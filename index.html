@@ -297,7 +297,13 @@
   </div>
 </div>
 
-<div id="audio-hint"><div class="audio-dot"></div> SOUND ON FOR BEST EXPERIENCE</div>
+<button id="audio-btn" onclick="toggleAudio()" style="position:fixed;bottom:52px;right:14px;z-index:200;background:var(--card);border:1px solid var(--border);border-radius:30px;padding:8px 16px;font-size:0.7rem;font-family:'Space Mono',monospace;color:var(--dim);letter-spacing:1px;cursor:pointer;box-shadow:var(--shadow);display:flex;align-items:center;gap:7px;transition:all 0.2s;">
+  <span id="audio-icon">🔊</span> <span id="audio-label">SOUND ON</span>
+</button>
+
+<footer style="position:fixed;bottom:0;left:0;right:0;text-align:center;padding:8px;font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--dim);letter-spacing:2px;background:rgba(255,255,255,0.7);backdrop-filter:blur(8px);border-top:1px solid var(--border);z-index:150;">
+  DEVELOPED BY <span style="color:var(--accent3);font-weight:700;">FERTAS MOHAMMED REDHA</span>
+</footer>
 
 <script>
 // ══════ CONFIG ══════
@@ -443,8 +449,16 @@ function launchConfetti(){
 }
 
 // ══════ AUDIO ══════
+let soundEnabled=true;
+function toggleAudio(){
+  soundEnabled=!soundEnabled;
+  document.getElementById('audio-icon').textContent=soundEnabled?'🔊':'🔇';
+  document.getElementById('audio-label').textContent=soundEnabled?'SOUND ON':'SOUND OFF';
+  document.getElementById('audio-btn').style.opacity=soundEnabled?'1':'0.5';
+}
 function unlockAudio(){ document.addEventListener('click',()=>{ if(!audioCtx) audioCtx=new(window.AudioContext||window.webkitAudioContext)(); },{once:true}); }
 function playSound(type){
+  if(!soundEnabled) return;
   if(!audioCtx) audioCtx=new(window.AudioContext||window.webkitAudioContext)();
   const t=audioCtx.currentTime, o=audioCtx.createOscillator(), g=audioCtx.createGain();
   o.connect(g); g.connect(audioCtx.destination);
