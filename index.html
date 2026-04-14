@@ -89,6 +89,7 @@
   .riddle-num { font-family:'Orbitron'; font-size:0.56rem; letter-spacing:3px; color:var(--accent3); margin-bottom:9px; font-weight:700; }
   .riddle-q { font-size:1.04rem; font-weight:700; line-height:1.65; color:var(--text); margin-bottom:18px; }
 
+  /* OPTIONS — horizontal wrap */
   .riddle-options { display:flex; flex-wrap:wrap; gap:9px; }
   .opt-btn {
     background:var(--bg2); border:2px solid var(--border); color:var(--text);
@@ -165,85 +166,30 @@
   #countdown-num { font-family:'Orbitron'; font-size:clamp(8rem,24vw,13rem); font-weight:900; line-height:1; background:linear-gradient(135deg,#00f5ff,#f43f5e); -webkit-background-clip:text; -webkit-text-fill-color:transparent; filter:drop-shadow(0 0 36px rgba(244,63,94,0.5)); animation:countScale 1s ease; }
   @keyframes countScale { 0%{transform:scale(1.5);opacity:0} 100%{transform:scale(1);opacity:1} }
 
-  /* BIRTHDAY SCREEN - Modified */
-  #birthday-screen { 
-    display:none; position:fixed; inset:0; z-index:950; 
-    background:linear-gradient(135deg,#fff7ed,#fdf2f8,#eff6ff); 
-    overflow-y:auto; align-items:center; justify-content:center; 
-    flex-direction:column; text-align:center; padding:40px 20px; 
-  }
+  /* BIRTHDAY */
+  #birthday-screen { display:none; position:fixed; inset:0; z-index:950; background:linear-gradient(135deg,#fff7ed,#fdf2f8,#eff6ff); overflow-y:auto; align-items:center; justify-content:center; flex-direction:column; text-align:center; padding:40px 20px; }
   #birthday-screen.show { display:flex; animation:fadeInUp 1s ease; }
   #canvas-confetti { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:951; }
-
-  .bday-badge { 
-    font-family:'Orbitron'; font-size:0.66rem; letter-spacing:5px; 
-    color:var(--accent3); margin-bottom:12px; text-transform:uppercase; 
-  }
-  .bday-title { 
-    font-family:'Orbitron'; font-size:clamp(2.2rem,8vw,4.2rem); font-weight:900; 
-    line-height:1.1; margin-bottom:12px;
-    background:linear-gradient(135deg, var(--gold), var(--accent2), #d946ef);
-    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-    filter:drop-shadow(0 0 20px rgba(217,119,6,0.4));
-  }
-  .bday-emojis { 
-    font-size:clamp(1.8rem,5.5vw,2.8rem); margin:14px 0; 
-    letter-spacing:6px; animation:floatEmoji 2s infinite; 
-  }
+  .bday-badge { font-family:'Orbitron'; font-size:0.66rem; letter-spacing:5px; color:var(--accent3); margin-bottom:12px; text-transform:uppercase; }
+  .bday-title { font-family:'Orbitron'; font-size:clamp(2.4rem,10vw,4.8rem); font-weight:900; line-height:1.05; margin-bottom:6px; background:linear-gradient(135deg, var(--gold), var(--accent2), #d946ef); -webkit-background-clip:text; -webkit-text-fill-color:transparent; filter:drop-shadow(0 0 18px rgba(217,119,6,0.3)); }
+  .bday-emojis { font-size:clamp(1.8rem,5.5vw,2.8rem); margin:14px 0; letter-spacing:6px; animation:floatEmoji 2s infinite; }
   @keyframes floatEmoji { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
-
-  .bday-message { 
-    max-width:520px; font-size:clamp(0.93rem,2.2vw,1.08rem); 
-    line-height:1.9; color:var(--text); margin:18px auto; font-weight:600; 
-    border:2px solid rgba(217,119,6,0.2); border-radius:20px; 
-    padding:26px 28px; background:rgba(255,255,255,0.88); 
-    box-shadow:0 8px 28px rgba(217,119,6,0.1); 
-  }
-  .smile-line { 
-    font-family:'Orbitron'; font-size:clamp(0.82rem,2vw,0.98rem); 
-    color:var(--gold); letter-spacing:2px; margin:18px 0; 
-    font-weight:700; animation:glowgold 2s infinite; 
-  }
-  @keyframes glowgold { 
-    0%,100%{text-shadow:0 0 8px rgba(217,119,6,0.3)} 
-    50%{text-shadow:0 0 22px rgba(217,119,6,0.7),0 0 44px rgba(217,119,6,0.2)} 
-  }
-  .bday-btns { 
-    display:flex; gap:13px; flex-wrap:wrap; justify-content:center; 
-    margin-top:26px; position:relative; z-index:952; 
-  }
-  .btn-back { 
-    background:linear-gradient(135deg, var(--accent3), var(--accent)); 
-    border:none; color:#fff; font-family:'Orbitron'; font-size:0.74rem; 
-    font-weight:700; letter-spacing:2px; padding:13px 28px; 
-    border-radius:40px; cursor:pointer; box-shadow:0 4px 14px rgba(124,58,237,0.28); 
-  }
-  .btn-leave { 
-    background:transparent; border:2px solid var(--dim); color:var(--dim); 
-    font-family:'Orbitron'; font-size:0.74rem; font-weight:700; 
-    letter-spacing:2px; padding:13px 28px; border-radius:40px; cursor:pointer; 
-  }
+  .bday-message { max-width:520px; font-size:clamp(0.93rem,2.2vw,1.08rem); line-height:1.9; color:var(--text); margin:18px auto; font-weight:600; border:2px solid rgba(217,119,6,0.2); border-radius:20px; padding:26px 28px; background:rgba(255,255,255,0.88); position:relative; z-index:952; box-shadow:0 8px 28px rgba(217,119,6,0.1); }
+  .smile-line { font-family:'Orbitron'; font-size:clamp(0.82rem,2vw,0.98rem); color:var(--gold); letter-spacing:2px; margin:18px 0; font-weight:700; animation:glowgold 2s infinite; }
+  @keyframes glowgold { 0%,100%{text-shadow:0 0 8px rgba(217,119,6,0.3)} 50%{text-shadow:0 0 22px rgba(217,119,6,0.7),0 0 44px rgba(217,119,6,0.2)} }
+  .bday-btns { display:flex; gap:13px; flex-wrap:wrap; justify-content:center; margin-top:26px; position:relative; z-index:952; }
+  .btn-back { background:linear-gradient(135deg, var(--accent3), var(--accent)); border:none; color:#fff; font-family:'Orbitron'; font-size:0.74rem; font-weight:700; letter-spacing:2px; padding:13px 28px; border-radius:40px; cursor:pointer; box-shadow:0 4px 14px rgba(124,58,237,0.28); transition:all 0.2s; }
+  .btn-leave { background:transparent; border:2px solid var(--dim); color:var(--dim); font-family:'Orbitron'; font-size:0.74rem; font-weight:700; letter-spacing:2px; padding:13px 28px; border-radius:40px; cursor:pointer; transition:all 0.2s; }
   .btn-back:hover { transform:scale(1.04); box-shadow:0 6px 22px rgba(124,58,237,0.44); }
   .btn-leave:hover { border-color:var(--accent2); color:var(--accent2); }
 
-  /* SOUND BUTTON */
-  #audio-hint {
-    position:fixed; bottom:14px; right:14px; z-index:200;
-    background:var(--card); border:1px solid var(--border); border-radius:50%;
-    width:44px; height:44px; display:flex; align-items:center; justify-content:center;
-    box-shadow:var(--shadow); cursor:pointer; transition:all 0.2s;
-    font-size:1.3rem; user-select:none;
-  }
-  #audio-hint:hover { transform:scale(1.12); box-shadow:var(--glow); }
-
-  /* FOOTER - Modified Color */
-  #site-footer {
-    text-align:center; padding:18px 20px;
-    font-family:'Space Mono'; font-size:0.62rem; 
-    color:var(--gold); font-weight:700; letter-spacing:2px;
-    border-top:1px solid var(--border);
-    background:rgba(255,255,255,0.5); text-transform:uppercase;
-  }
+  /* LOADING */
+  #time-loading { position:fixed; inset:0; z-index:9999; background:var(--bg); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:13px; }
+  .load-spinner { width:38px; height:38px; border:3px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation:spin 0.8s linear infinite; }
+  @keyframes spin { to{transform:rotate(360deg)} }
+  #time-loading p { font-family:'Space Mono'; font-size:0.76rem; color:var(--dim); letter-spacing:2px; }
+  #audio-hint { position:fixed; bottom:14px; right:14px; z-index:200; background:var(--card); border:1px solid var(--border); border-radius:30px; padding:7px 15px; font-size:0.7rem; font-family:'Space Mono'; color:var(--dim); letter-spacing:1px; display:flex; align-items:center; gap:7px; box-shadow:var(--shadow); }
+  .audio-dot { width:7px; height:7px; border-radius:50%; background:var(--accent); animation:blink 1.5s infinite; }
 
   @media(max-width:520px){
     .cw-clues{grid-template-columns:1fr}
@@ -331,8 +277,6 @@
     </div>
     <button class="next-stage-btn" id="ws-done-btn" onclick="restartAll()">PLAY AGAIN 🔄</button>
   </div>
-
-  <footer id="site-footer">Developed by Fertas Mohammed Redha</footer>
 </div>
 
 <div id="freeze-overlay">
@@ -343,30 +287,27 @@
 <div id="birthday-screen">
   <canvas id="canvas-confetti"></canvas>
   <div class="bday-badge">✦ A SPECIAL MOMENT ✦</div>
-  <div class="bday-title">HAPPY BIRTHDAY, Homens! 🎂🎉🎊🎈</div>
+  <div class="bday-title">HAPPY<br>BIRTHDAY!</div>
   <div class="bday-emojis">🎂 🎉 🎊 🎈</div>
   <div class="bday-message" id="bday-message-text"></div>
   <div class="smile-line" id="smile-text"></div>
   <div class="bday-btns">
     <button class="btn-back" onclick="backToGame()">BACK TO GAME</button>
-    <button class="btn-leave" onclick="leaveGame()">LEAVE</button>
+    <button class="btn-leave" onclick="window.close()">LEAVE</button>
   </div>
 </div>
 
-<div id="audio-hint" onclick="toggleSound()" title="Toggle Sound">🔊</div>
+<div id="audio-hint"><div class="audio-dot"></div> SOUND ON FOR BEST EXPERIENCE</div>
 
 <script>
 // ══════ CONFIG ══════
 const BIRTHDAY = { month: 4, day: 15 };
-const TEST_MODE = false;
-const TRIGGER_HOUR = 23;   // ← التعديل الجديد
-const TRIGGER_MIN  = 9;    // ← التعديل الجديد
+const TEST_MODE = false; // triggers at midnight
+const BIRTHDAY_MESSAGE = `Wishing you a day as bright and incredible as you are! 🌟\nMay this new year of your life bring you endless joy, laughter, and all the beautiful things you deserve.\nYou make every ordinary day feel like something special — so today, on YOUR day, we celebrate YOU! 🎂`;
+const SMILE_LINE = `😄 Smile, sweetheart! It's YOUR day! 😄`;
 
-const BIRTHDAY_MESSAGE = `Wishing you a day as bright and beautiful as you are 🌟<br>May this new year of your life bring you endless joy, laughter, and all the lovely things you truly deserve.<br><br>You make every ordinary day feel special, and today is all about you.<br>Happy birthday, my dear… every year you become even more wonderful, and you remain the most beautiful soul in this world.<br><br>I truly wish that God protects you, gives you a long life, and fills your days with peace and happiness.<br>May this year be full of joy, success, more shining moments, and continuous growth for you ✨🚀<br><br>And just a little reminder… you are the best and the most beautiful, without a doubt.<br>Always believe in yourself the way I believe in you 🤍<br><br>Happy birthday again… and always stay amazing.`;
-const SMILE_LINE = `😄 Smile sweetheart, it's your day 😄`;
-
-// ══════ POOLS (unchanged) ══════
-const RIDDLES_POOL = [ /* ... نفس القائمة الأصلية ... */ 
+// ══════ RIDDLES (picks 7) ══════
+const RIDDLES_POOL = [
   {q:"I speak without a mouth and hear without ears. I have no body, but I come alive with the wind. What am I?", opts:["Shadow","Echo","Mirror","Flame","Smoke"], ans:"Echo"},
   {q:"I have cities but no houses, mountains but no trees, water but no fish. What am I?", opts:["A Dream","A Painting","A Map","The Sky","A Desert"], ans:"A Map"},
   {q:"The more you take, the more you leave behind. What am I?", opts:["Memories","Footsteps","Time","Secrets","Regrets"], ans:"Footsteps"},
@@ -383,16 +324,19 @@ const RIDDLES_POOL = [ /* ... نفس القائمة الأصلية ... */
   {q:"What can run but never walks, has a mouth but never talks?", opts:["A River","A Train","A Clock","A Snake","A Road"], ans:"A River"},
 ];
 
-const CW_POOL = [ /* نفس القائمة الأصلية */ 
+// ══════ CROSSWORD (2 layouts) ══════
+const CW_POOL = [
   { words:[{word:"LIGHT",clue:"Opposite of darkness",dir:"across",row:0,col:0},{word:"LARGE",clue:"Opposite of small",dir:"down",row:0,col:0},{word:"EARTH",clue:"Our home planet",dir:"across",row:3,col:0},{word:"TIGER",clue:"Striped big cat",dir:"down",row:0,col:4},{word:"HONEY",clue:"Sweet bee product",dir:"across",row:4,col:1}], size:7 },
   { words:[{word:"BRAVE",clue:"Courageous and bold",dir:"across",row:0,col:0},{word:"BLOOM",clue:"Flowers in spring",dir:"across",row:2,col:0},{word:"BLACK",clue:"Color of night sky",dir:"across",row:4,col:0},{word:"BELLS",clue:"Ring on special days",dir:"down",row:0,col:4},{word:"BEACH",clue:"Sandy place by the sea",dir:"down",row:0,col:0}], size:6 },
 ];
 
-const ANAGRAM_POOL = [ /* نفس القائمة */ 
+// ══════ ANAGRAM (picks 6) ══════
+const ANAGRAM_POOL = [
   {word:"PLANET",hint:"Something in our solar system"},{word:"CASTLE",hint:"Medieval royal fortress"},{word:"BRIDGE",hint:"Connects two sides"},{word:"MIRROR",hint:"Shows your reflection"},{word:"FOREST",hint:"Full of trees and wildlife"},{word:"ROCKET",hint:"Goes into space"},{word:"SPIDER",hint:"Eight-legged creature"},{word:"WINTER",hint:"Cold season"},{word:"GARDEN",hint:"Where flowers grow"},{word:"OYSTER",hint:"Found in the ocean, makes pearls"},{word:"PARCEL",hint:"A wrapped package"},{word:"GRAVEL",hint:"Small stones on a road"},
 ];
 
-const TRIVIA_POOL = [ /* نفس القائمة */ 
+// ══════ TRIVIA (picks 8) ══════
+const TRIVIA_POOL = [
   {q:"Which planet has the most moons in our solar system?",opts:["Jupiter","Saturn","Uranus","Neptune"],ans:"Saturn",diff:"hard"},
   {q:"What is the only metal liquid at room temperature?",opts:["Lead","Mercury","Gallium","Cesium"],ans:"Mercury",diff:"medium"},
   {q:"How many bones does an adult human body have?",opts:["196","206","216","226"],ans:"206",diff:"medium"},
@@ -409,6 +353,7 @@ const TRIVIA_POOL = [ /* نفس القائمة */
   {q:"Which gas do plants absorb during photosynthesis?",opts:["Oxygen","Nitrogen","Carbon Dioxide","Hydrogen"],ans:"Carbon Dioxide",diff:"easy"},
 ];
 
+// ══════ WORD SEARCH POOLS ══════
 const WS_POOLS = [
   ["GALAXY","NEBULA","COMET","ORBIT","STELLAR","QUASAR","ECLIPSE"],
   ["CIPHER","BINARY","VERTEX","MATRIX","NEURAL","SYNTAX","VECTOR"],
@@ -416,280 +361,111 @@ const WS_POOLS = [
 ];
 
 // ══════ STATE ══════
-let score=0, currentStage=1;
-let riddlesSolved=0, totalRiddles=0;
-let anagramSolved=0, totalAnagrams=0;
-let triviaSolved=0, totalTrivia=0;
-let wsFoundCount=0, wsWords=[], wsGrid=[], wsSelected=[], wsSelecting=false;
-let frozenByBirthday=false, audioCtx=null, serverTime=null, serverFetchedAt=null, cwData=null;
-let birthdayTriggered=false, soundEnabled=true;
-let cwWordsSolvedCount=0;
-let bdayMusicLoop=null, bdayMusicPlaying=false;
+let score=0,currentStage=1;
+let riddlesSolved=0,totalRiddles=0;
+let anagramSolved=0,totalAnagrams=0;
+let triviaSolved=0,totalTrivia=0;
+let wsFoundCount=0,wsWords=[],wsGrid=[],wsSelected=[],wsSelecting=false;
+let frozenByBirthday=false,audioCtx=null,serverTime=null,serverFetchedAt=null,cwData=null;
 
 // ══════ INIT ══════
-window.addEventListener('load', async () => {
+window.addEventListener('load',async()=>{
   drawStars();
   await fetchServerTime();
   document.getElementById('time-loading').style.display='none';
   document.getElementById('app').style.display='block';
-  buildAll(); 
-  injectBirthdayContent(); 
-  startTimerLoop(); 
-  unlockAudio();
+  buildAll(); injectBirthdayContent(); startTimerLoop(); unlockAudio();
 });
 
 function buildAll(){ buildRiddles(); buildCrossword(); buildAnagrams(); buildTrivia(); buildWordSearch(); }
 
 function restartAll(){
-  score=0; currentStage=1; riddlesSolved=0; anagramSolved=0; triviaSolved=0;
-  wsFoundCount=0; cwWordsSolvedCount=0;
+  score=0; currentStage=1; riddlesSolved=0; anagramSolved=0; triviaSolved=0; wsFoundCount=0;
   document.getElementById('score-val').textContent='0';
   document.querySelectorAll('.next-stage-btn').forEach(b=>b.classList.remove('show'));
   buildAll(); goToStage(1);
 }
 
-// ══════ TIME FUNCTIONS (unchanged) ══════
+// ══════ TIME ══════
 async function fetchServerTime(){
-  const trySource = async (fn) => {
-    try {
-      const t = await fn();
-      if(t && t.getFullYear() >= 2024){ serverTime=t; serverFetchedAt=Date.now(); return true; }
-    } catch(e){}
-    return false;
-  };
-
-  const ok1 = await trySource(async () => {
-    const r = await fetch('https://worldtimeapi.org/api/timezone/Africa/Algiers', {cache:'no-store'});
-    const d = await r.json();
-    return new Date(d.datetime);
-  });
-  if(ok1) return;
-
-  const ok2 = await trySource(async () => {
-    const r = await fetch('https://timeapi.io/api/Time/current/zone?timeZone=Africa/Algiers', {cache:'no-store'});
-    const d = await r.json();
-    return new Date(d.year, d.month-1, d.day, d.hour, d.minute, d.seconds);
-  });
-  if(ok2) return;
-
-  const ok3 = await trySource(async () => {
-    const r = await fetch('https://worldclockapi.com/api/json/cet/now', {cache:'no-store'});
-    const d = await r.json();
-    return new Date(d.currentDateTime);
-  });
-  if(ok3) return;
-
-  serverTime = new Date();
-  serverFetchedAt = Date.now();
+  try{
+    const r=await fetch('https://worldtimeapi.org/api/timezone/Africa/Algiers');
+    const d=await r.json(); serverTime=new Date(d.datetime); serverFetchedAt=Date.now();
+  }catch{ serverTime=new Date(); serverFetchedAt=Date.now(); }
 }
-
-function getNow(){
-  if(!serverTime) return new Date();
-  return new Date(serverTime.getTime() + (Date.now() - serverFetchedAt));
-}
+function getNow(){ if(!serverTime) return new Date(); return new Date(serverTime.getTime()+(Date.now()-serverFetchedAt)); }
 
 // ══════ TIMER LOOP ══════
 function startTimerLoop(){
-  setInterval(() => {
-    if(frozenByBirthday || birthdayTriggered) return;
-    const now = getNow();
-    const isBday = (now.getMonth()+1 === BIRTHDAY.month && now.getDate() === BIRTHDAY.day);
+  setInterval(()=>{
+    if(frozenByBirthday) return;
+    const now=getNow();
+    const isBday=(now.getMonth()+1===BIRTHDAY.month&&now.getDate()===BIRTHDAY.day);
     if(!isBday) return;
-
-    if(now.getSeconds() === 0 && now.getMinutes() % 5 === 0) fetchServerTime();
-
+    if(now.getSeconds()===0&&now.getMinutes()%5===0) fetchServerTime();
     let sLeft;
-    if(TEST_MODE){
-      const testTime = new Date(now); testTime.setHours(12,0,0,0);
-      sLeft = Math.floor((testTime - now) / 1000);
-    } else {
-      const triggerTime = new Date(now);
-      triggerTime.setHours(TRIGGER_HOUR, TRIGGER_MIN, 0, 0);
-      sLeft = Math.floor((triggerTime - now) / 1000);
-    }
-
-    if(sLeft <= 3 && sLeft > 0){
-      frozenByBirthday = true;
-      triggerFreeze(sLeft);
-    } else if(sLeft <= 0 && sLeft > -10){
-      frozenByBirthday = true;
-      birthdayTriggered = true;
-      showBirthday();
-    }
-  }, 500);
+    if(TEST_MODE){ const noon=new Date(now); noon.setHours(12,0,0,0); sLeft=Math.floor((noon-now)/1000); }
+    else { const midnight=new Date(now); midnight.setHours(24,0,0,0); sLeft=Math.floor((midnight-now)/1000); }
+    if(sLeft<=3&&sLeft>0){ frozenByBirthday=true; triggerFreeze(sLeft); }
+  },500);
 }
 
-function checkCwFallback(){
-  if(birthdayTriggered) return;
-  const now = getNow();
-  const isBday = (now.getMonth()+1 === BIRTHDAY.month && now.getDate() === BIRTHDAY.day);
-  if(!isBday) return;
-  cwWordsSolvedCount++;
-  if(cwWordsSolvedCount >= 3){
-    birthdayTriggered = true;
-    frozenByBirthday = true;
-    showBirthday();
-  }
-}
-
-// ══════ FREEZE & BIRTHDAY ══════
+// ══════ FREEZE ══════
 function triggerFreeze(startCount){
   playSound('freeze');
-  const overlay = document.getElementById('freeze-overlay');
-  const num = document.getElementById('countdown-num');
+  const overlay=document.getElementById('freeze-overlay');
+  const num=document.getElementById('countdown-num');
   overlay.classList.add('show');
-  let c = Math.ceil(startCount); num.textContent = c;
-  const iv = setInterval(() => {
+  let c=Math.ceil(startCount); num.textContent=c;
+  const iv=setInterval(()=>{
     c--;
-    if(c <= 0){ 
-      clearInterval(iv); 
-      num.textContent='🎂'; 
-      setTimeout(() => { overlay.classList.remove('show'); showBirthday(); }, 800); 
-    }
-    else { 
-      num.style.animation='none'; num.offsetHeight; 
-      num.style.animation='countScale 0.9s ease'; 
-      num.textContent=c; 
-      playSound('tick'); 
-    }
-  }, 1000);
+    if(c<=0){ clearInterval(iv); num.textContent='🎂'; setTimeout(()=>{ overlay.classList.remove('show'); showBirthday(); },800); }
+    else { num.style.animation='none'; num.offsetHeight; num.style.animation='countScale 0.9s ease'; num.textContent=c; playSound('tick'); }
+  },1000);
 }
 
+// ══════ BIRTHDAY ══════
 function injectBirthdayContent(){
-  document.getElementById('bday-message-text').innerHTML = BIRTHDAY_MESSAGE;
-  document.getElementById('smile-text').textContent = SMILE_LINE;
+  document.getElementById('bday-message-text').innerHTML=BIRTHDAY_MESSAGE.replace(/\n/g,'<br>');
+  document.getElementById('smile-text').textContent=SMILE_LINE;
+}
+function showBirthday(){ playSound('birthday'); document.getElementById('birthday-screen').classList.add('show'); launchConfetti(); }
+function backToGame(){ document.getElementById('birthday-screen').classList.remove('show'); frozenByBirthday=false; }
+
+function launchConfetti(){
+  const canvas=document.getElementById('canvas-confetti'); const ctx=canvas.getContext('2d');
+  canvas.width=window.innerWidth; canvas.height=window.innerHeight;
+  const colors=['#3b82f6','#f43f5e','#7c3aed','#d97706','#059669','#d946ef'];
+  const pieces=Array.from({length:220},()=>({x:Math.random()*canvas.width,y:Math.random()*canvas.height-canvas.height,r:Math.random()*8+4,d:Math.random()*3+1,color:colors[~~(Math.random()*colors.length)],tilt:Math.random()*10-10,tiltAngle:0,tiltSpeed:Math.random()*0.1+0.05}));
+  let f=0;
+  function draw(){ ctx.clearRect(0,0,canvas.width,canvas.height); pieces.forEach(p=>{ ctx.beginPath(); ctx.lineWidth=p.r/2; ctx.strokeStyle=p.color; ctx.moveTo(p.x+p.tilt+p.r/4,p.y); ctx.lineTo(p.x+p.tilt,p.y+p.tilt+p.r/4); ctx.stroke(); p.tiltAngle+=p.tiltSpeed; p.y+=(Math.cos(f/10)+p.d); p.x+=Math.sin(f/20); p.tilt=Math.sin(p.tiltAngle)*12; if(p.y>canvas.height){p.y=-10;p.x=Math.random()*canvas.width;} }); f++; if(f<700) requestAnimationFrame(draw); else ctx.clearRect(0,0,canvas.width,canvas.height); }
+  draw();
 }
 
-function showBirthday(){
-  birthdayTriggered = true;
-  playBirthdayMusicLoop();
-  document.getElementById('birthday-screen').classList.add('show');
-  launchConfetti();
-}
-
-function backToGame(){
-  document.getElementById('birthday-screen').classList.remove('show');
-  stopBirthdayMusic();
-  frozenByBirthday = false;
-}
-
-function leaveGame(){
-  stopBirthdayMusic();
-  window.close();
-}
-
-function stopBirthdayMusic(){
-  if(bdayMusicLoop) clearTimeout(bdayMusicLoop);
-  bdayMusicPlaying = false;
-}
-
-// Stop music when tab is hidden
-document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'hidden' && bdayMusicPlaying) {
-    stopBirthdayMusic();
-  }
-});
-
-// ══════ BIRTHDAY MUSIC ══════
-function playBirthdayMusicLoop(){
-  if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  if(bdayMusicPlaying) return;
-  bdayMusicPlaying = true;
-  scheduleBdayMelody();
-}
-
-function scheduleBdayMelody(){
-  if(!soundEnabled || !audioCtx || !bdayMusicPlaying) return;
-  const t = audioCtx.currentTime;
-  const notes = [
-    {freq:523,time:0},{freq:523,time:0.3},{freq:587,time:0.6},{freq:523,time:0.9},
-    {freq:698,time:1.2},{freq:659,time:1.8},{freq:523,time:2.4},{freq:523,time:2.7},
-    {freq:587,time:3.0},{freq:523,time:3.3},{freq:784,time:3.6},{freq:698,time:4.2}
-  ];
-
-  notes.forEach(n => {
-    const o = audioCtx.createOscillator();
-    const g = audioCtx.createGain();
-    o.connect(g); g.connect(audioCtx.destination);
-    o.type = 'sine'; o.frequency.value = n.freq;
-    g.gain.setValueAtTime(0.3, t + n.time);
-    g.gain.exponentialRampToValueAtTime(0.001, t + n.time + 0.25);
-    o.start(t + n.time); o.stop(t + n.time + 0.28);
-  });
-
-  bdayMusicLoop = setTimeout(() => scheduleBdayMelody(), 5000);
-}
-
-// ══════ SOUND ══════
-function toggleSound(){
-  soundEnabled = !soundEnabled;
-  document.getElementById('audio-hint').textContent = soundEnabled ? '🔊' : '🔇';
-  if(!soundEnabled){
-    stopBirthdayMusic();
-  } else if(birthdayTriggered){
-    bdayMusicPlaying = false;
-    playBirthdayMusicLoop();
-  }
-}
-
-function unlockAudio(){
-  document.addEventListener('click', () => {
-    if(!audioCtx) audioCtx = new(window.AudioContext||window.webkitAudioContext)();
-  }, {once:true});
-}
-
+// ══════ AUDIO ══════
+function unlockAudio(){ document.addEventListener('click',()=>{ if(!audioCtx) audioCtx=new(window.AudioContext||window.webkitAudioContext)(); },{once:true}); }
 function playSound(type){
-  if(!soundEnabled || !audioCtx) return;
+  if(!audioCtx) audioCtx=new(window.AudioContext||window.webkitAudioContext)();
   const t=audioCtx.currentTime, o=audioCtx.createOscillator(), g=audioCtx.createGain();
   o.connect(g); g.connect(audioCtx.destination);
-  if(type==='correct'){ 
-    o.type='sine'; o.frequency.setValueAtTime(523,t); o.frequency.setValueAtTime(659,t+0.1); o.frequency.setValueAtTime(784,t+0.2); 
-    g.gain.setValueAtTime(0.3,t); g.gain.exponentialRampToValueAtTime(0.001,t+0.5); 
-    o.start(t); o.stop(t+0.5); 
-  }
-  else if(type==='wrong'){ 
-    o.type='sawtooth'; o.frequency.setValueAtTime(200,t); o.frequency.setValueAtTime(140,t+0.18); 
-    g.gain.setValueAtTime(0.2,t); g.gain.exponentialRampToValueAtTime(0.001,t+0.3); 
-    o.start(t); o.stop(t+0.3); 
-  }
-  else if(type==='tick'){ 
-    o.type='square'; o.frequency.setValueAtTime(900,t); 
-    g.gain.setValueAtTime(0.4,t); g.gain.exponentialRampToValueAtTime(0.001,t+0.12); 
-    o.start(t); o.stop(t+0.12); 
-  }
-  else if(type==='freeze'){ 
-    o.type='sawtooth'; o.frequency.setValueAtTime(440,t); o.frequency.exponentialRampToValueAtTime(100,t+0.9); 
-    g.gain.setValueAtTime(0.5,t); g.gain.exponentialRampToValueAtTime(0.001,t+0.9); 
-    o.start(t); o.stop(t+0.9); 
-  }
-  else if(type==='found'){ 
-    o.type='sine'; o.frequency.setValueAtTime(659,t); o.frequency.setValueAtTime(988,t+0.1); 
-    g.gain.setValueAtTime(0.25,t); g.gain.exponentialRampToValueAtTime(0.001,t+0.3); 
-    o.start(t); o.stop(t+0.3); 
+  if(type==='correct'){ o.type='sine'; o.frequency.setValueAtTime(523,t); o.frequency.setValueAtTime(659,t+0.1); o.frequency.setValueAtTime(784,t+0.2); g.gain.setValueAtTime(0.3,t); g.gain.exponentialRampToValueAtTime(0.001,t+0.5); o.start(t); o.stop(t+0.5); }
+  else if(type==='wrong'){ o.type='sawtooth'; o.frequency.setValueAtTime(200,t); o.frequency.setValueAtTime(140,t+0.18); g.gain.setValueAtTime(0.2,t); g.gain.exponentialRampToValueAtTime(0.001,t+0.3); o.start(t); o.stop(t+0.3); }
+  else if(type==='tick'){ o.type='square'; o.frequency.setValueAtTime(900,t); g.gain.setValueAtTime(0.4,t); g.gain.exponentialRampToValueAtTime(0.001,t+0.12); o.start(t); o.stop(t+0.12); }
+  else if(type==='freeze'){ o.type='sawtooth'; o.frequency.setValueAtTime(440,t); o.frequency.exponentialRampToValueAtTime(100,t+0.9); g.gain.setValueAtTime(0.5,t); g.gain.exponentialRampToValueAtTime(0.001,t+0.9); o.start(t); o.stop(t+0.9); }
+  else if(type==='found'){ o.type='sine'; o.frequency.setValueAtTime(659,t); o.frequency.setValueAtTime(988,t+0.1); g.gain.setValueAtTime(0.25,t); g.gain.exponentialRampToValueAtTime(0.001,t+0.3); o.start(t); o.stop(t+0.3); }
+  else if(type==='birthday'){
+    [523,523,587,523,698,659,523,523,587,523,784,698].forEach((freq,i)=>{
+      const times=[0,0.3,0.6,0.9,1.2,1.8,2.4,2.7,3.0,3.3,3.6,4.2];
+      const o2=audioCtx.createOscillator(),g2=audioCtx.createGain(); o2.connect(g2); g2.connect(audioCtx.destination);
+      o2.type='sine'; o2.frequency.value=freq; g2.gain.setValueAtTime(0.3,t+times[i]); g2.gain.exponentialRampToValueAtTime(0.001,t+times[i]+0.25); o2.start(t+times[i]); o2.stop(t+times[i]+0.3);
+    }); return;
   }
 }
 
-// ══════ NAV & SCORE ══════
-function goToStage(n){
-  currentStage=n;
-  document.querySelectorAll('.game-screen').forEach(s=>s.classList.remove('active'));
-  const map={1:'screen-riddles',2:'screen-crossword',3:'screen-anagram',4:'screen-trivia',5:'screen-wordsearch'};
-  document.getElementById(map[n]).classList.add('active');
-  updateDots(n); window.scrollTo({top:0,behavior:'smooth'});
-}
-function updateDots(a){
-  for(let i=1;i<=5;i++){
-    const dot=document.getElementById('dot-'+i), line=document.getElementById('line-'+i);
-    dot.classList.remove('active','done');
-    if(i<a) dot.classList.add('done'); else if(i===a) dot.classList.add('active');
-    if(line){ line.classList.remove('done'); if(i<a) line.classList.add('done'); }
-  }
-}
-function addScore(p){
-  score+=p; const el=document.getElementById('score-val');
-  el.textContent=score; el.style.transform='scale(1.6)';
-  setTimeout(()=>el.style.transform='scale(1)',300);
-}
+// ══════ NAV ══════
+function goToStage(n){ currentStage=n; document.querySelectorAll('.game-screen').forEach(s=>s.classList.remove('active')); const map={1:'screen-riddles',2:'screen-crossword',3:'screen-anagram',4:'screen-trivia',5:'screen-wordsearch'}; document.getElementById(map[n]).classList.add('active'); updateDots(n); window.scrollTo({top:0,behavior:'smooth'}); }
+function updateDots(a){ for(let i=1;i<=5;i++){ const dot=document.getElementById('dot-'+i),line=document.getElementById('line-'+i); dot.classList.remove('active','done'); if(i<a) dot.classList.add('done'); else if(i===a) dot.classList.add('active'); if(line){line.classList.remove('done');if(i<a)line.classList.add('done');} } }
+function addScore(p){ score+=p; const el=document.getElementById('score-val'); el.textContent=score; el.style.transform='scale(1.6)'; setTimeout(()=>el.style.transform='scale(1)',300); }
 function shuffle(arr){ const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=~~(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
 
 // ══════ STAGE 1: RIDDLES ══════
@@ -698,7 +474,7 @@ function buildRiddles(){
   const c=document.getElementById('riddles-container'); c.innerHTML='';
   pool.forEach((r,idx)=>{
     const opts=shuffle(r.opts); const card=document.createElement('div'); card.className='riddle-card'; card.id='rc-'+idx;
-    card.innerHTML=`<div class="riddle-num">RIDDLE \( {String(idx+1).padStart(2,'0')} / \){String(totalRiddles).padStart(2,'0')}</div><div class="riddle-q">\( {r.q}</div><div class="riddle-options"> \){opts.map(o=>`<button class="opt-btn" onclick="answerRiddle(this,'\( {o.replace(/'/g,"\\'")}',' \){r.ans.replace(/'/g,"\\'")}',\( {idx})"> \){o}</button>`).join('')}</div><div class="riddle-feedback" id="rfb-${idx}"></div>`;
+    card.innerHTML=`<div class="riddle-num">RIDDLE ${String(idx+1).padStart(2,'0')} / ${String(totalRiddles).padStart(2,'0')}</div><div class="riddle-q">${r.q}</div><div class="riddle-options">${opts.map(o=>`<button class="opt-btn" onclick="answerRiddle(this,'${o.replace(/'/g,"\\'")}','${r.ans.replace(/'/g,"\\'")}',${idx})">${o}</button>`).join('')}</div><div class="riddle-feedback" id="rfb-${idx}"></div>`;
     c.appendChild(card);
   });
   document.getElementById('riddle-next-btn').classList.remove('show');
@@ -707,15 +483,8 @@ function answerRiddle(btn,chosen,correct,idx){
   const card=document.getElementById('rc-'+idx); if(card.classList.contains('solved')) return;
   const btns=card.querySelectorAll('.opt-btn'); btns.forEach(b=>b.disabled=true);
   const fb=document.getElementById('rfb-'+idx);
-  if(chosen===correct){ 
-    btn.classList.add('correct'); fb.textContent='✓ CORRECT! +10 PTS'; fb.className='riddle-feedback ok'; 
-    card.classList.add('solved'); playSound('correct'); addScore(10); 
-  } else { 
-    btn.classList.add('wrong'); btns.forEach(b=>{if(b.textContent===correct)b.classList.add('correct');}); 
-    fb.textContent=`✗ WRONG — Answer: ${correct}`; fb.className='riddle-feedback fail'; 
-    card.classList.add('wrong-shake','solved'); playSound('wrong'); 
-    setTimeout(()=>card.classList.remove('wrong-shake'),500); 
-  }
+  if(chosen===correct){ btn.classList.add('correct'); fb.textContent='✓ CORRECT! +10 PTS'; fb.className='riddle-feedback ok'; card.classList.add('solved'); playSound('correct'); addScore(10); }
+  else { btn.classList.add('wrong'); btns.forEach(b=>{ if(b.textContent===correct) b.classList.add('correct'); }); fb.textContent=`✗ WRONG — Answer: ${correct}`; fb.className='riddle-feedback fail'; card.classList.add('wrong-shake','solved'); playSound('wrong'); setTimeout(()=>card.classList.remove('wrong-shake'),500); }
   riddlesSolved++; if(riddlesSolved>=totalRiddles) document.getElementById('riddle-next-btn').classList.add('show');
 }
 
@@ -728,62 +497,29 @@ function buildCrossword(){
   for(let r=0;r<size;r++) for(let c=0;c<size;c++){
     const cell=document.createElement('div'); cell.className='cw-cell';
     if(grid[r][c]===null){ cell.classList.add('black'); }
-    else { 
-      const inp=document.createElement('input'); inp.maxLength=1; inp.dataset.r=r; inp.dataset.c=c; 
-      inp.addEventListener('input',e=>e.target.value=e.target.value.toUpperCase().slice(-1)); 
-      inp.addEventListener('keydown',e=>{if(e.key==='Enter')checkCrossword();});
-      const ws=words.find(w=>w.row===r&&w.col===c); 
-      if(ws){const sp=document.createElement('span');sp.className='cell-num';sp.textContent=words.indexOf(ws)+1;cell.appendChild(sp);}
-      cell.appendChild(inp); 
-    }
+    else { const inp=document.createElement('input'); inp.maxLength=1; inp.dataset.r=r; inp.dataset.c=c; inp.addEventListener('input',e=>e.target.value=e.target.value.toUpperCase().slice(-1)); inp.addEventListener('keydown',e=>{if(e.key==='Enter')checkCrossword();}); const ws=words.find(w=>w.row===r&&w.col===c); if(ws){const sp=document.createElement('span');sp.className='cell-num';sp.textContent=words.indexOf(ws)+1;cell.appendChild(sp);} cell.appendChild(inp); }
     gEl.appendChild(cell);
   }
   const across=words.filter(w=>w.dir==='across'),down=words.filter(w=>w.dir==='down');
-  document.getElementById('cw-clues').innerHTML=`<div class="clue-section"><h4>ACROSS</h4>\( {across.map(w=>`<div class="clue-item" id="cla- \){words.indexOf(w)}"><span>\( {words.indexOf(w)+1}.</span> \){w.clue}</div>`).join('')}</div><div class="clue-section"><h4>DOWN</h4>\( {down.map(w=>`<div class="clue-item" id="cld- \){words.indexOf(w)}"><span>\( {words.indexOf(w)+1}.</span> \){w.clue}</div>`).join('')}</div>`;
+  document.getElementById('cw-clues').innerHTML=`<div class="clue-section"><h4>ACROSS</h4>${across.map(w=>`<div class="clue-item" id="cla-${words.indexOf(w)}"><span>${words.indexOf(w)+1}.</span>${w.clue}</div>`).join('')}</div><div class="clue-section"><h4>DOWN</h4>${down.map(w=>`<div class="clue-item" id="cld-${words.indexOf(w)}"><span>${words.indexOf(w)+1}.</span>${w.clue}</div>`).join('')}</div>`;
+  const btn=document.getElementById('cw-check-btn'); btn.textContent='CHECK ANSWERS'; btn.style.background='linear-gradient(135deg,var(--accent3),var(--accent))';
   document.getElementById('cw-next-btn').classList.remove('show');
-  cwWordsSolvedCount=0;
 }
-
 function checkCrossword(){
-  if(birthdayTriggered) return;
   const{words}=cwData; const vals={};
-  document.querySelectorAll('#cw-grid input').forEach(inp=>vals[`\( {inp.dataset.r}, \){inp.dataset.c}`]=inp.value);
+  document.querySelectorAll('#cw-grid input').forEach(inp=>vals[`${inp.dataset.r},${inp.dataset.c}`]=inp.value);
   let allOk=true;
-  let newlySolvedCount=0;
   words.forEach((w,wi)=>{
     let wok=true;
     for(let i=0;i<w.word.length;i++){
       const r=w.dir==='across'?w.row:w.row+i,c=w.dir==='across'?w.col+i:w.col;
-      const inp=document.querySelector(`#cw-grid input[data-r="\( {r}"][data-c=" \){c}"]`); if(!inp)continue;
-      if(vals[`\( {r}, \){c}`]===w.word[i]){inp.classList.add('correct-cell');inp.classList.remove('wrong-cell');}
+      const inp=document.querySelector(`#cw-grid input[data-r="${r}"][data-c="${c}"]`); if(!inp)continue;
+      if(vals[`${r},${c}`]===w.word[i]){inp.classList.add('correct-cell');inp.classList.remove('wrong-cell');}
       else{inp.classList.add('wrong-cell');inp.classList.remove('correct-cell');wok=false;allOk=false;}
     }
-    if(wok){
-      const clA=document.getElementById(`cla-${wi}`);
-      const clD=document.getElementById(`cld-${wi}`);
-      const el = clA || clD;
-      if(el && !el.classList.contains('solved-clue')){
-        el.classList.add('solved-clue');
-        newlySolvedCount++;
-      }
-    }
+    if(wok){const el=document.getElementById(`cla-${wi}`)||document.getElementById(`cld-${wi}`);if(el)el.classList.add('solved-clue');}
   });
-
-  if(newlySolvedCount > 0){
-    const totalSolvedNow = document.querySelectorAll('.clue-item.solved-clue').length;
-    if(currentStage===2 && totalSolvedNow >= 3){
-      checkCwFallback();
-      if(birthdayTriggered) return;
-    }
-  }
-
-  if(allOk){ 
-    playSound('correct'); addScore(30); 
-    document.getElementById('cw-next-btn').classList.add('show'); 
-    const btn=document.getElementById('cw-check-btn'); 
-    btn.textContent='✓ PERFECT!'; 
-    btn.style.background='linear-gradient(135deg,#059669,#0d9488)'; 
-  }
+  if(allOk){ playSound('correct'); addScore(30); document.getElementById('cw-next-btn').classList.add('show'); const btn=document.getElementById('cw-check-btn'); btn.textContent='✓ PERFECT!'; btn.style.background='linear-gradient(135deg,#059669,#0d9488)'; }
   else playSound('wrong');
 }
 
@@ -795,7 +531,7 @@ function buildAnagrams(){
   document.getElementById('anagram-next-btn').classList.remove('show');
   pool.forEach((item,idx)=>{
     const scr=scramble(item.word); const card=document.createElement('div'); card.className='anagram-card'; card.id='ac-'+idx;
-    card.innerHTML=`<div class="riddle-num">ANAGRAM \( {String(idx+1).padStart(2,'0')} / \){String(totalAnagrams).padStart(2,'0')}</div><div class="anagram-hint">💡 \( {item.hint}</div><div class="scrambled-word"> \){scr}</div><div class="anagram-input-wrap"><input class="anagram-input" id="ai-\( {idx}" maxlength=" \){item.word.length}" placeholder="\( {'_'.repeat(item.word.length)}" /><button class="anagram-submit" onclick="checkAnagram( \){idx},'\( {item.word}')">SUBMIT</button></div><div class="riddle-feedback" id="afb- \){idx}"></div>`;
+    card.innerHTML=`<div class="riddle-num">ANAGRAM ${String(idx+1).padStart(2,'0')} / ${String(totalAnagrams).padStart(2,'0')}</div><div class="anagram-hint">💡 ${item.hint}</div><div class="scrambled-word">${scr}</div><div class="anagram-input-wrap"><input class="anagram-input" id="ai-${idx}" maxlength="${item.word.length}" placeholder="${'_'.repeat(item.word.length)}" /><button class="anagram-submit" onclick="checkAnagram(${idx},'${item.word}')">SUBMIT</button></div><div class="riddle-feedback" id="afb-${idx}"></div>`;
     c.appendChild(card);
     card.querySelector('.anagram-input').addEventListener('keydown',e=>{if(e.key==='Enter')checkAnagram(idx,item.word);});
     card.querySelector('.anagram-input').addEventListener('input',e=>e.target.value=e.target.value.toUpperCase().replace(/[^A-Z]/g,''));
@@ -804,18 +540,8 @@ function buildAnagrams(){
 function checkAnagram(idx,correct){
   const inp=document.getElementById('ai-'+idx),fb=document.getElementById('afb-'+idx),card=document.getElementById('ac-'+idx);
   if(card.dataset.solved) return;
-  if(inp.value===correct){ 
-    inp.classList.add('correct-input'); inp.disabled=true; 
-    card.querySelector('.anagram-submit').disabled=true; 
-    fb.textContent=`✓ CORRECT! "${correct}" +15 PTS`; fb.className='riddle-feedback ok'; 
-    card.dataset.solved='1'; playSound('correct'); addScore(15); anagramSolved++; 
-    if(anagramSolved>=totalAnagrams) document.getElementById('anagram-next-btn').classList.add('show'); 
-  }
-  else { 
-    inp.classList.add('wrong-input'); inp.value=''; 
-    setTimeout(()=>inp.classList.remove('wrong-input'),400); 
-    fb.textContent='✗ Try again!'; fb.className='riddle-feedback fail'; playSound('wrong'); 
-  }
+  if(inp.value===correct){ inp.classList.add('correct-input'); inp.disabled=true; card.querySelector('.anagram-submit').disabled=true; fb.textContent=`✓ CORRECT! "${correct}" +15 PTS`; fb.className='riddle-feedback ok'; card.dataset.solved='1'; playSound('correct'); addScore(15); anagramSolved++; if(anagramSolved>=totalAnagrams) document.getElementById('anagram-next-btn').classList.add('show'); }
+  else { inp.classList.add('wrong-input'); inp.value=''; setTimeout(()=>inp.classList.remove('wrong-input'),400); fb.textContent='✗ Try again!'; fb.className='riddle-feedback fail'; playSound('wrong'); }
 }
 
 // ══════ STAGE 4: TRIVIA ══════
@@ -825,7 +551,7 @@ function buildTrivia(){
   document.getElementById('trivia-next-btn').classList.remove('show');
   pool.forEach((t,idx)=>{
     const opts=shuffle(t.opts); const card=document.createElement('div'); card.className='riddle-card'; card.id='tc-'+idx;
-    card.innerHTML=`<span class="trivia-difficulty diff-\( {t.diff}"> \){t.diff.toUpperCase()}</span><div class="riddle-num">TRIVIA \( {String(idx+1).padStart(2,'0')} / \){String(totalTrivia).padStart(2,'0')}</div><div class="riddle-q">\( {t.q}</div><div class="riddle-options"> \){opts.map(o=>`<button class="opt-btn" onclick="answerTrivia(this,'\( {o.replace(/'/g,"\\'")}',' \){t.ans.replace(/'/g,"\\'")}',\( {idx})"> \){o}</button>`).join('')}</div><div class="riddle-feedback" id="tfb-${idx}"></div>`;
+    card.innerHTML=`<span class="trivia-difficulty diff-${t.diff}">${t.diff.toUpperCase()}</span><div class="riddle-num">TRIVIA ${String(idx+1).padStart(2,'0')} / ${String(totalTrivia).padStart(2,'0')}</div><div class="riddle-q">${t.q}</div><div class="riddle-options">${opts.map(o=>`<button class="opt-btn" onclick="answerTrivia(this,'${o.replace(/'/g,"\\'")}','${t.ans.replace(/'/g,"\\'")}',${idx})">${o}</button>`).join('')}</div><div class="riddle-feedback" id="tfb-${idx}"></div>`;
     c.appendChild(card);
   });
 }
@@ -833,16 +559,8 @@ function answerTrivia(btn,chosen,correct,idx){
   const card=document.getElementById('tc-'+idx); if(card.classList.contains('solved'))return;
   const btns=card.querySelectorAll('.opt-btn'); btns.forEach(b=>b.disabled=true);
   const fb=document.getElementById('tfb-'+idx);
-  if(chosen===correct){ 
-    btn.classList.add('correct'); fb.textContent='✓ CORRECT! +20 PTS'; fb.className='riddle-feedback ok'; 
-    card.classList.add('solved'); playSound('correct'); addScore(20); 
-  }
-  else { 
-    btn.classList.add('wrong'); btns.forEach(b=>{if(b.textContent===correct)b.classList.add('correct');}); 
-    fb.textContent=`✗ WRONG — Answer: ${correct}`; fb.className='riddle-feedback fail'; 
-    card.classList.add('wrong-shake','solved'); playSound('wrong'); 
-    setTimeout(()=>card.classList.remove('wrong-shake'),500); 
-  }
+  if(chosen===correct){ btn.classList.add('correct'); fb.textContent='✓ CORRECT! +20 PTS'; fb.className='riddle-feedback ok'; card.classList.add('solved'); playSound('correct'); addScore(20); }
+  else { btn.classList.add('wrong'); btns.forEach(b=>{if(b.textContent===correct)b.classList.add('correct');}); fb.textContent=`✗ WRONG — Answer: ${correct}`; fb.className='riddle-feedback fail'; card.classList.add('wrong-shake','solved'); playSound('wrong'); setTimeout(()=>card.classList.remove('wrong-shake'),500); }
   triviaSolved++; if(triviaSolved>=totalTrivia) document.getElementById('trivia-next-btn').classList.add('show');
 }
 
@@ -854,10 +572,7 @@ function buildWordSearch(){
   const dirs=[[0,1],[1,0],[1,1],[-1,1],[0,-1],[-1,0],[-1,-1],[1,-1]];
   wsWords.forEach(word=>{
     let placed=false,att=0;
-    while(!placed&&att<300){ att++; const dir=dirs[~~(Math.random()*dirs.length)]; const r0=~~(Math.random()*SIZE),c0=~~(Math.random()*SIZE); let ok=true; 
-      for(let i=0;i<word.length;i++){const r=r0+dir[0]*i,c=c0+dir[1]*i;if(r<0||r>=SIZE||c<0||c>=SIZE||(wsGrid[r][c]!==''&&wsGrid[r][c]!==word[i])){ok=false;break;}} 
-      if(ok){for(let i=0;i<word.length;i++)wsGrid[r0+dir[0]*i][c0+dir[1]*i]=word[i];placed=true;} 
-    }
+    while(!placed&&att<300){ att++; const dir=dirs[~~(Math.random()*dirs.length)]; const r0=~~(Math.random()*SIZE),c0=~~(Math.random()*SIZE); let ok=true; for(let i=0;i<word.length;i++){const r=r0+dir[0]*i,c=c0+dir[1]*i;if(r<0||r>=SIZE||c<0||c>=SIZE||(wsGrid[r][c]!==''&&wsGrid[r][c]!==word[i])){ok=false;break;}} if(ok){for(let i=0;i<word.length;i++)wsGrid[r0+dir[0]*i][c0+dir[1]*i]=word[i];placed=true;} }
   });
   const A='ABCDEFGHIJKLMNOPQRSTUVWXYZ'; for(let r=0;r<SIZE;r++) for(let c=0;c<SIZE;c++) if(!wsGrid[r][c]) wsGrid[r][c]=A[~~(Math.random()*26)];
   const gEl=document.getElementById('ws-grid'); gEl.style.gridTemplateColumns=`repeat(${SIZE},31px)`; gEl.innerHTML='';
@@ -867,7 +582,7 @@ function buildWordSearch(){
     cell.addEventListener('touchstart',wsTStart,{passive:true}); cell.addEventListener('touchmove',wsTMove,{passive:true}); cell.addEventListener('touchend',wsEnd);
     gEl.appendChild(cell);
   }
-  document.getElementById('ws-words-list').innerHTML=wsWords.map((w,i)=>`<div class="ws-word" id="wsw-\( {i}"> \){w}</div>`).join('');
+  document.getElementById('ws-words-list').innerHTML=wsWords.map((w,i)=>`<div class="ws-word" id="wsw-${i}">${w}</div>`).join('');
   document.getElementById('ws-done-btn').classList.remove('show');
 }
 function wsStart(e){ wsSelecting=true; wsSelected=[]; const c=e.target.closest('.ws-cell'); if(c&&!c.classList.contains('found')){wsSelected.push(c);hlSel();} }
@@ -878,13 +593,7 @@ function wsEnd(){
   wsSelecting=false;
   const word=wsSelected.map(c=>c.textContent).join(''),rev=word.split('').reverse().join('');
   const found=wsWords.find(w=>w===word||w===rev);
-  if(found){ 
-    wsSelected.forEach(c=>{c.classList.add('found');c.classList.remove('selected');}); 
-    const wi=wsWords.indexOf(found); 
-    document.getElementById('wsw-'+wi).classList.add('found-word'); 
-    playSound('found'); addScore(25); wsFoundCount++; 
-    if(wsFoundCount>=wsWords.length) document.getElementById('ws-done-btn').classList.add('show'); 
-  }
+  if(found){ wsSelected.forEach(c=>{c.classList.add('found');c.classList.remove('selected');}); const wi=wsWords.indexOf(found); document.getElementById('wsw-'+wi).classList.add('found-word'); playSound('found'); addScore(25); wsFoundCount++; if(wsFoundCount>=wsWords.length) document.getElementById('ws-done-btn').classList.add('show'); }
   else wsSelected.forEach(c=>c.classList.remove('selected'));
   wsSelected=[];
 }
@@ -895,44 +604,7 @@ function drawStars(){
   const canvas=document.getElementById('stars-canvas'),ctx=canvas.getContext('2d');
   function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;} resize(); window.addEventListener('resize',resize);
   const stars=Array.from({length:100},()=>({x:Math.random(),y:Math.random(),r:Math.random()*1.1+0.2,speed:Math.random()*0.003+0.001,alpha:Math.random()}));
-  function draw(){ 
-    ctx.clearRect(0,0,canvas.width,canvas.height); 
-    stars.forEach(s=>{ 
-      s.alpha+=s.speed; if(s.alpha>1)s.alpha=0; 
-      ctx.beginPath(); ctx.arc(s.x*canvas.width,s.y*canvas.height,s.r,0,Math.PI*2); 
-      ctx.fillStyle=`rgba(80,120,200,${Math.abs(Math.sin(s.alpha*Math.PI))*0.45})`; ctx.fill(); 
-    }); 
-    requestAnimationFrame(draw); 
-  }
-  draw();
-}
-
-function launchConfetti(){
-  const canvas = document.getElementById('canvas-confetti');
-  const ctx = canvas.getContext('2d');
-  canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-  const colors = ['#3b82f6','#f43f5e','#7c3aed','#d97706','#059669','#d946ef'];
-  const pieces = Array.from({length:220}, () => ({
-    x:Math.random()*canvas.width, y:Math.random()*canvas.height-canvas.height,
-    r:Math.random()*8+4, d:Math.random()*3+1,
-    color:colors[~~(Math.random()*colors.length)],
-    tilt:Math.random()*10-10, tiltAngle:0, tiltSpeed:Math.random()*0.1+0.05
-  }));
-  let f=0;
-  function draw(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    pieces.forEach(p => {
-      ctx.beginPath(); ctx.lineWidth=p.r/2; ctx.strokeStyle=p.color;
-      ctx.moveTo(p.x+p.tilt+p.r/4, p.y); ctx.lineTo(p.x+p.tilt, p.y+p.tilt+p.r/4); ctx.stroke();
-      p.tiltAngle += p.tiltSpeed;
-      p.y += (Math.cos(f/10)+p.d); p.x += Math.sin(f/20);
-      p.tilt = Math.sin(p.tiltAngle)*12;
-      if(p.y > canvas.height){ p.y=-10; p.x=Math.random()*canvas.width; }
-    });
-    f++;
-    if(f < 700) requestAnimationFrame(draw);
-    else ctx.clearRect(0,0,canvas.width,canvas.height);
-  }
+  function draw(){ ctx.clearRect(0,0,canvas.width,canvas.height); stars.forEach(s=>{ s.alpha+=s.speed; if(s.alpha>1)s.alpha=0; ctx.beginPath(); ctx.arc(s.x*canvas.width,s.y*canvas.height,s.r,0,Math.PI*2); ctx.fillStyle=`rgba(80,120,200,${Math.abs(Math.sin(s.alpha*Math.PI))*0.45})`; ctx.fill(); }); requestAnimationFrame(draw); }
   draw();
 }
 </script>
