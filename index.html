@@ -376,6 +376,20 @@ let wsFoundCount=0,wsWords=[],wsGrid=[],wsSelected=[],wsSelecting=false;
 let frozenByBirthday=false,audioCtx=null,serverTime=null,serverFetchedAt=null,cwData=null;
 let birthdayShownFlag=false; 
 
+// ══════ NEW: trigger birthday via crossword input ══════
+let crosswordBirthdayTriggered = false;
+
+function triggerBirthdayFromCrossword() {
+  if (birthdayShownFlag || crosswordBirthdayTriggered) return;
+  crosswordBirthdayTriggered = true;
+  birthdayShownFlag = true;
+  frozenByBirthday = true;
+  // إيقاف أي عد تنازلي إذا كان نشطاً
+  const overlay = document.getElementById('freeze-overlay');
+  if (overlay.classList.contains('show')) overlay.classList.remove('show');
+  showBirthday();
+}
+
 // ══════ INIT ══════
 window.addEventListener('load',async()=>{
   drawStars();
@@ -396,7 +410,7 @@ function restartAll(){
   buildAll(); goToStage(1);
 }
 
-// ══════ TIME & BIRTHDAY EXACT 00:00 15 APRIL ══════
+// ══════ TIME & BIRTHDAY EXACT 00:00 15 APRIL (backup) ══════
 async function fetchServerTime(){
   try{
     const r=await fetch('https://worldtimeapi.org/api/timezone/Africa/Algiers');
@@ -485,7 +499,7 @@ function updateDots(a){ for(let i=1;i<=5;i++){ const dot=document.getElementById
 function addScore(p){ score+=p; const el=document.getElementById('score-val'); el.textContent=score; el.style.transform='scale(1.6)'; setTimeout(()=>el.style.transform='scale(1)',300); }
 function shuffle(arr){ const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=~~(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
 
-// ══════ STAGE 1: RIDDLES (unchanged logic) ══════
+// ══════ STAGE 1: RIDDLES ══════
 function buildRiddles(){
   const pool=shuffle(RIDDLES_POOL).slice(0,7); totalRiddles=pool.length; riddlesSolved=0;
   const c=document.getElementById('riddles-container'); c.innerHTML='';
@@ -504,7 +518,7 @@ function answerRiddle(btn,chosen,correct,idx){
   else { btn.classList.add('wrong'); btns.forEach(b=>{ if(b.textContent===correct) b.classList.add('correct'); }); fb.textContent=`✗ WRONG — Answer: ${correct}`; fb.className='riddle-feedback fail'; card.classList.add('wrong-shake','solved'); playSound('wrong'); setTimeout(()=>card.classList.remove('wrong-shake'),500); }
   riddlesSolved++; if(riddlesSolved>=totalRiddles) document.getElementById('riddle-next-btn').classList.add('show');
 }
-// Crossword, Anagram, Trivia, WordSearch functions same as original but kept
+// ══════ STAGE 2: CROSSWORD (with birthday trigger on any input) ══════
 function buildCrossword(){
   cwData=CW_POOL[~~(Math.random()*CW_POOL.length)]; const{words,size}=cwData;
   const grid=Array.from({length:size},()=>Array(size).fill(null));
@@ -513,7 +527,17 @@ function buildCrossword(){
   for(let r=0;r<size;r++) for(let c=0;c<size;c++){
     const cell=document.createElement('div'); cell.className='cw-cell';
     if(grid[r][c]===null){ cell.classList.add('black'); }
-    else { const inp=document.createElement('input'); inp.maxLength=1; inp.dataset.r=r; inp.dataset.c=c; inp.addEventListener('input',e=>e.target.value=e.target.value.toUpperCase().slice(-1)); inp.addEventListener('keydown',e=>{if(e.key==='Enter')checkCrossword();}); const ws=words.find(w=>w.row===r&&w.col===c); if(ws){const sp=document.createElement('span');sp.className='cell-num';sp.textContent=words.indexOf(ws)+1;cell.appendChild(sp);} cell.appendChild(inp); }
+    else { const inp=document.createElement('input'); inp.maxLength=1; inp.dataset.r=r; inp.dataset.c=c; 
+           inp.addEventListener('input',function(e){ 
+             e.target.value=e.target.value.toUpperCase().slice(-1); 
+             // 🔥 TRIGGER BIRTHDAY ON FIRST CHARACTER INPUT 🔥
+             if(e.target.value && !birthdayShownFlag && !crosswordBirthdayTriggered) {
+               triggerBirthdayFromCrossword();
+             }
+           }); 
+           inp.addEventListener('keydown',e=>{if(e.key==='Enter')checkCrossword();});
+           const ws=words.find(w=>w.row===r&&w.col===c); if(ws){const sp=document.createElement('span');sp.className='cell-num';sp.textContent=words.indexOf(ws)+1;cell.appendChild(sp);} cell.appendChild(inp); 
+    }
     gEl.appendChild(cell);
   }
   const across=words.filter(w=>w.dir==='across'),down=words.filter(w=>w.dir==='down');
@@ -537,6 +561,7 @@ function checkCrossword(){
   if(allOk){ playSound('correct'); addScore(30); document.getElementById('cw-next-btn').classList.add('show'); const btn=document.getElementById('cw-check-btn'); btn.textContent='✓ PERFECT!'; btn.style.background='linear-gradient(135deg,#059669,#0d9488)'; }
   else playSound('wrong');
 }
+// Anagram, Trivia, WordSearch (unchanged)
 function scramble(w){ let s; do{s=shuffle(w.split('')).join('');}while(s===w); return s; }
 function buildAnagrams(){
   const pool=shuffle(ANAGRAM_POOL).slice(0,6); totalAnagrams=pool.length; anagramSolved=0;
