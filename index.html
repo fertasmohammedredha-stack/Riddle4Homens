@@ -23,21 +23,16 @@
     --glow: 0 4px 20px rgba(59,130,246,0.2);
     --shadow: 0 2px 16px rgba(30,41,59,0.09);
   }
-
-  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  * { margin:0; padding:0; box-sizing:border-box; }
   body {
     background: var(--bg);
-    background-image: 
-      radial-gradient(ellipse at 20% 20%, rgba(124,58,237,0.07) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 80%, rgba(59,130,246,0.07) 0%, transparent 50%);
-    color: var(--text);
-    font-family: 'Rajdhani', sans-serif;
-    min-height: 100vh;
-    overflow-x: hidden;
+    background-image: radial-gradient(ellipse at 20% 20%, rgba(124,58,237,0.07) 0%, transparent 50%),
+                      radial-gradient(ellipse at 80% 80%, rgba(59,130,246,0.07) 0%, transparent 50%);
+    color: var(--text); font-family: 'Rajdhani', sans-serif;
+    min-height: 100vh; overflow-x: hidden;
   }
-
   #stars-canvas { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; opacity:0.3; }
-  #app { position:relative; z-index:10; min-height:100vh; display:flex; flex-direction:column; }
+  #app { position:relative; z-index:10; min-height:100vh; }
 
   /* HEADER */
   #header {
@@ -46,15 +41,20 @@
     backdrop-filter:blur(12px); position:sticky; top:0; z-index:100;
   }
   #header h1 {
-    font-family:'Orbitron'; font-size:clamp(1.2rem, 4vw, 1.9rem); font-weight:900; letter-spacing:4px;
+    font-family:'Orbitron'; font-size:clamp(1.2rem,4vw,1.9rem); font-weight:900; letter-spacing:4px;
     background:linear-gradient(135deg, var(--accent3), var(--accent), var(--accent2));
     -webkit-background-clip:text; -webkit-text-fill-color:transparent;
   }
   #header p { font-size:0.75rem; color:var(--dim); letter-spacing:2px; margin-top:3px; font-family:'Space Mono'; }
-
-  /* PROGRESS BAR */
-  #progress-bar-wrap { max-width:700px; margin:12px auto 0; display:flex; align-items:center; gap:7px; padding:0 22px; overflow-x:auto; padding-bottom:2px; }
-  .stage-dot { width:27px; height:27px; border-radius:50%; flex-shrink:0; border:2px solid var(--dim); display:flex; align-items:center; justify-content:center; font-family:'Orbitron'; font-size:0.56rem; font-weight:700; color:var(--dim); transition:all 0.4s; }
+  #progress-bar-wrap {
+    max-width:700px; margin:12px auto 0; display:flex; align-items:center; gap:7px;
+    padding:0 22px; overflow-x:auto; padding-bottom:2px;
+  }
+  .stage-dot {
+    width:27px; height:27px; border-radius:50%; flex-shrink:0;
+    border:2px solid var(--dim); display:flex; align-items:center; justify-content:center;
+    font-family:'Orbitron'; font-size:0.56rem; font-weight:700; color:var(--dim); transition:all 0.4s;
+  }
   .stage-dot.active { border-color:var(--accent); color:var(--accent); box-shadow:var(--glow); background:rgba(59,130,246,0.08); }
   .stage-dot.done { border-color:var(--accent3); background:var(--accent3); color:#fff; }
   .stage-line { flex:1; height:2px; background:var(--border); transition:background 0.4s; min-width:10px; }
@@ -63,423 +63,757 @@
   #score-display span { color:var(--gold); font-weight:700; font-size:0.88rem; }
 
   /* SCREENS */
-  .game-screen { display:none; max-width:760px; margin:0 auto; padding:26px 16px 70px; width:100%; }
-  .game-screen.active { display:block; animation:fadeInUp 0.45s ease forwards; }
+  .game-screen { display:none; max-width:760px; margin:0 auto; padding:26px 16px 70px; }
+  .game-screen.active { display:block; animation:fadeInUp 0.45s ease; }
   @keyframes fadeInUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
 
-  /* FOOTER - Modified for visibility */
-  #site-footer {
-    text-align:center; padding:18px 20px;
-    font-family:'Orbitron'; font-size:0.75rem; 
-    color: #1e40af; /* أزرق داكن وواضح جداً */
-    letter-spacing:2px; border-top:1px solid var(--border);
-    background:rgba(255,255,255,0.85); text-transform:uppercase;
-    font-weight: 800; margin-top: auto;
-  }
+  .stage-title { text-align:center; margin-bottom:26px; }
+  .stage-label { font-family:'Orbitron'; font-size:0.6rem; letter-spacing:4px; color:var(--accent3); text-transform:uppercase; margin-bottom:5px; font-weight:700; }
+  .stage-name { font-family:'Orbitron'; font-size:clamp(1.25rem,3.5vw,1.75rem); font-weight:900; color:var(--text); }
+  .stage-desc { font-size:0.93rem; color:var(--text2); margin-top:5px; font-weight:600; }
 
-  /* BIRTHDAY SCREEN - UI FIXES */
-  #birthday-screen {
-    display:none; position:fixed; inset:0; z-index:2000;
-    background: linear-gradient(135deg, #ffffff, #f0f7ff, #fff5f7);
-    overflow-y:auto; align-items:center; justify-content:center;
-    flex-direction:column; text-align:center; padding:40px 24px;
+  /* RIDDLE CARD */
+  .riddle-card {
+    background:var(--card); border:1px solid var(--border); border-radius:18px;
+    padding:24px 20px; margin-bottom:16px; box-shadow:var(--shadow);
+    position:relative; overflow:hidden;
   }
-  #birthday-screen.show { display:flex; }
-  #canvas-confetti { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:2001; }
-  
-  .bday-badge { 
-    position:relative; z-index:2002; font-family:'Orbitron'; 
-    font-size:0.85rem; letter-spacing:5px; color:var(--accent3); 
-    margin-bottom:15px; font-weight:900;
+  .riddle-card::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:3px;
+    background:linear-gradient(90deg, var(--accent3), var(--accent), var(--accent2));
   }
-  .bday-title { 
-    position:relative; z-index:2002; font-family:'Orbitron'; 
-    font-size:clamp(1.8rem, 6vw, 3.5rem); font-weight:900; 
-    background:linear-gradient(135deg, #d97706, #f43f5e, #7c3aed);
-    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-    margin-bottom:20px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
-  }
-  .bday-message { 
-    position:relative; z-index:2002; max-width:600px;
-    background:rgba(255,255,255,0.95); border:2px solid rgba(124,58,237,0.1);
-    border-radius:24px; padding:30px; font-size:1.05rem; line-height:1.8;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05); color: var(--text); font-weight: 600;
-  }
+  .riddle-card.solved { border-color:rgba(5,150,105,0.25); }
+  .riddle-card.wrong-shake { animation:shake 0.4s ease; }
+  @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-7px)} 75%{transform:translateX(7px)} }
 
-  /* GAME CONTENT STYLES (RIDDLES, CROSSWORD, ETC) */
-  .riddle-card { background:var(--card); border:1px solid var(--border); border-radius:18px; padding:24px 20px; margin-bottom:16px; box-shadow:var(--shadow); position:relative; overflow:hidden; }
-  .riddle-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg, var(--accent3), var(--accent), var(--accent2)); }
-  .riddle-q { font-size:1.15rem; font-weight:700; line-height:1.5; margin-bottom:18px; color:var(--text); }
-  .options-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-  .opt-btn { background:var(--bg2); border:2px solid var(--border); color:var(--text); font-family:'Rajdhani'; font-size:0.95rem; font-weight:700; padding:12px; border-radius:12px; cursor:pointer; transition:0.18s; position:relative; overflow:hidden; }
-  .opt-btn:hover:not(:disabled) { border-color:var(--accent); color:var(--accent); background:rgba(59,130,246,0.05); }
-  .opt-btn.correct { background:var(--accent4); color:white; border-color:var(--accent4); }
-  .opt-btn.wrong { background:var(--accent2); color:white; border-color:var(--accent2); }
+  .riddle-num { font-family:'Orbitron'; font-size:0.56rem; letter-spacing:3px; color:var(--accent3); margin-bottom:9px; font-weight:700; }
+  .riddle-q { font-size:1.04rem; font-weight:700; line-height:1.65; color:var(--text); margin-bottom:18px; }
 
-  .cw-grid { display:grid; gap:2px; border:2px solid var(--border); border-radius:10px; overflow:hidden; background:var(--bg2); margin:0 auto; }
-  .cw-cell { width:38px; height:38px; background:var(--surface); border:1px solid rgba(59,130,246,0.1); display:flex; align-items:center; justify-content:center; position:relative; }
+  .riddle-options { display:flex; flex-wrap:wrap; gap:9px; }
+  .opt-btn {
+    background:var(--bg2); border:2px solid var(--border); color:var(--text);
+    font-family:'Rajdhani'; font-size:0.95rem; font-weight:700;
+    padding:9px 20px; border-radius:30px; cursor:pointer; transition:all 0.18s;
+    letter-spacing:0.5px; white-space:nowrap;
+  }
+  .opt-btn:hover:not(:disabled) { background:rgba(59,130,246,0.1); border-color:var(--accent); color:var(--accent); transform:translateY(-2px); box-shadow:var(--glow); }
+  .opt-btn.correct { background:rgba(5,150,105,0.12); border-color:var(--accent4); color:var(--accent4); font-weight:800; }
+  .opt-btn.wrong { background:rgba(244,63,94,0.1); border-color:var(--accent2); color:var(--accent2); }
+  .opt-btn:disabled { cursor:default; opacity:0.8; }
+  .riddle-feedback { margin-top:11px; font-size:0.88rem; font-weight:700; letter-spacing:1px; min-height:20px; text-align:center; }
+  .riddle-feedback.ok { color:var(--accent4); }
+  .riddle-feedback.fail { color:var(--accent2); }
+
+  /* CROSSWORD */
+  .cw-wrap { display:flex; flex-direction:column; align-items:center; gap:20px; }
+  .cw-grid { display:grid; gap:2px; border:2px solid var(--border); border-radius:10px; overflow:hidden; box-shadow:var(--shadow); background:var(--bg2); }
+  .cw-cell { width:38px; height:38px; background:var(--surface); border:1px solid rgba(59,130,246,0.12); display:flex; align-items:center; justify-content:center; position:relative; }
   .cw-cell.black { background:var(--text); border-color:var(--text); }
-  .cw-cell input { width:100%; height:100%; background:transparent; border:none; outline:none; text-align:center; color:var(--accent3); font-family:'Space Mono'; font-size:1rem; font-weight:700; text-transform:uppercase; }
+  .cw-cell input { width:100%; height:100%; background:transparent; border:none; outline:none; text-align:center; color:var(--accent3); font-family:'Space Mono'; font-size:1rem; font-weight:700; text-transform:uppercase; caret-color:var(--accent2); }
+  .cw-cell input:focus { background:rgba(59,130,246,0.07); }
+  .cw-cell input.correct-cell { color:var(--accent4); }
+  .cw-cell input.wrong-cell { color:var(--accent2); }
+  .cell-num { position:absolute; top:1px; left:2px; font-size:8px; color:var(--accent3); font-family:'Space Mono'; line-height:1; pointer-events:none; font-weight:700; }
+  .cw-clues { width:100%; display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .clue-section h4 { font-family:'Orbitron'; font-size:0.66rem; letter-spacing:3px; color:var(--accent3); margin-bottom:9px; font-weight:700; }
+  .clue-item { font-size:0.87rem; margin-bottom:6px; line-height:1.5; color:var(--text2); font-weight:600; }
+  .clue-item span { color:var(--accent); font-weight:800; margin-right:5px; }
+  .clue-item.solved-clue { color:var(--accent4); text-decoration:line-through; opacity:0.65; }
 
-  .anagram-box { background:var(--card); border:1px solid var(--border); border-radius:18px; padding:25px; text-align:center; margin-bottom:16px; }
-  .scrambled { font-family:'Orbitron'; font-size:2rem; letter-spacing:8px; color:var(--accent3); margin-bottom:20px; font-weight:900; }
-  .ana-input { width:100%; max-width:300px; background:var(--bg2); border:2px solid var(--border); border-radius:12px; padding:12px; text-align:center; font-family:'Space Mono'; font-size:1.2rem; font-weight:700; color:var(--text); text-transform:uppercase; outline:none; margin-bottom:15px; }
+  /* ANAGRAM */
+  .anagram-card { background:var(--card); border:1px solid var(--border); border-radius:18px; padding:26px 20px; margin-bottom:16px; box-shadow:var(--shadow); position:relative; overflow:hidden; }
+  .anagram-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg, var(--accent2), var(--gold), var(--accent3)); }
+  .scrambled-word { font-family:'Orbitron'; font-size:clamp(1.7rem,5.5vw,2.8rem); font-weight:900; text-align:center; letter-spacing:8px; color:var(--accent3); margin:14px 0; padding:14px; background:rgba(124,58,237,0.05); border-radius:12px; border:2px dashed rgba(124,58,237,0.2); }
+  .anagram-hint { font-size:0.88rem; color:var(--text2); font-weight:600; margin-bottom:10px; }
+  .anagram-input-wrap { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+  .anagram-input { flex:1; min-width:150px; padding:11px 18px; border-radius:30px; border:2px solid var(--border); background:var(--bg); color:var(--text); font-family:'Space Mono'; font-size:1rem; font-weight:700; text-transform:uppercase; outline:none; letter-spacing:3px; transition:border-color 0.2s; }
+  .anagram-input:focus { border-color:var(--accent); }
+  .anagram-input.correct-input { border-color:var(--accent4); background:rgba(5,150,105,0.07); color:var(--accent4); }
+  .anagram-input.wrong-input { border-color:var(--accent2); animation:shake 0.4s; }
+  .anagram-submit { background:linear-gradient(135deg, var(--accent3), var(--accent)); border:none; color:#fff; font-family:'Orbitron'; font-size:0.74rem; font-weight:700; letter-spacing:2px; padding:12px 20px; border-radius:30px; cursor:pointer; transition:all 0.2s; box-shadow:0 4px 14px rgba(124,58,237,0.28); white-space:nowrap; }
+  .anagram-submit:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(124,58,237,0.4); }
 
-  .ws-grid { display:grid; gap:4px; margin:20px auto; background:var(--bg2); padding:10px; border-radius:12px; }
-  .ws-cell { width:32px; height:32px; background:var(--surface); display:flex; align-items:center; justify-content:center; font-family:'Space Mono'; font-size:0.9rem; font-weight:700; border-radius:4px; cursor:pointer; user-select:none; transition:0.2s; }
-  .ws-cell.selected { background:var(--accent); color:white; }
-  .ws-cell.found { background:var(--accent4); color:white; }
+  /* TRIVIA */
+  .trivia-difficulty { display:inline-block; font-family:'Orbitron'; font-size:0.54rem; font-weight:700; letter-spacing:2px; padding:3px 10px; border-radius:20px; margin-bottom:9px; }
+  .diff-easy { background:rgba(5,150,105,0.1); color:var(--accent4); border:1px solid rgba(5,150,105,0.3); }
+  .diff-medium { background:rgba(217,119,6,0.1); color:var(--gold); border:1px solid rgba(217,119,6,0.3); }
+  .diff-hard { background:rgba(244,63,94,0.1); color:var(--accent2); border:1px solid rgba(244,63,94,0.3); }
 
-  .next-stage-btn { display:none; width:100%; background:linear-gradient(135deg, var(--accent3), var(--accent)); color:white; border:none; padding:16px; border-radius:15px; font-family:'Orbitron'; font-size:0.9rem; font-weight:700; cursor:pointer; margin-top:20px; box-shadow:var(--glow); }
-  .next-stage-btn.show { display:block; animation:pulse 2s infinite; }
-  @keyframes pulse { 0%{transform:scale(1)} 50%{transform:scale(1.02)} 100%{transform:scale(1)} }
+  /* WORD SEARCH */
+  .ws-container { display:flex; flex-direction:column; align-items:center; gap:18px; }
+  .ws-grid { display:grid; gap:1px; user-select:none; border:2px solid var(--border); border-radius:10px; overflow:hidden; box-shadow:var(--shadow); background:var(--bg2); }
+  .ws-cell { width:31px; height:31px; background:var(--surface); border:1px solid rgba(59,130,246,0.07); display:flex; align-items:center; justify-content:center; font-family:'Space Mono'; font-size:0.78rem; font-weight:700; color:var(--text); cursor:pointer; transition:background 0.1s; -webkit-tap-highlight-color:transparent; }
+  .ws-cell.selected { background:rgba(59,130,246,0.15); color:var(--accent); }
+  .ws-cell.found { background:rgba(124,58,237,0.14); color:var(--accent3); cursor:default; font-weight:900; }
+  .ws-words { display:flex; flex-wrap:wrap; gap:9px; justify-content:center; max-width:450px; }
+  .ws-word { font-family:'Space Mono'; font-size:0.77rem; padding:6px 13px; border-radius:20px; border:2px solid var(--border); color:var(--text2); background:var(--surface); font-weight:700; transition:all 0.3s; }
+  .ws-word.found-word { border-color:var(--accent3); color:var(--accent3); text-decoration:line-through; opacity:0.65; }
 
+  /* BUTTONS */
+  .action-btn { display:block; margin:16px auto 0; background:linear-gradient(135deg, var(--accent3), var(--accent)); border:none; color:#fff; font-family:'Orbitron'; font-size:0.78rem; font-weight:700; letter-spacing:3px; padding:13px 34px; border-radius:40px; cursor:pointer; box-shadow:0 4px 16px rgba(124,58,237,0.3); transition:all 0.2s; }
+  .action-btn:hover { transform:translateY(-2px); box-shadow:0 6px 24px rgba(124,58,237,0.45); }
+  .next-stage-btn { display:none; margin:28px auto 0; background:linear-gradient(135deg, var(--accent2), var(--accent3)); border:none; color:#fff; font-family:'Orbitron'; font-size:0.84rem; font-weight:700; letter-spacing:3px; padding:15px 46px; border-radius:40px; cursor:pointer; box-shadow:0 4px 18px rgba(244,63,94,0.28); animation:pulsebtn 1.6s infinite; }
+  @keyframes pulsebtn { 0%,100%{box-shadow:0 4px 18px rgba(244,63,94,0.28)} 50%{box-shadow:0 6px 32px rgba(244,63,94,0.5)} }
+  .next-stage-btn.show { display:block; }
+  .next-stage-btn:hover { transform:scale(1.03); }
+
+  /* FREEZE */
+  #freeze-overlay { display:none; position:fixed; inset:0; z-index:900; background:rgba(5,8,16,0.96); backdrop-filter:blur(10px); align-items:center; justify-content:center; flex-direction:column; }
+  #freeze-overlay.show { display:flex; }
+  .freeze-text { font-family:'Orbitron'; font-size:clamp(0.85rem,2.5vw,1.25rem); color:#f43f5e; letter-spacing:6px; text-transform:uppercase; margin-bottom:36px; animation:blink 0.8s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+  #countdown-num { font-family:'Orbitron'; font-size:clamp(8rem,24vw,13rem); font-weight:900; line-height:1; background:linear-gradient(135deg,#00f5ff,#f43f5e); -webkit-background-clip:text; -webkit-text-fill-color:transparent; filter:drop-shadow(0 0 36px rgba(244,63,94,0.5)); animation:countScale 1s ease; }
+  @keyframes countScale { 0%{transform:scale(1.5);opacity:0} 100%{transform:scale(1);opacity:1} }
+
+  /* BIRTHDAY */
+  #birthday-screen { display:none; position:fixed; inset:0; z-index:950; background:linear-gradient(135deg,#fff7ed,#fdf2f8,#eff6ff); overflow-y:auto; align-items:center; justify-content:center; flex-direction:column; text-align:center; padding:40px 20px; }
+  #birthday-screen.show { display:flex; animation:fadeInUp 1s ease; }
+  #canvas-confetti { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:951; }
+  .bday-badge { font-family:'Orbitron'; font-size:0.66rem; letter-spacing:5px; color:var(--accent3); margin-bottom:12px; text-transform:uppercase; }
+  .bday-title { font-family:'Orbitron'; font-size:clamp(2rem,8vw,4rem); font-weight:900; line-height:1.1; margin-bottom:6px; background:linear-gradient(135deg, var(--gold), var(--accent2), #d946ef); -webkit-background-clip:text; -webkit-text-fill-color:transparent; filter:drop-shadow(0 0 18px rgba(217,119,6,0.3)); }
+  .bday-emojis { font-size:clamp(1.8rem,5.5vw,2.8rem); margin:14px 0; letter-spacing:6px; animation:floatEmoji 2s infinite; }
+  @keyframes floatEmoji { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+  .bday-message { max-width:520px; font-size:clamp(0.93rem,2.2vw,1.08rem); line-height:1.9; color:var(--text); margin:18px auto; font-weight:600; border:2px solid rgba(217,119,6,0.2); border-radius:20px; padding:26px 28px; background:rgba(255,255,255,0.88); position:relative; z-index:952; box-shadow:0 8px 28px rgba(217,119,6,0.1); }
+  .smile-line { font-family:'Orbitron'; font-size:clamp(0.82rem,2vw,0.98rem); color:var(--gold); letter-spacing:2px; margin:18px 0; font-weight:700; animation:glowgold 2s infinite; }
+  @keyframes glowgold { 0%,100%{text-shadow:0 0 8px rgba(217,119,6,0.3)} 50%{text-shadow:0 0 22px rgba(217,119,6,0.7),0 0 44px rgba(217,119,6,0.2)} }
+  .bday-btns { display:flex; gap:13px; flex-wrap:wrap; justify-content:center; margin-top:26px; position:relative; z-index:952; }
+  .btn-back { background:linear-gradient(135deg, var(--accent3), var(--accent)); border:none; color:#fff; font-family:'Orbitron'; font-size:0.74rem; font-weight:700; letter-spacing:2px; padding:13px 28px; border-radius:40px; cursor:pointer; box-shadow:0 4px 14px rgba(124,58,237,0.28); transition:all 0.2s; }
+  .btn-leave { background:transparent; border:2px solid var(--dim); color:var(--dim); font-family:'Orbitron'; font-size:0.74rem; font-weight:700; letter-spacing:2px; padding:13px 28px; border-radius:40px; cursor:pointer; transition:all 0.2s; }
+  .btn-back:hover { transform:scale(1.04); box-shadow:0 6px 22px rgba(124,58,237,0.44); }
+  .btn-leave:hover { border-color:var(--accent2); color:var(--accent2); }
+
+  /* LOADING */
   #time-loading { position:fixed; inset:0; z-index:9999; background:var(--bg); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:13px; }
   .load-spinner { width:38px; height:38px; border:3px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation:spin 0.8s linear infinite; }
   @keyframes spin { to{transform:rotate(360deg)} }
+  #time-loading p { font-family:'Space Mono'; font-size:0.76rem; color:var(--dim); letter-spacing:2px; }
+
+  /* SOUND BUTTON — icon only */
+  #audio-hint {
+    position:fixed; bottom:14px; right:14px; z-index:200;
+    background:var(--card); border:1px solid var(--border); border-radius:50%;
+    width:44px; height:44px; display:flex; align-items:center; justify-content:center;
+    box-shadow:var(--shadow); cursor:pointer; transition:all 0.2s;
+    font-size:1.3rem; user-select:none;
+  }
+  #audio-hint:hover { transform:scale(1.12); box-shadow:var(--glow); }
+
+  /* FOOTER */
+  #site-footer {
+    text-align:center; padding:18px 20px;
+    font-family:'Space Mono'; font-size:0.62rem; color:var(--dim);
+    letter-spacing:2px; border-top:1px solid var(--border);
+    background:rgba(255,255,255,0.5); text-transform:uppercase;
+  }
+
+  @media(max-width:520px){
+    .cw-clues{grid-template-columns:1fr}
+    .cw-cell{width:32px;height:32px}
+    .ws-cell{width:26px;height:26px;font-size:0.7rem}
+    .opt-btn{font-size:0.88rem;padding:8px 15px}
+  }
 </style>
 </head>
 <body>
-
 <canvas id="stars-canvas"></canvas>
-<div id="time-loading"><div class="load-spinner"></div><p>SYNCHRONIZING WITH SERVER TIME...</p></div>
+<div id="time-loading"><div class="load-spinner"></div><p>SYNCING TIME...</p></div>
 
 <div id="app" style="display:none">
   <div id="header">
     <h1>⚡ GAME ZONE ⚡</h1>
     <p>CHALLENGE YOUR MIND — BEAT THE CLOCK</p>
     <div id="progress-bar-wrap">
-      <div class="stage-dot active" id="dot-1">01</div><div class="stage-line" id="line-1"></div>
-      <div class="stage-dot" id="dot-2">02</div><div class="stage-line" id="line-2"></div>
-      <div class="stage-dot" id="dot-3">03</div><div class="stage-line" id="line-3"></div>
-      <div class="stage-dot" id="dot-4">04</div><div class="stage-line" id="line-4"></div>
+      <div class="stage-dot active" id="dot-1">01</div>
+      <div class="stage-line" id="line-1"></div>
+      <div class="stage-dot" id="dot-2">02</div>
+      <div class="stage-line" id="line-2"></div>
+      <div class="stage-dot" id="dot-3">03</div>
+      <div class="stage-line" id="line-3"></div>
+      <div class="stage-dot" id="dot-4">04</div>
+      <div class="stage-line" id="line-4"></div>
       <div class="stage-dot" id="dot-5">05</div>
     </div>
     <div id="score-display">SCORE: <span id="score-val">0</span> PTS</div>
   </div>
 
-  <div class="game-screen active" id="screen-1">
+  <div class="game-screen active" id="screen-riddles">
+    <div class="stage-title">
+      <div class="stage-label">Stage 01 — Warm Up</div>
+      <div class="stage-name">RIDDLE MASTER</div>
+      <div class="stage-desc">Answer all riddles to advance — think carefully!</div>
+    </div>
     <div id="riddles-container"></div>
-    <button class="next-stage-btn" id="btn-next-1" onclick="goToStage(2)">GO TO STAGE 02 →</button>
+    <button class="next-stage-btn" id="riddle-next-btn" onclick="goToStage(2)">NEXT STAGE →</button>
   </div>
 
-  <div class="game-screen" id="screen-2">
-    <div class="riddle-card">
-      <h2 style="text-align:center; margin-bottom:10px;">STAGE 02: CROSSWORD</h2>
-      <p style="text-align:center; color:var(--text2); font-size:0.9rem;">Solve the logic grid below.</p>
+  <div class="game-screen" id="screen-crossword">
+    <div class="stage-title">
+      <div class="stage-label">Stage 02 — Word Puzzle</div>
+      <div class="stage-name">CROSSWORD</div>
+      <div class="stage-desc">Fill the grid using the clues below</div>
     </div>
-    <div id="cw-wrap" style="display:flex; flex-direction:column; align-items:center; gap:20px;">
-        <div id="cw-grid-el" class="cw-grid"></div>
-        <div id="cw-clues" style="width:100%; background:var(--card); padding:20px; border-radius:15px; border:1px solid var(--border);"></div>
+    <div class="cw-wrap">
+      <div class="cw-grid" id="cw-grid"></div>
+      <div class="cw-clues" id="cw-clues"></div>
+      <button class="action-btn" id="cw-check-btn" onclick="checkCrossword()">CHECK ANSWERS</button>
     </div>
-    <button class="next-stage-btn" id="btn-next-2" onclick="goToStage(3)">GO TO STAGE 03 →</button>
+    <button class="next-stage-btn" id="cw-next-btn" onclick="goToStage(3)">NEXT STAGE →</button>
   </div>
 
-  <div class="game-screen" id="screen-3">
-    <div class="riddle-card"><h2 style="text-align:center;">STAGE 03: ANAGRAM</h2></div>
+  <div class="game-screen" id="screen-anagram">
+    <div class="stage-title">
+      <div class="stage-label">Stage 03 — Unscramble</div>
+      <div class="stage-name">ANAGRAM BREAKER</div>
+      <div class="stage-desc">Rearrange the letters to find the hidden word</div>
+    </div>
     <div id="anagram-container"></div>
-    <button class="next-stage-btn" id="btn-next-3" onclick="goToStage(4)">GO TO STAGE 04 →</button>
+    <button class="next-stage-btn" id="anagram-next-btn" onclick="goToStage(4)">NEXT STAGE →</button>
   </div>
 
-  <div class="game-screen" id="screen-4">
-    <div class="riddle-card"><h2 style="text-align:center;">STAGE 04: TRIVIA</h2></div>
-    <div id="trivia-container"></div>
-    <button class="next-stage-btn" id="btn-next-4" onclick="goToStage(5)">GO TO STAGE 05 →</button>
-  </div>
-
-  <div class="game-screen" id="screen-5">
-    <div class="riddle-card"><h2 style="text-align:center;">STAGE 05: WORD SEARCH</h2></div>
-    <div style="display:flex; flex-direction:column; align-items:center;">
-        <div id="ws-grid-el" class="ws-grid"></div>
-        <div id="ws-words" style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:15px;"></div>
+  <div class="game-screen" id="screen-trivia">
+    <div class="stage-title">
+      <div class="stage-label">Stage 04 — Knowledge Test</div>
+      <div class="stage-name">TRIVIA GAUNTLET</div>
+      <div class="stage-desc">Hard questions — no guessing allowed!</div>
     </div>
-    <button class="next-stage-btn" id="btn-next-5" onclick="alert('CHALLENGE COMPLETE!')">COMPLETE CHALLENGE</button>
+    <div id="trivia-container"></div>
+    <button class="next-stage-btn" id="trivia-next-btn" onclick="goToStage(5)">FINAL STAGE →</button>
+  </div>
+
+  <div class="game-screen" id="screen-wordsearch">
+    <div class="stage-title">
+      <div class="stage-label">Stage 05 — Final Challenge</div>
+      <div class="stage-name">WORD HUNT</div>
+      <div class="stage-desc">Find ALL hidden words — drag to select!</div>
+    </div>
+    <div class="ws-container">
+      <div class="ws-grid" id="ws-grid"></div>
+      <div class="ws-words" id="ws-words-list"></div>
+    </div>
+    <button class="next-stage-btn" id="ws-done-btn" onclick="restartAll()">PLAY AGAIN 🔄</button>
   </div>
 
   <footer id="site-footer">Developed by Fertas Mohammed Redha</footer>
 </div>
 
+<div id="freeze-overlay">
+  <div class="freeze-text">⚡ SYSTEM HALT ⚡</div>
+  <div id="countdown-num">3</div>
+</div>
+
 <div id="birthday-screen">
   <canvas id="canvas-confetti"></canvas>
   <div class="bday-badge">✦ A SPECIAL MOMENT ✦</div>
-  <h1 class="bday-title">HAPPY BIRTHDAY, Homens! 🎂🎉🎊🎈</h1>
+  <div class="bday-title">HAPPY BIRTHDAY, Homens!</div>
+  <div class="bday-emojis">🎂 🎉 🎊 🎈</div>
   <div class="bday-message" id="bday-message-text"></div>
-  <div id="smile-text" style="font-weight:900; color:var(--gold); margin-top:15px; z-index:2005; position:relative;"></div>
-  <div style="margin-top:25px; z-index:2005; position:relative;">
-    <button onclick="backToGame()" style="padding:15px 40px; border-radius:50px; border:none; background:var(--accent3); color:white; cursor:pointer; font-family:'Orbitron'; font-weight:700; box-shadow:0 4px 15px rgba(124,58,237,0.3);">BACK TO CHALLENGE</button>
+  <div class="smile-line" id="smile-text"></div>
+  <div class="bday-btns">
+    <button class="btn-back" onclick="backToGame()">BACK TO GAME</button>
+    <button class="btn-leave" onclick="window.close()">LEAVE</button>
   </div>
 </div>
 
-<audio id="bday-music" loop>
-  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-</audio>
+<!-- Sound toggle — icon only -->
+<div id="audio-hint" onclick="toggleSound()" title="Toggle Sound">🔊</div>
 
 <script>
-// ══════ CONFIGURATION ══════
-const TRIGGER_HOUR = 22; 
-const TRIGGER_MIN  = 50;
-const BIRTHDAY_DATE = { month: 4, day: 14 };
-const BIRTHDAY_MESSAGE = `Wishing you a day as bright and beautiful as you are 🌟<br>May this new year of your life bring you endless joy, laughter, and all the lovely things you truly deserve.<br><br>You make every ordinary day feel special, and today is all about you.<br>Happy birthday, my dear… every year you become even more wonderful.<br><br>I truly wish that God protects you, gives you a long life, and fills your days with peace and happiness. ✨🚀<br><br>And just a little reminder… you are the best and the most beautiful, without a doubt. Always believe in yourself. 🤍`;
+// ══════ CONFIG ══════
+const BIRTHDAY = { month: 4, day: 15 };
+const TEST_MODE = false;
+// ⏰ Trigger at 21:45
+const TRIGGER_HOUR = 21;
+const TRIGGER_MIN  = 45;
 
-// ══════ DATA ══════
-const RIDDLES = [
-  { q: "I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?", o: ["A Cloud", "An Echo", "A Ghost", "A Whistle"], a: 1 },
-  { q: "You measure my life in hours and I serve you by expiring. I'm quick when I'm thin and slow when I'm fat. The wind is my enemy.", o: ["A Candle", "A Battery", "A Clock", "A Person"], a: 0 },
-  { q: "I have keys, but no locks and space, but no rooms. You can enter, but you can't leave. What am I?", o: ["A Prison", "A Piano", "A Keyboard", "A Map"], a: 2 }
+const BIRTHDAY_MESSAGE = `Wishing you a day as bright and beautiful as you are 🌟<br>May this new year of your life bring you endless joy, laughter, and all the lovely things you truly deserve.<br><br>You make every ordinary day feel special, and today is all about you.<br>Happy birthday, my dear… every year you become even more wonderful, and you remain the most beautiful soul in this world.<br><br>I truly wish that God protects you, gives you a long life, and fills your days with peace and happiness.<br>May this year be full of joy, success, more shining moments, and continuous growth for you ✨🚀<br><br>And just a little reminder… you are the best and the most beautiful, without a doubt.<br>Always believe in yourself the way I believe in you 🤍<br><br>Happy birthday again… and always stay amazing.`;
+const SMILE_LINE = `😄 Smile sweetheart, it's your day 😄`;
+
+// ══════ RIDDLES ══════
+const RIDDLES_POOL = [
+  {q:"I speak without a mouth and hear without ears. I have no body, but I come alive with the wind. What am I?", opts:["Shadow","Echo","Mirror","Flame","Smoke"], ans:"Echo"},
+  {q:"I have cities but no houses, mountains but no trees, water but no fish. What am I?", opts:["A Dream","A Painting","A Map","The Sky","A Desert"], ans:"A Map"},
+  {q:"The more you take, the more you leave behind. What am I?", opts:["Memories","Footsteps","Time","Secrets","Regrets"], ans:"Footsteps"},
+  {q:"I'm always in front of you but can never be seen. What am I?", opts:["The Past","Your Shadow","The Future","Air","Death"], ans:"The Future"},
+  {q:"I have hands but cannot clap. I have a face but no eyes. What am I?", opts:["A Glove","A Statue","A Clock","A Mask","A Doll"], ans:"A Clock"},
+  {q:"What has to be broken before you can use it?", opts:["A Promise","A Code","An Egg","A Lock","A Rule"], ans:"An Egg"},
+  {q:"I'm light as a feather, yet the strongest person can't hold me for 5 minutes. What am I?", opts:["Air","Breath","Smoke","Water","Light"], ans:"Breath"},
+  {q:"What gets wetter as it dries?", opts:["Ice","A Towel","Sand","Soap","A Sponge"], ans:"A Towel"},
+  {q:"I have branches but no fruit, trunk, or leaves. What am I?", opts:["A River","A Bank","A Road","A Library","A Highway"], ans:"A Bank"},
+  {q:"The more there is, the less you see. What am I?", opts:["Light","Darkness","Fog","Space","Silence"], ans:"Darkness"},
+  {q:"I go up and down but never move. What am I?", opts:["A Yo-yo","Temperature","Stairs","A Heart","A Tide"], ans:"Stairs"},
+  {q:"I'm not alive, but I grow. I don't have lungs, but I need air. Water kills me. What am I?", opts:["A Plant","Fire","Ice","A Cloud","Wind"], ans:"Fire"},
+  {q:"I have keys but no locks, space but no room. You can enter but can't go inside. What am I?", opts:["A Piano","A Map","A Keyboard","A Door","A Code"], ans:"A Keyboard"},
+  {q:"What can run but never walks, has a mouth but never talks?", opts:["A River","A Train","A Clock","A Snake","A Road"], ans:"A River"},
 ];
 
-const ANAGRAMS = [
-  { s: "E L C T R O N I C S", a: "ELECTRONICS" },
-  { s: "G A L A X Y", a: "GALAXY" },
-  { s: "P R O G R A M", a: "PROGRAM" }
+// ══════ CROSSWORD ══════
+const CW_POOL = [
+  { words:[{word:"LIGHT",clue:"Opposite of darkness",dir:"across",row:0,col:0},{word:"LARGE",clue:"Opposite of small",dir:"down",row:0,col:0},{word:"EARTH",clue:"Our home planet",dir:"across",row:3,col:0},{word:"TIGER",clue:"Striped big cat",dir:"down",row:0,col:4},{word:"HONEY",clue:"Sweet bee product",dir:"across",row:4,col:1}], size:7 },
+  { words:[{word:"BRAVE",clue:"Courageous and bold",dir:"across",row:0,col:0},{word:"BLOOM",clue:"Flowers in spring",dir:"across",row:2,col:0},{word:"BLACK",clue:"Color of night sky",dir:"across",row:4,col:0},{word:"BELLS",clue:"Ring on special days",dir:"down",row:0,col:4},{word:"BEACH",clue:"Sandy place by the sea",dir:"down",row:0,col:0}], size:6 },
 ];
 
-const TRIVIA = [
-  { q: "Which planet is known as the Red Planet?", o: ["Venus", "Mars", "Jupiter", "Saturn"], a: 1 },
-  { q: "What is the capital of France?", o: ["London", "Berlin", "Paris", "Rome"], a: 2 },
-  { q: "What is 15 + 27?", o: ["32", "42", "45", "39"], a: 1 }
+// ══════ ANAGRAM ══════
+const ANAGRAM_POOL = [
+  {word:"PLANET",hint:"Something in our solar system"},{word:"CASTLE",hint:"Medieval royal fortress"},{word:"BRIDGE",hint:"Connects two sides"},{word:"MIRROR",hint:"Shows your reflection"},{word:"FOREST",hint:"Full of trees and wildlife"},{word:"ROCKET",hint:"Goes into space"},{word:"SPIDER",hint:"Eight-legged creature"},{word:"WINTER",hint:"Cold season"},{word:"GARDEN",hint:"Where flowers grow"},{word:"OYSTER",hint:"Found in the ocean, makes pearls"},{word:"PARCEL",hint:"A wrapped package"},{word:"GRAVEL",hint:"Small stones on a road"},
+];
+
+// ══════ TRIVIA ══════
+const TRIVIA_POOL = [
+  {q:"Which planet has the most moons in our solar system?",opts:["Jupiter","Saturn","Uranus","Neptune"],ans:"Saturn",diff:"hard"},
+  {q:"What is the only metal liquid at room temperature?",opts:["Lead","Mercury","Gallium","Cesium"],ans:"Mercury",diff:"medium"},
+  {q:"How many bones does an adult human body have?",opts:["196","206","216","226"],ans:"206",diff:"medium"},
+  {q:"What is the largest organ in the human body?",opts:["Liver","Brain","Skin","Lungs"],ans:"Skin",diff:"easy"},
+  {q:"Which country has the longest coastline in the world?",opts:["Russia","Australia","Norway","Canada"],ans:"Canada",diff:"hard"},
+  {q:"What is the chemical symbol for gold?",opts:["Gd","Go","Au","Ag"],ans:"Au",diff:"easy"},
+  {q:"In which year did the first iPhone launch?",opts:["2005","2006","2007","2008"],ans:"2007",diff:"medium"},
+  {q:"What is the approximate speed of light (km/s)?",opts:["200,000","300,000","400,000","500,000"],ans:"300,000",diff:"hard"},
+  {q:"How many strings does a standard guitar have?",opts:["4","5","6","7"],ans:"6",diff:"easy"},
+  {q:"What is the capital of Australia?",opts:["Sydney","Melbourne","Canberra","Perth"],ans:"Canberra",diff:"medium"},
+  {q:"Which element has atomic number 1?",opts:["Helium","Oxygen","Hydrogen","Carbon"],ans:"Hydrogen",diff:"easy"},
+  {q:"How many sides does a dodecahedron have?",opts:["8","10","12","20"],ans:"12",diff:"hard"},
+  {q:"What is the largest ocean by area?",opts:["Atlantic","Indian","Arctic","Pacific"],ans:"Pacific",diff:"medium"},
+  {q:"Which gas do plants absorb during photosynthesis?",opts:["Oxygen","Nitrogen","Carbon Dioxide","Hydrogen"],ans:"Carbon Dioxide",diff:"easy"},
+];
+
+// ══════ WORD SEARCH ══════
+const WS_POOLS = [
+  ["GALAXY","NEBULA","COMET","ORBIT","STELLAR","QUASAR","ECLIPSE"],
+  ["CIPHER","BINARY","VERTEX","MATRIX","NEURAL","SYNTAX","VECTOR"],
+  ["THUNDER","BLIZZARD","CYCLONE","AURORA","TYPHOON","MIRAGE","FROST"],
 ];
 
 // ══════ STATE ══════
-let score = 0, currentStage = 1, serverTime = null, fetchAt = null;
-const music = document.getElementById('bday-music');
+let score=0, currentStage=1;
+let riddlesSolved=0, totalRiddles=0;
+let anagramSolved=0, totalAnagrams=0;
+let triviaSolved=0, totalTrivia=0;
+let wsFoundCount=0, wsWords=[], wsGrid=[], wsSelected=[], wsSelecting=false;
+let frozenByBirthday=false, audioCtx=null, serverTime=null, serverFetchedAt=null, cwData=null;
+let birthdayTriggered=false, soundEnabled=true;
+let cwWordsSolvedCount=0;
+let bdayMusicLoop=null, bdayMusicPlaying=false;
 
-// ══════ TIME ENGINE ══════
-async function syncTime() {
-  try {
-    const r = await fetch('https://worldtimeapi.org/api/timezone/Africa/Algiers');
+// ══════ INIT ══════
+window.addEventListener('load', async () => {
+  drawStars();
+  await fetchServerTime();
+  document.getElementById('time-loading').style.display='none';
+  document.getElementById('app').style.display='block';
+  buildAll(); injectBirthdayContent(); startTimerLoop(); unlockAudio();
+});
+
+function buildAll(){ buildRiddles(); buildCrossword(); buildAnagrams(); buildTrivia(); buildWordSearch(); }
+
+function restartAll(){
+  score=0; currentStage=1; riddlesSolved=0; anagramSolved=0; triviaSolved=0;
+  wsFoundCount=0; cwWordsSolvedCount=0;
+  document.getElementById('score-val').textContent='0';
+  document.querySelectorAll('.next-stage-btn').forEach(b=>b.classList.remove('show'));
+  buildAll(); goToStage(1);
+}
+
+// ══════ TIME — Multiple reliable sources ══════
+async function fetchServerTime(){
+  const trySource = async (fn) => {
+    try {
+      const t = await fn();
+      if(t && t.getFullYear() >= 2024){ serverTime=t; serverFetchedAt=Date.now(); return true; }
+    } catch(e){}
+    return false;
+  };
+
+  // Source 1: WorldTimeAPI — Algiers (UTC+1, Algeria timezone)
+  const ok1 = await trySource(async () => {
+    const r = await fetch('https://worldtimeapi.org/api/timezone/Africa/Algiers', {cache:'no-store'});
     const d = await r.json();
-    serverTime = new Date(d.datetime);
-    fetchAt = Date.now();
-  } catch(e) { serverTime = new Date(); fetchAt = Date.now(); }
+    return new Date(d.datetime);
+  });
+  if(ok1) return;
+
+  // Source 2: timeapi.io
+  const ok2 = await trySource(async () => {
+    const r = await fetch('https://timeapi.io/api/Time/current/zone?timeZone=Africa/Algiers', {cache:'no-store'});
+    const d = await r.json();
+    return new Date(d.year, d.month-1, d.day, d.hour, d.minute, d.seconds);
+  });
+  if(ok2) return;
+
+  // Source 3: worldclockapi
+  const ok3 = await trySource(async () => {
+    const r = await fetch('https://worldclockapi.com/api/json/cet/now', {cache:'no-store'});
+    const d = await r.json();
+    return new Date(d.currentDateTime);
+  });
+  if(ok3) return;
+
+  // Fallback: device time (last resort)
+  serverTime = new Date();
+  serverFetchedAt = Date.now();
 }
 
-function getNow() {
-  return new Date(serverTime.getTime() + (Date.now() - fetchAt));
+function getNow(){
+  if(!serverTime) return new Date();
+  return new Date(serverTime.getTime() + (Date.now() - serverFetchedAt));
 }
 
-// ══════ INITIALIZATION ══════
-window.onload = async () => {
-  await syncTime();
-  document.getElementById('time-loading').style.display = 'none';
-  document.getElementById('app').style.display = 'flex';
-  document.getElementById('bday-message-text').innerHTML = BIRTHDAY_MESSAGE;
-  document.getElementById('smile-text').textContent = "😄 Smile sweetheart, it's your day 😄";
-
-  renderRiddles();
-  initCrossword();
-  renderAnagrams();
-  renderTrivia();
-  initWordSearch();
-  initStars();
-
+// ══════ TIMER LOOP ══════
+function startTimerLoop(){
   setInterval(() => {
+    if(frozenByBirthday || birthdayTriggered) return;
     const now = getNow();
-    if(now.getMonth()+1 === BIRTHDAY_DATE.month && now.getDate() === BIRTHDAY_DATE.day) {
-      if(now.getHours() === TRIGGER_HOUR && now.getMinutes() === TRIGGER_MIN) {
-        if(!document.getElementById('birthday-screen').classList.contains('show')) showBirthday();
-      }
+    const isBday = (now.getMonth()+1 === BIRTHDAY.month && now.getDate() === BIRTHDAY.day);
+    if(!isBday) return;
+
+    // Re-sync every 5 minutes for accuracy
+    if(now.getSeconds() === 0 && now.getMinutes() % 5 === 0) fetchServerTime();
+
+    let sLeft;
+    if(TEST_MODE){
+      const testTime = new Date(now); testTime.setHours(12,0,0,0);
+      sLeft = Math.floor((testTime - now) / 1000);
+    } else {
+      const triggerTime = new Date(now);
+      triggerTime.setHours(TRIGGER_HOUR, TRIGGER_MIN, 0, 0);
+      sLeft = Math.floor((triggerTime - now) / 1000);
     }
+
+    if(sLeft <= 3 && sLeft > 0){
+      frozenByBirthday = true;
+      triggerFreeze(sLeft);
+    } else if(sLeft <= 0 && sLeft > -10){
+      // Exact moment — in case we missed the countdown window
+      frozenByBirthday = true;
+      birthdayTriggered = true;
+      showBirthday();
+    }
+  }, 500);
+}
+
+// ══════ FALLBACK: trigger when 3 crossword words solved in Stage 2 ══════
+function checkCwFallback(){
+  if(birthdayTriggered) return;
+  const now = getNow();
+  const isBday = (now.getMonth()+1 === BIRTHDAY.month && now.getDate() === BIRTHDAY.day);
+  if(!isBday) return;
+  cwWordsSolvedCount++;
+  if(cwWordsSolvedCount >= 3){
+    birthdayTriggered = true;
+    frozenByBirthday = true;
+    showBirthday();
+  }
+}
+
+// ══════ FREEZE ══════
+function triggerFreeze(startCount){
+  playSound('freeze');
+  const overlay = document.getElementById('freeze-overlay');
+  const num = document.getElementById('countdown-num');
+  overlay.classList.add('show');
+  let c = Math.ceil(startCount); num.textContent = c;
+  const iv = setInterval(() => {
+    c--;
+    if(c <= 0){ clearInterval(iv); num.textContent='🎂'; setTimeout(() => { overlay.classList.remove('show'); showBirthday(); }, 800); }
+    else { num.style.animation='none'; num.offsetHeight; num.style.animation='countScale 0.9s ease'; num.textContent=c; playSound('tick'); }
   }, 1000);
-};
+}
 
-// ══════ CORE FUNCTIONS ══════
-function showBirthday() {
+// ══════ BIRTHDAY ══════
+function injectBirthdayContent(){
+  document.getElementById('bday-message-text').innerHTML = BIRTHDAY_MESSAGE;
+  document.getElementById('smile-text').textContent = SMILE_LINE;
+}
+
+function showBirthday(){
+  birthdayTriggered = true;
+  playBirthdayMusicLoop();
   document.getElementById('birthday-screen').classList.add('show');
-  music.play().catch(() => {});
-  startConfetti();
+  launchConfetti();
 }
 
-function backToGame() {
+function backToGame(){
   document.getElementById('birthday-screen').classList.remove('show');
-  music.pause();
-  music.currentTime = 0;
+  frozenByBirthday = false;
+  // 🎵 Music intentionally keeps playing after leaving the birthday screen
 }
 
-function addScore(v) {
-  score += v;
-  document.getElementById('score-val').textContent = score;
+// ══════ BIRTHDAY MUSIC — Loops indefinitely, survives page navigation ══════
+function playBirthdayMusicLoop(){
+  if(!audioCtx) audioCtx = new(window.AudioContext||window.webkitAudioContext)();
+  if(bdayMusicPlaying) return;
+  bdayMusicPlaying = true;
+  scheduleBdayMelody();
 }
 
-function goToStage(n) {
-  document.querySelectorAll('.game-screen').forEach(s => s.classList.remove('active'));
-  document.getElementById(`screen-${n}`).classList.add('active');
-  document.getElementById(`dot-${n}`).classList.add('active');
-  document.getElementById(`dot-${n-1}`).classList.add('done');
-  document.getElementById(`line-${n-1}`).classList.add('done');
-  currentStage = n;
-  window.scrollTo(0,0);
+function scheduleBdayMelody(){
+  if(!soundEnabled || !audioCtx || !bdayMusicPlaying) return;
+
+  const t = audioCtx.currentTime;
+  const notes = [
+    {freq:523,time:0},{freq:523,time:0.3},{freq:587,time:0.6},{freq:523,time:0.9},
+    {freq:698,time:1.2},{freq:659,time:1.8},{freq:523,time:2.4},{freq:523,time:2.7},
+    {freq:587,time:3.0},{freq:523,time:3.3},{freq:784,time:3.6},{freq:698,time:4.2}
+  ];
+
+  notes.forEach(n => {
+    const o = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+    o.connect(g); g.connect(audioCtx.destination);
+    o.type = 'sine'; o.frequency.value = n.freq;
+    g.gain.setValueAtTime(0.3, t + n.time);
+    g.gain.exponentialRampToValueAtTime(0.001, t + n.time + 0.25);
+    o.start(t + n.time); o.stop(t + n.time + 0.28);
+  });
+
+  // Loop: schedule next iteration after total melody length (5s)
+  bdayMusicLoop = setTimeout(() => scheduleBdayMelody(), 5000);
 }
+
+// ══════ SOUND TOGGLE ══════
+function toggleSound(){
+  soundEnabled = !soundEnabled;
+  document.getElementById('audio-hint').textContent = soundEnabled ? '🔊' : '🔇';
+  if(!soundEnabled){
+    if(bdayMusicLoop) clearTimeout(bdayMusicLoop);
+    bdayMusicPlaying = false;
+  } else if(birthdayTriggered){
+    // Resume birthday music if it was playing
+    bdayMusicPlaying = false;
+    playBirthdayMusicLoop();
+  }
+}
+
+// ══════ CONFETTI ══════
+function launchConfetti(){
+  const canvas = document.getElementById('canvas-confetti');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+  const colors = ['#3b82f6','#f43f5e','#7c3aed','#d97706','#059669','#d946ef'];
+  const pieces = Array.from({length:220}, () => ({
+    x:Math.random()*canvas.width, y:Math.random()*canvas.height-canvas.height,
+    r:Math.random()*8+4, d:Math.random()*3+1,
+    color:colors[~~(Math.random()*colors.length)],
+    tilt:Math.random()*10-10, tiltAngle:0, tiltSpeed:Math.random()*0.1+0.05
+  }));
+  let f=0;
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    pieces.forEach(p => {
+      ctx.beginPath(); ctx.lineWidth=p.r/2; ctx.strokeStyle=p.color;
+      ctx.moveTo(p.x+p.tilt+p.r/4, p.y); ctx.lineTo(p.x+p.tilt, p.y+p.tilt+p.r/4); ctx.stroke();
+      p.tiltAngle += p.tiltSpeed;
+      p.y += (Math.cos(f/10)+p.d); p.x += Math.sin(f/20);
+      p.tilt = Math.sin(p.tiltAngle)*12;
+      if(p.y > canvas.height){ p.y=-10; p.x=Math.random()*canvas.width; }
+    });
+    f++;
+    if(f < 700) requestAnimationFrame(draw);
+    else ctx.clearRect(0,0,canvas.width,canvas.height);
+  }
+  draw();
+}
+
+// ══════ AUDIO ══════
+function unlockAudio(){
+  document.addEventListener('click', () => {
+    if(!audioCtx) audioCtx = new(window.AudioContext||window.webkitAudioContext)();
+  }, {once:true});
+}
+
+function playSound(type){
+  if(!soundEnabled) return;
+  if(!audioCtx) audioCtx = new(window.AudioContext||window.webkitAudioContext)();
+  const t=audioCtx.currentTime, o=audioCtx.createOscillator(), g=audioCtx.createGain();
+  o.connect(g); g.connect(audioCtx.destination);
+  if(type==='correct'){ o.type='sine'; o.frequency.setValueAtTime(523,t); o.frequency.setValueAtTime(659,t+0.1); o.frequency.setValueAtTime(784,t+0.2); g.gain.setValueAtTime(0.3,t); g.gain.exponentialRampToValueAtTime(0.001,t+0.5); o.start(t); o.stop(t+0.5); }
+  else if(type==='wrong'){ o.type='sawtooth'; o.frequency.setValueAtTime(200,t); o.frequency.setValueAtTime(140,t+0.18); g.gain.setValueAtTime(0.2,t); g.gain.exponentialRampToValueAtTime(0.001,t+0.3); o.start(t); o.stop(t+0.3); }
+  else if(type==='tick'){ o.type='square'; o.frequency.setValueAtTime(900,t); g.gain.setValueAtTime(0.4,t); g.gain.exponentialRampToValueAtTime(0.001,t+0.12); o.start(t); o.stop(t+0.12); }
+  else if(type==='freeze'){ o.type='sawtooth'; o.frequency.setValueAtTime(440,t); o.frequency.exponentialRampToValueAtTime(100,t+0.9); g.gain.setValueAtTime(0.5,t); g.gain.exponentialRampToValueAtTime(0.001,t+0.9); o.start(t); o.stop(t+0.9); }
+  else if(type==='found'){ o.type='sine'; o.frequency.setValueAtTime(659,t); o.frequency.setValueAtTime(988,t+0.1); g.gain.setValueAtTime(0.25,t); g.gain.exponentialRampToValueAtTime(0.001,t+0.3); o.start(t); o.stop(t+0.3); }
+}
+
+// ══════ NAV ══════
+function goToStage(n){
+  currentStage=n;
+  document.querySelectorAll('.game-screen').forEach(s=>s.classList.remove('active'));
+  const map={1:'screen-riddles',2:'screen-crossword',3:'screen-anagram',4:'screen-trivia',5:'screen-wordsearch'};
+  document.getElementById(map[n]).classList.add('active');
+  updateDots(n); window.scrollTo({top:0,behavior:'smooth'});
+}
+function updateDots(a){
+  for(let i=1;i<=5;i++){
+    const dot=document.getElementById('dot-'+i), line=document.getElementById('line-'+i);
+    dot.classList.remove('active','done');
+    if(i<a) dot.classList.add('done'); else if(i===a) dot.classList.add('active');
+    if(line){ line.classList.remove('done'); if(i<a) line.classList.add('done'); }
+  }
+}
+function addScore(p){
+  score+=p; const el=document.getElementById('score-val');
+  el.textContent=score; el.style.transform='scale(1.6)';
+  setTimeout(()=>el.style.transform='scale(1)',300);
+}
+function shuffle(arr){ const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=~~(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
 
 // ══════ STAGE 1: RIDDLES ══════
-function renderRiddles() {
-  const container = document.getElementById('riddles-container');
-  let solved = 0;
-  RIDDLES.forEach((r, idx) => {
-    const card = document.createElement('div');
-    card.className = 'riddle-card';
-    card.innerHTML = `<div class="riddle-q">${r.q}</div><div class="options-grid" id="opts-${idx}"></div>`;
-    container.appendChild(card);
-    const optsDiv = document.getElementById(`opts-${idx}`);
-    r.o.forEach((opt, oIdx) => {
-      const btn = document.createElement('button');
-      btn.className = 'opt-btn';
-      btn.textContent = opt;
-      btn.onclick = () => {
-        if(oIdx === r.a) { btn.classList.add('correct'); addScore(50); solved++; }
-        else btn.classList.add('wrong');
-        Array.from(optsDiv.children).forEach(b => b.disabled = true);
-        if(solved === RIDDLES.length) document.getElementById('btn-next-1').classList.add('show');
-      };
-      optsDiv.appendChild(btn);
-    });
+function buildRiddles(){
+  const pool=shuffle(RIDDLES_POOL).slice(0,7); totalRiddles=pool.length; riddlesSolved=0;
+  const c=document.getElementById('riddles-container'); c.innerHTML='';
+  pool.forEach((r,idx)=>{
+    const opts=shuffle(r.opts); const card=document.createElement('div'); card.className='riddle-card'; card.id='rc-'+idx;
+    card.innerHTML=`<div class="riddle-num">RIDDLE ${String(idx+1).padStart(2,'0')} / ${String(totalRiddles).padStart(2,'0')}</div><div class="riddle-q">${r.q}</div><div class="riddle-options">${opts.map(o=>`<button class="opt-btn" onclick="answerRiddle(this,'${o.replace(/'/g,"\\'")}','${r.ans.replace(/'/g,"\\'")}',${idx})">${o}</button>`).join('')}</div><div class="riddle-feedback" id="rfb-${idx}"></div>`;
+    c.appendChild(card);
   });
+  document.getElementById('riddle-next-btn').classList.remove('show');
+}
+function answerRiddle(btn,chosen,correct,idx){
+  const card=document.getElementById('rc-'+idx); if(card.classList.contains('solved')) return;
+  const btns=card.querySelectorAll('.opt-btn'); btns.forEach(b=>b.disabled=true);
+  const fb=document.getElementById('rfb-'+idx);
+  if(chosen===correct){ btn.classList.add('correct'); fb.textContent='✓ CORRECT! +10 PTS'; fb.className='riddle-feedback ok'; card.classList.add('solved'); playSound('correct'); addScore(10); }
+  else { btn.classList.add('wrong'); btns.forEach(b=>{if(b.textContent===correct)b.classList.add('correct');}); fb.textContent=`✗ WRONG — Answer: ${correct}`; fb.className='riddle-feedback fail'; card.classList.add('wrong-shake','solved'); playSound('wrong'); setTimeout(()=>card.classList.remove('wrong-shake'),500); }
+  riddlesSolved++; if(riddlesSolved>=totalRiddles) document.getElementById('riddle-next-btn').classList.add('show');
 }
 
 // ══════ STAGE 2: CROSSWORD ══════
-function initCrossword() {
-  const grid = [
-    ['C','O','D','E',' '],
-    [' ',' ','A',' ',' '],
-    [' ',' ','T',' ',' '],
-    [' ',' ','A',' ',' ']
-  ];
-  const container = document.getElementById('cw-grid-el');
-  container.style.gridTemplateColumns = `repeat(5, 38px)`;
-  grid.forEach((row, r) => {
-    row.forEach((cell, c) => {
-      const el = document.createElement('div');
-      el.className = cell === ' ' ? 'cw-cell black' : 'cw-cell';
-      if(cell !== ' ') {
-        const input = document.createElement('input');
-        input.maxLength = 1;
-        input.oninput = () => { if(input.value.toUpperCase() === cell) { input.style.color = 'var(--accent4)'; checkCW(); } };
-        el.appendChild(input);
-      }
-      container.appendChild(el);
-    });
-  });
-  document.getElementById('cw-clues').innerHTML = "<b>CLUES:</b><br>1. Across: Set of instructions for computers (4 letters)<br>2. Down: Facts and statistics collected (4 letters)";
+function buildCrossword(){
+  cwData=CW_POOL[~~(Math.random()*CW_POOL.length)]; const{words,size}=cwData;
+  const grid=Array.from({length:size},()=>Array(size).fill(null));
+  words.forEach(w=>{ for(let i=0;i<w.word.length;i++){ const r=w.dir==='across'?w.row:w.row+i,c=w.dir==='across'?w.col+i:w.col; grid[r][c]=w.word[i]; } });
+  const gEl=document.getElementById('cw-grid'); gEl.style.gridTemplateColumns=`repeat(${size},38px)`; gEl.innerHTML='';
+  for(let r=0;r<size;r++) for(let c=0;c<size;c++){
+    const cell=document.createElement('div'); cell.className='cw-cell';
+    if(grid[r][c]===null){ cell.classList.add('black'); }
+    else { const inp=document.createElement('input'); inp.maxLength=1; inp.dataset.r=r; inp.dataset.c=c; inp.addEventListener('input',e=>e.target.value=e.target.value.toUpperCase().slice(-1)); inp.addEventListener('keydown',e=>{if(e.key==='Enter')checkCrossword();}); const ws=words.find(w=>w.row===r&&w.col===c); if(ws){const sp=document.createElement('span');sp.className='cell-num';sp.textContent=words.indexOf(ws)+1;cell.appendChild(sp);} cell.appendChild(inp); }
+    gEl.appendChild(cell);
+  }
+  const across=words.filter(w=>w.dir==='across'),down=words.filter(w=>w.dir==='down');
+  document.getElementById('cw-clues').innerHTML=`<div class="clue-section"><h4>ACROSS</h4>${across.map(w=>`<div class="clue-item" id="cla-${words.indexOf(w)}"><span>${words.indexOf(w)+1}.</span>${w.clue}</div>`).join('')}</div><div class="clue-section"><h4>DOWN</h4>${down.map(w=>`<div class="clue-item" id="cld-${words.indexOf(w)}"><span>${words.indexOf(w)+1}.</span>${w.clue}</div>`).join('')}</div>`;
+  const btn=document.getElementById('cw-check-btn'); btn.textContent='CHECK ANSWERS'; btn.style.background='linear-gradient(135deg,var(--accent3),var(--accent))';
+  document.getElementById('cw-next-btn').classList.remove('show');
+  cwWordsSolvedCount=0;
 }
-function checkCW() {
-  const inputs = document.querySelectorAll('.cw-cell input');
-  const allCorrect = Array.from(inputs).every(i => i.value.toUpperCase() !== "" && i.style.color === 'rgb(5, 150, 105)');
-  if(allCorrect) { addScore(100); document.getElementById('btn-next-2').classList.add('show'); }
+
+function checkCrossword(){
+  if(birthdayTriggered) return;
+  const{words}=cwData; const vals={};
+  document.querySelectorAll('#cw-grid input').forEach(inp=>vals[`${inp.dataset.r},${inp.dataset.c}`]=inp.value);
+  let allOk=true;
+  let newlySolvedCount=0;
+  words.forEach((w,wi)=>{
+    let wok=true;
+    for(let i=0;i<w.word.length;i++){
+      const r=w.dir==='across'?w.row:w.row+i,c=w.dir==='across'?w.col+i:w.col;
+      const inp=document.querySelector(`#cw-grid input[data-r="${r}"][data-c="${c}"]`); if(!inp)continue;
+      if(vals[`${r},${c}`]===w.word[i]){inp.classList.add('correct-cell');inp.classList.remove('wrong-cell');}
+      else{inp.classList.add('wrong-cell');inp.classList.remove('correct-cell');wok=false;allOk=false;}
+    }
+    if(wok){
+      const clA=document.getElementById(`cla-${wi}`);
+      const clD=document.getElementById(`cld-${wi}`);
+      const el = clA || clD;
+      if(el && !el.classList.contains('solved-clue')){
+        el.classList.add('solved-clue');
+        newlySolvedCount++;
+      }
+    }
+  });
+
+  // Count total solved for fallback
+  if(newlySolvedCount > 0){
+    const totalSolvedNow = document.querySelectorAll('.clue-item.solved-clue').length;
+    if(currentStage===2 && totalSolvedNow >= 3){
+      checkCwFallback();
+      if(birthdayTriggered) return;
+    }
+  }
+
+  if(allOk){ playSound('correct'); addScore(30); document.getElementById('cw-next-btn').classList.add('show'); const btn=document.getElementById('cw-check-btn'); btn.textContent='✓ PERFECT!'; btn.style.background='linear-gradient(135deg,#059669,#0d9488)'; }
+  else playSound('wrong');
 }
 
 // ══════ STAGE 3: ANAGRAM ══════
-function renderAnagrams() {
-  const container = document.getElementById('anagram-container');
-  let solved = 0;
-  ANAGRAMS.forEach((a, idx) => {
-    const div = document.createElement('div');
-    div.className = 'anagram-box';
-    div.innerHTML = `<div class="scrambled">${a.s}</div><input class="ana-input" id="ana-${idx}" placeholder="TYPE HERE...">`;
-    container.appendChild(div);
-    const input = document.getElementById(`ana-${idx}`);
-    input.oninput = () => {
-      if(input.value.toUpperCase() === a.a) {
-        input.disabled = true; input.style.borderColor = 'var(--accent4)';
-        addScore(75); solved++;
-        if(solved === ANAGRAMS.length) document.getElementById('btn-next-3').classList.add('show');
-      }
-    };
+function scramble(w){ let s; do{s=shuffle(w.split('')).join('');}while(s===w); return s; }
+function buildAnagrams(){
+  const pool=shuffle(ANAGRAM_POOL).slice(0,6); totalAnagrams=pool.length; anagramSolved=0;
+  const c=document.getElementById('anagram-container'); c.innerHTML='';
+  document.getElementById('anagram-next-btn').classList.remove('show');
+  pool.forEach((item,idx)=>{
+    const scr=scramble(item.word); const card=document.createElement('div'); card.className='anagram-card'; card.id='ac-'+idx;
+    card.innerHTML=`<div class="riddle-num">ANAGRAM ${String(idx+1).padStart(2,'0')} / ${String(totalAnagrams).padStart(2,'0')}</div><div class="anagram-hint">💡 ${item.hint}</div><div class="scrambled-word">${scr}</div><div class="anagram-input-wrap"><input class="anagram-input" id="ai-${idx}" maxlength="${item.word.length}" placeholder="${'_'.repeat(item.word.length)}" /><button class="anagram-submit" onclick="checkAnagram(${idx},'${item.word}')">SUBMIT</button></div><div class="riddle-feedback" id="afb-${idx}"></div>`;
+    c.appendChild(card);
+    card.querySelector('.anagram-input').addEventListener('keydown',e=>{if(e.key==='Enter')checkAnagram(idx,item.word);});
+    card.querySelector('.anagram-input').addEventListener('input',e=>e.target.value=e.target.value.toUpperCase().replace(/[^A-Z]/g,''));
   });
+}
+function checkAnagram(idx,correct){
+  const inp=document.getElementById('ai-'+idx),fb=document.getElementById('afb-'+idx),card=document.getElementById('ac-'+idx);
+  if(card.dataset.solved) return;
+  if(inp.value===correct){ inp.classList.add('correct-input'); inp.disabled=true; card.querySelector('.anagram-submit').disabled=true; fb.textContent=`✓ CORRECT! "${correct}" +15 PTS`; fb.className='riddle-feedback ok'; card.dataset.solved='1'; playSound('correct'); addScore(15); anagramSolved++; if(anagramSolved>=totalAnagrams) document.getElementById('anagram-next-btn').classList.add('show'); }
+  else { inp.classList.add('wrong-input'); inp.value=''; setTimeout(()=>inp.classList.remove('wrong-input'),400); fb.textContent='✗ Try again!'; fb.className='riddle-feedback fail'; playSound('wrong'); }
 }
 
 // ══════ STAGE 4: TRIVIA ══════
-function renderTrivia() {
-  const container = document.getElementById('trivia-container');
-  let solved = 0;
-  TRIVIA.forEach((t, idx) => {
-    const card = document.createElement('div');
-    card.className = 'riddle-card';
-    card.innerHTML = `<div class="riddle-q">${t.q}</div><div class="options-grid" id="t-opts-${idx}"></div>`;
-    container.appendChild(card);
-    const opts = document.getElementById(`t-opts-${idx}`);
-    t.o.forEach((opt, oIdx) => {
-      const btn = document.createElement('button');
-      btn.className = 'opt-btn'; btn.textContent = opt;
-      btn.onclick = () => {
-        if(oIdx === t.a) { btn.classList.add('correct'); addScore(50); solved++; }
-        else btn.classList.add('wrong');
-        Array.from(opts.children).forEach(b => b.disabled = true);
-        if(solved === TRIVIA.length) document.getElementById('btn-next-4').classList.add('show');
-      };
-      opts.appendChild(btn);
-    });
+function buildTrivia(){
+  const pool=shuffle(TRIVIA_POOL).slice(0,8); totalTrivia=pool.length; triviaSolved=0;
+  const c=document.getElementById('trivia-container'); c.innerHTML='';
+  document.getElementById('trivia-next-btn').classList.remove('show');
+  pool.forEach((t,idx)=>{
+    const opts=shuffle(t.opts); const card=document.createElement('div'); card.className='riddle-card'; card.id='tc-'+idx;
+    card.innerHTML=`<span class="trivia-difficulty diff-${t.diff}">${t.diff.toUpperCase()}</span><div class="riddle-num">TRIVIA ${String(idx+1).padStart(2,'0')} / ${String(totalTrivia).padStart(2,'0')}</div><div class="riddle-q">${t.q}</div><div class="riddle-options">${opts.map(o=>`<button class="opt-btn" onclick="answerTrivia(this,'${o.replace(/'/g,"\\'")}','${t.ans.replace(/'/g,"\\'")}',${idx})">${o}</button>`).join('')}</div><div class="riddle-feedback" id="tfb-${idx}"></div>`;
+    c.appendChild(card);
   });
+}
+function answerTrivia(btn,chosen,correct,idx){
+  const card=document.getElementById('tc-'+idx); if(card.classList.contains('solved'))return;
+  const btns=card.querySelectorAll('.opt-btn'); btns.forEach(b=>b.disabled=true);
+  const fb=document.getElementById('tfb-'+idx);
+  if(chosen===correct){ btn.classList.add('correct'); fb.textContent='✓ CORRECT! +20 PTS'; fb.className='riddle-feedback ok'; card.classList.add('solved'); playSound('correct'); addScore(20); }
+  else { btn.classList.add('wrong'); btns.forEach(b=>{if(b.textContent===correct)b.classList.add('correct');}); fb.textContent=`✗ WRONG — Answer: ${correct}`; fb.className='riddle-feedback fail'; card.classList.add('wrong-shake','solved'); playSound('wrong'); setTimeout(()=>card.classList.remove('wrong-shake'),500); }
+  triviaSolved++; if(triviaSolved>=totalTrivia) document.getElementById('trivia-next-btn').classList.add('show');
 }
 
 // ══════ STAGE 5: WORD SEARCH ══════
-const WS_WORDS = ["JAVA", "HTML", "CSS", "NODE"];
-function initWordSearch() {
-  const gridData = [
-    ['J','A','V','A','X'],
-    ['H','T','M','L','O'],
-    ['C','S','S','Y','N'],
-    ['N','O','D','E','Z'],
-    ['Q','W','E','R','T']
-  ];
-  const container = document.getElementById('ws-grid-el');
-  container.style.gridTemplateColumns = `repeat(5, 32px)`;
-  let found = 0;
-  gridData.flat().forEach(char => {
-    const cell = document.createElement('div');
-    cell.className = 'ws-cell'; cell.textContent = char;
-    cell.onclick = () => {
-      cell.classList.toggle('selected');
-      checkWS();
-    };
-    container.appendChild(cell);
+function buildWordSearch(){
+  const pool=shuffle(WS_POOLS[~~(Math.random()*WS_POOLS.length)]); wsWords=pool.slice(0,7);
+  wsFoundCount=0; wsGrid=[]; wsSelected=[]; const SIZE=14;
+  wsGrid=Array.from({length:SIZE},()=>Array(SIZE).fill(''));
+  const dirs=[[0,1],[1,0],[1,1],[-1,1],[0,-1],[-1,0],[-1,-1],[1,-1]];
+  wsWords.forEach(word=>{
+    let placed=false,att=0;
+    while(!placed&&att<300){ att++; const dir=dirs[~~(Math.random()*dirs.length)]; const r0=~~(Math.random()*SIZE),c0=~~(Math.random()*SIZE); let ok=true; for(let i=0;i<word.length;i++){const r=r0+dir[0]*i,c=c0+dir[1]*i;if(r<0||r>=SIZE||c<0||c>=SIZE||(wsGrid[r][c]!==''&&wsGrid[r][c]!==word[i])){ok=false;break;}} if(ok){for(let i=0;i<word.length;i++)wsGrid[r0+dir[0]*i][c0+dir[1]*i]=word[i];placed=true;} }
   });
-  WS_WORDS.forEach(w => {
-    const span = document.createElement('span');
-    span.id = `ws-${w}`; span.style.padding = "5px 10px"; span.style.border = "1px solid var(--border)"; span.style.borderRadius = "8px"; span.textContent = w;
-    document.getElementById('ws-words').appendChild(span);
-  });
-}
-function checkWS() {
-  const selected = Array.from(document.querySelectorAll('.ws-cell.selected')).map(c => c.textContent).join('');
-  WS_WORDS.forEach(word => {
-    if(selected.includes(word)) {
-      document.getElementById(`ws-${word}`).style.background = 'var(--accent4)';
-      document.getElementById(`ws-${word}`).style.color = 'white';
-      // Simple logic to mark as found
-      document.querySelectorAll('.ws-cell.selected').forEach(c => { if(word.includes(c.textContent)) { c.classList.remove('selected'); c.classList.add('found'); } });
-      addScore(100);
-      // If all found, show next
-      const foundCount = document.querySelectorAll('#ws-words span[style*="background"]').length;
-      if(foundCount >= WS_WORDS.length) document.getElementById('btn-next-5').classList.add('show');
-    }
-  });
-}
-
-// ══════ VISUALS ══════
-function initStars() {
-  const c = document.getElementById('stars-canvas'), ctx = c.getContext('2d');
-  const resize = () => { c.width = window.innerWidth; c.height = window.innerHeight; };
-  window.onresize = resize; resize();
-  const stars = Array.from({length:100}, () => ({ x:Math.random(), y:Math.random(), r:Math.random()*1.2, s:Math.random()*0.002 }));
-  function anim() {
-    ctx.clearRect(0,0,c.width,c.height); ctx.fillStyle = "#fff";
-    stars.forEach(s => { ctx.beginPath(); ctx.arc(s.x*c.width, s.y*c.height, s.r, 0, Math.PI*2); ctx.fill(); });
-    requestAnimationFrame(anim);
+  const A='ABCDEFGHIJKLMNOPQRSTUVWXYZ'; for(let r=0;r<SIZE;r++) for(let c=0;c<SIZE;c++) if(!wsGrid[r][c]) wsGrid[r][c]=A[~~(Math.random()*26)];
+  const gEl=document.getElementById('ws-grid'); gEl.style.gridTemplateColumns=`repeat(${SIZE},31px)`; gEl.innerHTML='';
+  for(let r=0;r<SIZE;r++) for(let c=0;c<SIZE;c++){
+    const cell=document.createElement('div'); cell.className='ws-cell'; cell.textContent=wsGrid[r][c]; cell.dataset.r=r; cell.dataset.c=c;
+    cell.addEventListener('mousedown',wsStart); cell.addEventListener('mouseenter',wsMove); cell.addEventListener('mouseup',wsEnd);
+    cell.addEventListener('touchstart',wsTStart,{passive:true}); cell.addEventListener('touchmove',wsTMove,{passive:true}); cell.addEventListener('touchend',wsEnd);
+    gEl.appendChild(cell);
   }
-  anim();
+  document.getElementById('ws-words-list').innerHTML=wsWords.map((w,i)=>`<div class="ws-word" id="wsw-${i}">${w}</div>`).join('');
+  document.getElementById('ws-done-btn').classList.remove('show');
 }
+function wsStart(e){ wsSelecting=true; wsSelected=[]; const c=e.target.closest('.ws-cell'); if(c&&!c.classList.contains('found')){wsSelected.push(c);hlSel();} }
+function wsMove(e){ if(!wsSelecting)return; const c=e.target.closest('.ws-cell'); if(c&&!wsSelected.includes(c)&&!c.classList.contains('found')){wsSelected.push(c);hlSel();} }
+function wsTStart(e){ wsSelecting=true; wsSelected=[]; const t=e.touches[0],el=document.elementFromPoint(t.clientX,t.clientY); if(el&&el.classList.contains('ws-cell')){wsSelected.push(el);hlSel();} }
+function wsTMove(e){ if(!wsSelecting)return; const t=e.touches[0],el=document.elementFromPoint(t.clientX,t.clientY); if(el&&el.classList.contains('ws-cell')&&!wsSelected.includes(el)&&!el.classList.contains('found')){wsSelected.push(el);hlSel();} }
+function wsEnd(){
+  wsSelecting=false;
+  const word=wsSelected.map(c=>c.textContent).join(''),rev=word.split('').reverse().join('');
+  const found=wsWords.find(w=>w===word||w===rev);
+  if(found){ wsSelected.forEach(c=>{c.classList.add('found');c.classList.remove('selected');}); const wi=wsWords.indexOf(found); document.getElementById('wsw-'+wi).classList.add('found-word'); playSound('found'); addScore(25); wsFoundCount++; if(wsFoundCount>=wsWords.length) document.getElementById('ws-done-btn').classList.add('show'); }
+  else wsSelected.forEach(c=>c.classList.remove('selected'));
+  wsSelected=[];
+}
+function hlSel(){ document.querySelectorAll('.ws-cell.selected').forEach(c=>c.classList.remove('selected')); wsSelected.forEach(c=>c.classList.add('selected')); }
 
-function startConfetti() {
-  const c = document.getElementById('canvas-confetti'), ctx = c.getContext('2d');
-  c.width = window.innerWidth; c.height = window.innerHeight;
-  const colors = ['#3b82f6','#f43f5e','#7c3aed','#d97706'];
-  const p = Array.from({length:120}, () => ({ x:Math.random()*c.width, y:Math.random()*c.height, r:Math.random()*4+2, c:colors[~~(Math.random()*4)], sy:Math.random()*3+1 }));
-  function run() {
-    ctx.clearRect(0,0,c.width,c.height);
-    p.forEach(i => { ctx.beginPath(); ctx.fillStyle=i.c; ctx.arc(i.x, i.y, i.r, 0, Math.PI*2); ctx.fill(); i.y+=i.sy; if(i.y>c.height) i.y=-10; });
-    if(document.getElementById('birthday-screen').classList.contains('show')) requestAnimationFrame(run);
-  }
-  run();
+// ══════ STARS ══════
+function drawStars(){
+  const canvas=document.getElementById('stars-canvas'),ctx=canvas.getContext('2d');
+  function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;} resize(); window.addEventListener('resize',resize);
+  const stars=Array.from({length:100},()=>({x:Math.random(),y:Math.random(),r:Math.random()*1.1+0.2,speed:Math.random()*0.003+0.001,alpha:Math.random()}));
+  function draw(){ ctx.clearRect(0,0,canvas.width,canvas.height); stars.forEach(s=>{ s.alpha+=s.speed; if(s.alpha>1)s.alpha=0; ctx.beginPath(); ctx.arc(s.x*canvas.width,s.y*canvas.height,s.r,0,Math.PI*2); ctx.fillStyle=`rgba(80,120,200,${Math.abs(Math.sin(s.alpha*Math.PI))*0.45})`; ctx.fill(); }); requestAnimationFrame(draw); }
+  draw();
 }
 </script>
 </body>
