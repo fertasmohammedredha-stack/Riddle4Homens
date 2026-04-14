@@ -30,8 +30,10 @@
     background-image: 
       radial-gradient(ellipse at 20% 20%, rgba(124,58,237,0.07) 0%, transparent 50%),
       radial-gradient(ellipse at 80% 80%, rgba(59,130,246,0.07) 0%, transparent 50%);
-    color: var(--text); font-family: 'Rajdhani', sans-serif;
-    min-height: 100vh; overflow-x: hidden;
+    color: var(--text);
+    font-family: 'Rajdhani', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
   }
 
   #stars-canvas { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; opacity:0.3; }
@@ -51,13 +53,12 @@
   #header p { font-size:0.75rem; color:var(--dim); letter-spacing:2px; margin-top:3px; font-family:'Space Mono'; }
 
   /* PROGRESS BAR */
-  #progress-bar-wrap { max-width:700px; margin:12px auto 0; display:flex; align-items:center; gap:7px; padding:0 22px; overflow-x:auto; }
-  .stage-dot { width:27px; height:27px; border-radius:50%; flex-shrink:0; border:2px solid var(--dim); display:flex; align-items:center; justify-content:center; font-family:'Orbitron'; font-size:0.56rem; font-weight:700; color:var(--dim); transition:0.4s; }
+  #progress-bar-wrap { max-width:700px; margin:12px auto 0; display:flex; align-items:center; gap:7px; padding:0 22px; overflow-x:auto; padding-bottom:2px; }
+  .stage-dot { width:27px; height:27px; border-radius:50%; flex-shrink:0; border:2px solid var(--dim); display:flex; align-items:center; justify-content:center; font-family:'Orbitron'; font-size:0.56rem; font-weight:700; color:var(--dim); transition:all 0.4s; }
   .stage-dot.active { border-color:var(--accent); color:var(--accent); box-shadow:var(--glow); background:rgba(59,130,246,0.08); }
   .stage-dot.done { border-color:var(--accent3); background:var(--accent3); color:#fff; }
-  .stage-line { flex:1; height:2px; background:var(--border); min-width:10px; }
+  .stage-line { flex:1; height:2px; background:var(--border); transition:background 0.4s; min-width:10px; }
   .stage-line.done { background:var(--accent3); }
-
   #score-display { text-align:center; margin-top:7px; font-family:'Space Mono'; font-size:0.74rem; color:var(--text2); letter-spacing:2px; }
   #score-display span { color:var(--gold); font-weight:700; font-size:0.88rem; }
 
@@ -66,54 +67,73 @@
   .game-screen.active { display:block; animation:fadeInUp 0.45s ease forwards; }
   @keyframes fadeInUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
 
-  /* GAME ELEMENTS (RIDDLES, CROSSWORD, ETC.) */
-  .riddle-card { background:var(--card); border:1px solid var(--border); border-radius:18px; padding:24px 20px; margin-bottom:16px; box-shadow:var(--shadow); position:relative; overflow:hidden; }
-  .riddle-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg, var(--accent3), var(--accent), var(--accent2)); }
-  .riddle-q { font-size:1.15rem; font-weight:700; line-height:1.5; margin-bottom:18px; color:var(--text); }
-  .options-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-  .opt-btn { background:var(--bg2); border:2px solid var(--border); color:var(--text); font-family:'Rajdhani'; font-size:0.95rem; font-weight:700; padding:12px; border-radius:12px; cursor:pointer; transition:0.2s; }
-  .opt-btn.correct { background:var(--accent4); color:white; border-color:var(--accent4); }
-  .opt-btn.wrong { background:var(--accent2); color:white; border-color:var(--accent2); }
+  /* FOOTER - Modified for visibility */
+  #site-footer {
+    text-align:center; padding:18px 20px;
+    font-family:'Orbitron'; font-size:0.75rem; 
+    color: #1e40af; /* أزرق داكن وواضح جداً */
+    letter-spacing:2px; border-top:1px solid var(--border);
+    background:rgba(255,255,255,0.85); text-transform:uppercase;
+    font-weight: 800; margin-top: auto;
+  }
 
-  /* BIRTHDAY SCREEN - FIXES */
+  /* BIRTHDAY SCREEN - UI FIXES */
   #birthday-screen {
     display:none; position:fixed; inset:0; z-index:2000;
     background: linear-gradient(135deg, #ffffff, #f0f7ff, #fff5f7);
     overflow-y:auto; align-items:center; justify-content:center;
     flex-direction:column; text-align:center; padding:40px 24px;
   }
-  #birthday-screen.show { display:flex; animation:fadeInUp 0.8s ease; }
+  #birthday-screen.show { display:flex; }
+  #canvas-confetti { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:2001; }
   
   .bday-badge { 
-    position:relative; z-index:2001; font-family:'Orbitron'; 
-    font-size:0.85rem; letter-spacing:4px; color:var(--accent3); 
+    position:relative; z-index:2002; font-family:'Orbitron'; 
+    font-size:0.85rem; letter-spacing:5px; color:var(--accent3); 
     margin-bottom:15px; font-weight:900;
   }
   .bday-title { 
-    position:relative; z-index:2001; font-family:'Orbitron'; 
-    font-size:clamp(1.6rem, 5vw, 3rem); font-weight:900; 
+    position:relative; z-index:2002; font-family:'Orbitron'; 
+    font-size:clamp(1.8rem, 6vw, 3.5rem); font-weight:900; 
     background:linear-gradient(135deg, #d97706, #f43f5e, #7c3aed);
     -webkit-background-clip:text; -webkit-text-fill-color:transparent;
     margin-bottom:20px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
   }
   .bday-message { 
-    position:relative; z-index:2001; max-width:600px;
+    position:relative; z-index:2002; max-width:600px;
     background:rgba(255,255,255,0.95); border:2px solid rgba(124,58,237,0.1);
     border-radius:24px; padding:30px; font-size:1.05rem; line-height:1.8;
     box-shadow: 0 10px 30px rgba(0,0,0,0.05); color: var(--text); font-weight: 600;
   }
 
-  /* FOOTER - Updated color for visibility */
-  #site-footer {
-    text-align:center; padding:18px 20px;
-    font-family:'Orbitron'; font-size:0.75rem; 
-    color: #1e40af; /* Deep Blue for clear visibility */
-    letter-spacing:2px; border-top:1px solid var(--border);
-    background:rgba(255,255,255,0.85); text-transform:uppercase;
-    font-weight: 800; margin-top: auto;
-  }
+  /* GAME CONTENT STYLES (RIDDLES, CROSSWORD, ETC) */
+  .riddle-card { background:var(--card); border:1px solid var(--border); border-radius:18px; padding:24px 20px; margin-bottom:16px; box-shadow:var(--shadow); position:relative; overflow:hidden; }
+  .riddle-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg, var(--accent3), var(--accent), var(--accent2)); }
+  .riddle-q { font-size:1.15rem; font-weight:700; line-height:1.5; margin-bottom:18px; color:var(--text); }
+  .options-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .opt-btn { background:var(--bg2); border:2px solid var(--border); color:var(--text); font-family:'Rajdhani'; font-size:0.95rem; font-weight:700; padding:12px; border-radius:12px; cursor:pointer; transition:0.18s; position:relative; overflow:hidden; }
+  .opt-btn:hover:not(:disabled) { border-color:var(--accent); color:var(--accent); background:rgba(59,130,246,0.05); }
+  .opt-btn.correct { background:var(--accent4); color:white; border-color:var(--accent4); }
+  .opt-btn.wrong { background:var(--accent2); color:white; border-color:var(--accent2); }
 
-  #canvas-confetti { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:2000; }
+  .cw-grid { display:grid; gap:2px; border:2px solid var(--border); border-radius:10px; overflow:hidden; background:var(--bg2); margin:0 auto; }
+  .cw-cell { width:38px; height:38px; background:var(--surface); border:1px solid rgba(59,130,246,0.1); display:flex; align-items:center; justify-content:center; position:relative; }
+  .cw-cell.black { background:var(--text); border-color:var(--text); }
+  .cw-cell input { width:100%; height:100%; background:transparent; border:none; outline:none; text-align:center; color:var(--accent3); font-family:'Space Mono'; font-size:1rem; font-weight:700; text-transform:uppercase; }
+
+  .anagram-box { background:var(--card); border:1px solid var(--border); border-radius:18px; padding:25px; text-align:center; margin-bottom:16px; }
+  .scrambled { font-family:'Orbitron'; font-size:2rem; letter-spacing:8px; color:var(--accent3); margin-bottom:20px; font-weight:900; }
+  .ana-input { width:100%; max-width:300px; background:var(--bg2); border:2px solid var(--border); border-radius:12px; padding:12px; text-align:center; font-family:'Space Mono'; font-size:1.2rem; font-weight:700; color:var(--text); text-transform:uppercase; outline:none; margin-bottom:15px; }
+
+  .ws-grid { display:grid; gap:4px; margin:20px auto; background:var(--bg2); padding:10px; border-radius:12px; }
+  .ws-cell { width:32px; height:32px; background:var(--surface); display:flex; align-items:center; justify-content:center; font-family:'Space Mono'; font-size:0.9rem; font-weight:700; border-radius:4px; cursor:pointer; user-select:none; transition:0.2s; }
+  .ws-cell.selected { background:var(--accent); color:white; }
+  .ws-cell.found { background:var(--accent4); color:white; }
+
+  .next-stage-btn { display:none; width:100%; background:linear-gradient(135deg, var(--accent3), var(--accent)); color:white; border:none; padding:16px; border-radius:15px; font-family:'Orbitron'; font-size:0.9rem; font-weight:700; cursor:pointer; margin-top:20px; box-shadow:var(--glow); }
+  .next-stage-btn.show { display:block; animation:pulse 2s infinite; }
+  @keyframes pulse { 0%{transform:scale(1)} 50%{transform:scale(1.02)} 100%{transform:scale(1)} }
+
   #time-loading { position:fixed; inset:0; z-index:9999; background:var(--bg); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:13px; }
   .load-spinner { width:38px; height:38px; border:3px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation:spin 0.8s linear infinite; }
   @keyframes spin { to{transform:rotate(360deg)} }
@@ -122,7 +142,7 @@
 <body>
 
 <canvas id="stars-canvas"></canvas>
-<div id="time-loading"><div class="load-spinner"></div><p>SYNCING REAL-TIME DATA...</p></div>
+<div id="time-loading"><div class="load-spinner"></div><p>SYNCHRONIZING WITH SERVER TIME...</p></div>
 
 <div id="app" style="display:none">
   <div id="header">
@@ -138,13 +158,42 @@
     <div id="score-display">SCORE: <span id="score-val">0</span> PTS</div>
   </div>
 
-  <div class="game-screen active" id="screen-riddles">
+  <div class="game-screen active" id="screen-1">
     <div id="riddles-container"></div>
+    <button class="next-stage-btn" id="btn-next-1" onclick="goToStage(2)">GO TO STAGE 02 →</button>
   </div>
-  
-  <div class="game-screen" id="screen-crossword">
-    <h2 style="text-align:center; margin-bottom:15px;">STAGE 02: CROSSWORD</h2>
-    <div id="cw-grid-container" style="display:flex; justify-content:center; margin-bottom:20px;"></div>
+
+  <div class="game-screen" id="screen-2">
+    <div class="riddle-card">
+      <h2 style="text-align:center; margin-bottom:10px;">STAGE 02: CROSSWORD</h2>
+      <p style="text-align:center; color:var(--text2); font-size:0.9rem;">Solve the logic grid below.</p>
+    </div>
+    <div id="cw-wrap" style="display:flex; flex-direction:column; align-items:center; gap:20px;">
+        <div id="cw-grid-el" class="cw-grid"></div>
+        <div id="cw-clues" style="width:100%; background:var(--card); padding:20px; border-radius:15px; border:1px solid var(--border);"></div>
+    </div>
+    <button class="next-stage-btn" id="btn-next-2" onclick="goToStage(3)">GO TO STAGE 03 →</button>
+  </div>
+
+  <div class="game-screen" id="screen-3">
+    <div class="riddle-card"><h2 style="text-align:center;">STAGE 03: ANAGRAM</h2></div>
+    <div id="anagram-container"></div>
+    <button class="next-stage-btn" id="btn-next-3" onclick="goToStage(4)">GO TO STAGE 04 →</button>
+  </div>
+
+  <div class="game-screen" id="screen-4">
+    <div class="riddle-card"><h2 style="text-align:center;">STAGE 04: TRIVIA</h2></div>
+    <div id="trivia-container"></div>
+    <button class="next-stage-btn" id="btn-next-4" onclick="goToStage(5)">GO TO STAGE 05 →</button>
+  </div>
+
+  <div class="game-screen" id="screen-5">
+    <div class="riddle-card"><h2 style="text-align:center;">STAGE 05: WORD SEARCH</h2></div>
+    <div style="display:flex; flex-direction:column; align-items:center;">
+        <div id="ws-grid-el" class="ws-grid"></div>
+        <div id="ws-words" style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:15px;"></div>
+    </div>
+    <button class="next-stage-btn" id="btn-next-5" onclick="alert('CHALLENGE COMPLETE!')">COMPLETE CHALLENGE</button>
   </div>
 
   <footer id="site-footer">Developed by Fertas Mohammed Redha</footer>
@@ -166,15 +215,33 @@
 </audio>
 
 <script>
-// ══════ CONFIG ══════
+// ══════ CONFIGURATION ══════
 const TRIGGER_HOUR = 22; 
-const TRIGGER_MIN  = 35;
-const BIRTHDAY_DATE = { month: 4, day: 15 };
+const TRIGGER_MIN  = 50;
+const BIRTHDAY_DATE = { month: 4, day: 14 };
+const BIRTHDAY_MESSAGE = `Wishing you a day as bright and beautiful as you are 🌟<br>May this new year of your life bring you endless joy, laughter, and all the lovely things you truly deserve.<br><br>You make every ordinary day feel special, and today is all about you.<br>Happy birthday, my dear… every year you become even more wonderful.<br><br>I truly wish that God protects you, gives you a long life, and fills your days with peace and happiness. ✨🚀<br><br>And just a little reminder… you are the best and the most beautiful, without a doubt. Always believe in yourself. 🤍`;
 
-const BIRTHDAY_MESSAGE = `Wishing you a day as bright and beautiful as you are 🌟<br>May this new year of your life bring you endless joy, laughter, and all the lovely things you truly deserve.<br><br>Happy birthday, my dear… every year you become even more wonderful.<br><br>I truly wish that God protects you and fills your days with peace and happiness. ✨🚀`;
+// ══════ DATA ══════
+const RIDDLES = [
+  { q: "I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?", o: ["A Cloud", "An Echo", "A Ghost", "A Whistle"], a: 1 },
+  { q: "You measure my life in hours and I serve you by expiring. I'm quick when I'm thin and slow when I'm fat. The wind is my enemy.", o: ["A Candle", "A Battery", "A Clock", "A Person"], a: 0 },
+  { q: "I have keys, but no locks and space, but no rooms. You can enter, but you can't leave. What am I?", o: ["A Prison", "A Piano", "A Keyboard", "A Map"], a: 2 }
+];
+
+const ANAGRAMS = [
+  { s: "E L C T R O N I C S", a: "ELECTRONICS" },
+  { s: "G A L A X Y", a: "GALAXY" },
+  { s: "P R O G R A M", a: "PROGRAM" }
+];
+
+const TRIVIA = [
+  { q: "Which planet is known as the Red Planet?", o: ["Venus", "Mars", "Jupiter", "Saturn"], a: 1 },
+  { q: "What is the capital of France?", o: ["London", "Berlin", "Paris", "Rome"], a: 2 },
+  { q: "What is 15 + 27?", o: ["32", "42", "45", "39"], a: 1 }
+];
 
 // ══════ STATE ══════
-let serverTime = null, fetchAt = null, score = 0;
+let score = 0, currentStage = 1, serverTime = null, fetchAt = null;
 const music = document.getElementById('bday-music');
 
 // ══════ TIME ENGINE ══════
@@ -184,9 +251,7 @@ async function syncTime() {
     const d = await r.json();
     serverTime = new Date(d.datetime);
     fetchAt = Date.now();
-  } catch(e) {
-    serverTime = new Date(); fetchAt = Date.now();
-  }
+  } catch(e) { serverTime = new Date(); fetchAt = Date.now(); }
 }
 
 function getNow() {
@@ -201,74 +266,217 @@ window.onload = async () => {
   document.getElementById('bday-message-text').innerHTML = BIRTHDAY_MESSAGE;
   document.getElementById('smile-text').textContent = "😄 Smile sweetheart, it's your day 😄";
 
-  // Time Monitor
+  renderRiddles();
+  initCrossword();
+  renderAnagrams();
+  renderTrivia();
+  initWordSearch();
+  initStars();
+
   setInterval(() => {
     const now = getNow();
     if(now.getMonth()+1 === BIRTHDAY_DATE.month && now.getDate() === BIRTHDAY_DATE.day) {
       if(now.getHours() === TRIGGER_HOUR && now.getMinutes() === TRIGGER_MIN) {
-        if(!document.getElementById('birthday-screen').classList.contains('show')) {
-          showBirthday();
-        }
+        if(!document.getElementById('birthday-screen').classList.contains('show')) showBirthday();
       }
     }
   }, 1000);
-
-  initStars();
-  renderRiddles();
 };
 
+// ══════ CORE FUNCTIONS ══════
 function showBirthday() {
   document.getElementById('birthday-screen').classList.add('show');
-  music.play().catch(() => console.log("Audio waiting for interaction"));
+  music.play().catch(() => {});
   startConfetti();
 }
 
 function backToGame() {
-  // 1. Hide Screen
   document.getElementById('birthday-screen').classList.remove('show');
-  // 2. STOP AUDIO IMMEDIATELY
   music.pause();
   music.currentTime = 0;
 }
 
-// ══════ GAME LOGIC (Placeholders for stages) ══════
-function renderRiddles() {
-  const container = document.getElementById('riddles-container');
-  container.innerHTML = `
-    <div class="riddle-card">
-      <div class="riddle-q">I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?</div>
-      <div class="options-grid">
-        <button class="opt-btn" onclick="this.classList.add('wrong')">A Cloud</button>
-        <button class="opt-btn" onclick="this.classList.add('correct')">An Echo</button>
-      </div>
-    </div>
-  `;
+function addScore(v) {
+  score += v;
+  document.getElementById('score-val').textContent = score;
 }
 
-// ══════ VISUALS (STARS & CONFETTI) ══════
+function goToStage(n) {
+  document.querySelectorAll('.game-screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(`screen-${n}`).classList.add('active');
+  document.getElementById(`dot-${n}`).classList.add('active');
+  document.getElementById(`dot-${n-1}`).classList.add('done');
+  document.getElementById(`line-${n-1}`).classList.add('done');
+  currentStage = n;
+  window.scrollTo(0,0);
+}
+
+// ══════ STAGE 1: RIDDLES ══════
+function renderRiddles() {
+  const container = document.getElementById('riddles-container');
+  let solved = 0;
+  RIDDLES.forEach((r, idx) => {
+    const card = document.createElement('div');
+    card.className = 'riddle-card';
+    card.innerHTML = `<div class="riddle-q">${r.q}</div><div class="options-grid" id="opts-${idx}"></div>`;
+    container.appendChild(card);
+    const optsDiv = document.getElementById(`opts-${idx}`);
+    r.o.forEach((opt, oIdx) => {
+      const btn = document.createElement('button');
+      btn.className = 'opt-btn';
+      btn.textContent = opt;
+      btn.onclick = () => {
+        if(oIdx === r.a) { btn.classList.add('correct'); addScore(50); solved++; }
+        else btn.classList.add('wrong');
+        Array.from(optsDiv.children).forEach(b => b.disabled = true);
+        if(solved === RIDDLES.length) document.getElementById('btn-next-1').classList.add('show');
+      };
+      optsDiv.appendChild(btn);
+    });
+  });
+}
+
+// ══════ STAGE 2: CROSSWORD ══════
+function initCrossword() {
+  const grid = [
+    ['C','O','D','E',' '],
+    [' ',' ','A',' ',' '],
+    [' ',' ','T',' ',' '],
+    [' ',' ','A',' ',' ']
+  ];
+  const container = document.getElementById('cw-grid-el');
+  container.style.gridTemplateColumns = `repeat(5, 38px)`;
+  grid.forEach((row, r) => {
+    row.forEach((cell, c) => {
+      const el = document.createElement('div');
+      el.className = cell === ' ' ? 'cw-cell black' : 'cw-cell';
+      if(cell !== ' ') {
+        const input = document.createElement('input');
+        input.maxLength = 1;
+        input.oninput = () => { if(input.value.toUpperCase() === cell) { input.style.color = 'var(--accent4)'; checkCW(); } };
+        el.appendChild(input);
+      }
+      container.appendChild(el);
+    });
+  });
+  document.getElementById('cw-clues').innerHTML = "<b>CLUES:</b><br>1. Across: Set of instructions for computers (4 letters)<br>2. Down: Facts and statistics collected (4 letters)";
+}
+function checkCW() {
+  const inputs = document.querySelectorAll('.cw-cell input');
+  const allCorrect = Array.from(inputs).every(i => i.value.toUpperCase() !== "" && i.style.color === 'rgb(5, 150, 105)');
+  if(allCorrect) { addScore(100); document.getElementById('btn-next-2').classList.add('show'); }
+}
+
+// ══════ STAGE 3: ANAGRAM ══════
+function renderAnagrams() {
+  const container = document.getElementById('anagram-container');
+  let solved = 0;
+  ANAGRAMS.forEach((a, idx) => {
+    const div = document.createElement('div');
+    div.className = 'anagram-box';
+    div.innerHTML = `<div class="scrambled">${a.s}</div><input class="ana-input" id="ana-${idx}" placeholder="TYPE HERE...">`;
+    container.appendChild(div);
+    const input = document.getElementById(`ana-${idx}`);
+    input.oninput = () => {
+      if(input.value.toUpperCase() === a.a) {
+        input.disabled = true; input.style.borderColor = 'var(--accent4)';
+        addScore(75); solved++;
+        if(solved === ANAGRAMS.length) document.getElementById('btn-next-3').classList.add('show');
+      }
+    };
+  });
+}
+
+// ══════ STAGE 4: TRIVIA ══════
+function renderTrivia() {
+  const container = document.getElementById('trivia-container');
+  let solved = 0;
+  TRIVIA.forEach((t, idx) => {
+    const card = document.createElement('div');
+    card.className = 'riddle-card';
+    card.innerHTML = `<div class="riddle-q">${t.q}</div><div class="options-grid" id="t-opts-${idx}"></div>`;
+    container.appendChild(card);
+    const opts = document.getElementById(`t-opts-${idx}`);
+    t.o.forEach((opt, oIdx) => {
+      const btn = document.createElement('button');
+      btn.className = 'opt-btn'; btn.textContent = opt;
+      btn.onclick = () => {
+        if(oIdx === t.a) { btn.classList.add('correct'); addScore(50); solved++; }
+        else btn.classList.add('wrong');
+        Array.from(opts.children).forEach(b => b.disabled = true);
+        if(solved === TRIVIA.length) document.getElementById('btn-next-4').classList.add('show');
+      };
+      opts.appendChild(btn);
+    });
+  });
+}
+
+// ══════ STAGE 5: WORD SEARCH ══════
+const WS_WORDS = ["JAVA", "HTML", "CSS", "NODE"];
+function initWordSearch() {
+  const gridData = [
+    ['J','A','V','A','X'],
+    ['H','T','M','L','O'],
+    ['C','S','S','Y','N'],
+    ['N','O','D','E','Z'],
+    ['Q','W','E','R','T']
+  ];
+  const container = document.getElementById('ws-grid-el');
+  container.style.gridTemplateColumns = `repeat(5, 32px)`;
+  let found = 0;
+  gridData.flat().forEach(char => {
+    const cell = document.createElement('div');
+    cell.className = 'ws-cell'; cell.textContent = char;
+    cell.onclick = () => {
+      cell.classList.toggle('selected');
+      checkWS();
+    };
+    container.appendChild(cell);
+  });
+  WS_WORDS.forEach(w => {
+    const span = document.createElement('span');
+    span.id = `ws-${w}`; span.style.padding = "5px 10px"; span.style.border = "1px solid var(--border)"; span.style.borderRadius = "8px"; span.textContent = w;
+    document.getElementById('ws-words').appendChild(span);
+  });
+}
+function checkWS() {
+  const selected = Array.from(document.querySelectorAll('.ws-cell.selected')).map(c => c.textContent).join('');
+  WS_WORDS.forEach(word => {
+    if(selected.includes(word)) {
+      document.getElementById(`ws-${word}`).style.background = 'var(--accent4)';
+      document.getElementById(`ws-${word}`).style.color = 'white';
+      // Simple logic to mark as found
+      document.querySelectorAll('.ws-cell.selected').forEach(c => { if(word.includes(c.textContent)) { c.classList.remove('selected'); c.classList.add('found'); } });
+      addScore(100);
+      // If all found, show next
+      const foundCount = document.querySelectorAll('#ws-words span[style*="background"]').length;
+      if(foundCount >= WS_WORDS.length) document.getElementById('btn-next-5').classList.add('show');
+    }
+  });
+}
+
+// ══════ VISUALS ══════
 function initStars() {
-  const c = document.getElementById('stars-canvas');
-  const ctx = c.getContext('2d');
+  const c = document.getElementById('stars-canvas'), ctx = c.getContext('2d');
   const resize = () => { c.width = window.innerWidth; c.height = window.innerHeight; };
   window.onresize = resize; resize();
-  const stars = Array.from({length:80}, () => ({ x:Math.random(), y:Math.random(), r:Math.random()*1.2 }));
-  function animate() {
-    ctx.clearRect(0,0,c.width,c.height); ctx.fillStyle="#fff";
+  const stars = Array.from({length:100}, () => ({ x:Math.random(), y:Math.random(), r:Math.random()*1.2, s:Math.random()*0.002 }));
+  function anim() {
+    ctx.clearRect(0,0,c.width,c.height); ctx.fillStyle = "#fff";
     stars.forEach(s => { ctx.beginPath(); ctx.arc(s.x*c.width, s.y*c.height, s.r, 0, Math.PI*2); ctx.fill(); });
-    requestAnimationFrame(animate);
+    requestAnimationFrame(anim);
   }
-  animate();
+  anim();
 }
 
 function startConfetti() {
-  const c = document.getElementById('canvas-confetti');
-  const ctx = c.getContext('2d');
+  const c = document.getElementById('canvas-confetti'), ctx = c.getContext('2d');
   c.width = window.innerWidth; c.height = window.innerHeight;
   const colors = ['#3b82f6','#f43f5e','#7c3aed','#d97706'];
-  const p = Array.from({length:100}, () => ({ x:Math.random()*c.width, y:Math.random()*c.height, r:Math.random()*4+2, color:colors[~~(Math.random()*4)] }));
+  const p = Array.from({length:120}, () => ({ x:Math.random()*c.width, y:Math.random()*c.height, r:Math.random()*4+2, c:colors[~~(Math.random()*4)], sy:Math.random()*3+1 }));
   function run() {
     ctx.clearRect(0,0,c.width,c.height);
-    p.forEach(i => { ctx.beginPath(); ctx.fillStyle=i.color; ctx.arc(i.x, i.y, i.r, 0, Math.PI*2); ctx.fill(); i.y+=2; if(i.y>c.height) i.y=-10; });
+    p.forEach(i => { ctx.beginPath(); ctx.fillStyle=i.c; ctx.arc(i.x, i.y, i.r, 0, Math.PI*2); ctx.fill(); i.y+=i.sy; if(i.y>c.height) i.y=-10; });
     if(document.getElementById('birthday-screen').classList.contains('show')) requestAnimationFrame(run);
   }
   run();
