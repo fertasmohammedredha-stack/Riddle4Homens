@@ -307,8 +307,8 @@
 
 <script>
 // ══════ CONFIG ══════
-const BIRTHDAY = { month: 4, day: 15 };
-const TEST_MODE = false; // triggers at midnight
+const BIRTHDAY = { month: 4, day: 14 };
+const TEST_MODE = true; // triggers at 3:24:57 AM
 const BIRTHDAY_MESSAGE = `Wishing you a day as bright and incredible as you are! 🌟\nMay this new year of your life bring you endless joy, laughter, and all the beautiful things you deserve.\nYou make every ordinary day feel like something special — so today, on YOUR day, we celebrate YOU! 🎂`;
 const SMILE_LINE = `😄 Smile, sweetheart! It's YOUR day! 😄`;
 
@@ -410,7 +410,7 @@ function startTimerLoop(){
     if(!isBday) return;
     if(now.getSeconds()===0&&now.getMinutes()%5===0) fetchServerTime();
     let sLeft;
-    if(TEST_MODE){ const noon=new Date(now); noon.setHours(12,0,0,0); sLeft=Math.floor((noon-now)/1000); }
+    if(TEST_MODE){ const noon=new Date(now); noon.setHours(3,25,0,0); sLeft=Math.floor((noon-now)/1000); }
     else { const midnight=new Date(now); midnight.setHours(24,0,0,0); sLeft=Math.floor((midnight-now)/1000); }
     if(sLeft<=3&&sLeft>0){ frozenByBirthday=true; triggerFreeze(sLeft); }
   },500);
