@@ -23,16 +23,19 @@
     --glow: 0 4px 20px rgba(59,130,246,0.2);
     --shadow: 0 2px 16px rgba(30,41,59,0.09);
   }
-  * { margin:0; padding:0; box-sizing:border-box; }
+
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
   body {
     background: var(--bg);
-    background-image: radial-gradient(ellipse at 20% 20%, rgba(124,58,237,0.07) 0%, transparent 50%),
-                      radial-gradient(ellipse at 80% 80%, rgba(59,130,246,0.07) 0%, transparent 50%);
+    background-image: 
+      radial-gradient(ellipse at 20% 20%, rgba(124,58,237,0.07) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, rgba(59,130,246,0.07) 0%, transparent 50%);
     color: var(--text); font-family: 'Rajdhani', sans-serif;
     min-height: 100vh; overflow-x: hidden;
   }
+
   #stars-canvas { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; opacity:0.3; }
-  #app { position:relative; z-index:10; min-height:100vh; }
+  #app { position:relative; z-index:10; min-height:100vh; display:flex; flex-direction:column; }
 
   /* HEADER */
   #header {
@@ -41,69 +44,107 @@
     backdrop-filter:blur(12px); position:sticky; top:0; z-index:100;
   }
   #header h1 {
-    font-family:'Orbitron'; font-size:clamp(1.2rem,4vw,1.9rem); font-weight:900; letter-spacing:4px;
+    font-family:'Orbitron'; font-size:clamp(1.2rem, 4vw, 1.9rem); font-weight:900; letter-spacing:4px;
     background:linear-gradient(135deg, var(--accent3), var(--accent), var(--accent2));
     -webkit-background-clip:text; -webkit-text-fill-color:transparent;
   }
   #header p { font-size:0.75rem; color:var(--dim); letter-spacing:2px; margin-top:3px; font-family:'Space Mono'; }
+
+  /* PROGRESS BAR */
+  #progress-bar-wrap { max-width:700px; margin:12px auto 0; display:flex; align-items:center; gap:7px; padding:0 22px; overflow-x:auto; }
+  .stage-dot { width:27px; height:27px; border-radius:50%; flex-shrink:0; border:2px solid var(--dim); display:flex; align-items:center; justify-content:center; font-family:'Orbitron'; font-size:0.56rem; font-weight:700; color:var(--dim); transition:0.4s; }
+  .stage-dot.active { border-color:var(--accent); color:var(--accent); box-shadow:var(--glow); background:rgba(59,130,246,0.08); }
+  .stage-dot.done { border-color:var(--accent3); background:var(--accent3); color:#fff; }
+  .stage-line { flex:1; height:2px; background:var(--border); min-width:10px; }
+  .stage-line.done { background:var(--accent3); }
+
+  #score-display { text-align:center; margin-top:7px; font-family:'Space Mono'; font-size:0.74rem; color:var(--text2); letter-spacing:2px; }
+  #score-display span { color:var(--gold); font-weight:700; font-size:0.88rem; }
+
+  /* SCREENS */
+  .game-screen { display:none; max-width:760px; margin:0 auto; padding:26px 16px 70px; width:100%; }
+  .game-screen.active { display:block; animation:fadeInUp 0.45s ease forwards; }
+  @keyframes fadeInUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
+
+  /* GAME ELEMENTS (RIDDLES, CROSSWORD, ETC.) */
+  .riddle-card { background:var(--card); border:1px solid var(--border); border-radius:18px; padding:24px 20px; margin-bottom:16px; box-shadow:var(--shadow); position:relative; overflow:hidden; }
+  .riddle-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg, var(--accent3), var(--accent), var(--accent2)); }
+  .riddle-q { font-size:1.15rem; font-weight:700; line-height:1.5; margin-bottom:18px; color:var(--text); }
+  .options-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .opt-btn { background:var(--bg2); border:2px solid var(--border); color:var(--text); font-family:'Rajdhani'; font-size:0.95rem; font-weight:700; padding:12px; border-radius:12px; cursor:pointer; transition:0.2s; }
+  .opt-btn.correct { background:var(--accent4); color:white; border-color:var(--accent4); }
+  .opt-btn.wrong { background:var(--accent2); color:white; border-color:var(--accent2); }
+
+  /* BIRTHDAY SCREEN - FIXES */
+  #birthday-screen {
+    display:none; position:fixed; inset:0; z-index:2000;
+    background: linear-gradient(135deg, #ffffff, #f0f7ff, #fff5f7);
+    overflow-y:auto; align-items:center; justify-content:center;
+    flex-direction:column; text-align:center; padding:40px 24px;
+  }
+  #birthday-screen.show { display:flex; animation:fadeInUp 0.8s ease; }
   
-  /* FOOTER NAME STYLE - IMPROVED VISIBILITY */
+  .bday-badge { 
+    position:relative; z-index:2001; font-family:'Orbitron'; 
+    font-size:0.85rem; letter-spacing:4px; color:var(--accent3); 
+    margin-bottom:15px; font-weight:900;
+  }
+  .bday-title { 
+    position:relative; z-index:2001; font-family:'Orbitron'; 
+    font-size:clamp(1.6rem, 5vw, 3rem); font-weight:900; 
+    background:linear-gradient(135deg, #d97706, #f43f5e, #7c3aed);
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    margin-bottom:20px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+  }
+  .bday-message { 
+    position:relative; z-index:2001; max-width:600px;
+    background:rgba(255,255,255,0.95); border:2px solid rgba(124,58,237,0.1);
+    border-radius:24px; padding:30px; font-size:1.05rem; line-height:1.8;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05); color: var(--text); font-weight: 600;
+  }
+
+  /* FOOTER - Updated color for visibility */
   #site-footer {
     text-align:center; padding:18px 20px;
     font-family:'Orbitron'; font-size:0.75rem; 
-    color: #1e3a8a; /* Blue-dark color for better visibility */
+    color: #1e40af; /* Deep Blue for clear visibility */
     letter-spacing:2px; border-top:1px solid var(--border);
-    background:rgba(255,255,255,0.8); text-transform:uppercase;
-    font-weight: 800;
+    background:rgba(255,255,255,0.85); text-transform:uppercase;
+    font-weight: 800; margin-top: auto;
   }
 
-  /* BIRTHDAY SCREEN */
-  #birthday-screen {
-    display:none; position:fixed; inset:0; z-index:950;
-    background: linear-gradient(135deg,#fff7ed,#fdf2f8,#eff6ff);
-    overflow-y:auto; align-items:center; justify-content:center;
-    flex-direction:column; text-align:center; padding:40px 20px;
-  }
-  #birthday-screen.show { display:flex; animation:fadeInUp 1s ease; }
-  #canvas-confetti { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:951; }
-  
-  .bday-badge { 
-    position:relative; z-index:960; font-family:'Orbitron'; 
-    font-size:0.8rem; letter-spacing:5px; color:var(--accent3); 
-    margin-bottom:12px; text-transform:uppercase; font-weight:900;
-  }
-  .bday-title { 
-    position:relative; z-index:960; font-family:'Orbitron'; 
-    font-size:clamp(1.8rem, 6vw, 3.5rem); font-weight:900; line-height:1.2; 
-    margin-bottom:15px; background:linear-gradient(135deg, var(--gold), var(--accent2), #d946ef);
-    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
-  }
-  .bday-message { 
-    max-width:520px; font-size:clamp(0.93rem,2.2vw,1.08rem); line-height:1.9; 
-    color:var(--text); margin:18px auto; font-weight:600; 
-    border:2px solid rgba(217,119,6,0.2); border-radius:20px; padding:26px 28px; 
-    background:rgba(255,255,255,0.95); position:relative; z-index:960; 
-  }
-
-  .game-screen { display:none; max-width:760px; margin:0 auto; padding:26px 16px 70px; }
-  .game-screen.active { display:block; animation:fadeInUp 0.45s ease; }
-  @keyframes fadeInUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
+  #canvas-confetti { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:2000; }
+  #time-loading { position:fixed; inset:0; z-index:9999; background:var(--bg); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:13px; }
+  .load-spinner { width:38px; height:38px; border:3px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation:spin 0.8s linear infinite; }
+  @keyframes spin { to{transform:rotate(360deg)} }
 </style>
 </head>
 <body>
+
 <canvas id="stars-canvas"></canvas>
-<div id="app">
+<div id="time-loading"><div class="load-spinner"></div><p>SYNCING REAL-TIME DATA...</p></div>
+
+<div id="app" style="display:none">
   <div id="header">
     <h1>⚡ GAME ZONE ⚡</h1>
-    <p>CHALLENGE YOUR MIND</p>
+    <p>CHALLENGE YOUR MIND — BEAT THE CLOCK</p>
+    <div id="progress-bar-wrap">
+      <div class="stage-dot active" id="dot-1">01</div><div class="stage-line" id="line-1"></div>
+      <div class="stage-dot" id="dot-2">02</div><div class="stage-line" id="line-2"></div>
+      <div class="stage-dot" id="dot-3">03</div><div class="stage-line" id="line-3"></div>
+      <div class="stage-dot" id="dot-4">04</div><div class="stage-line" id="line-4"></div>
+      <div class="stage-dot" id="dot-5">05</div>
+    </div>
+    <div id="score-display">SCORE: <span id="score-val">0</span> PTS</div>
   </div>
 
-  <div class="game-screen active" id="screen-main">
-    <div style="text-align:center; padding:50px;">
-        <h2>The Game is Running...</h2>
-        <p>Wait for the special moment at 22:35!</p>
-    </div>
+  <div class="game-screen active" id="screen-riddles">
+    <div id="riddles-container"></div>
+  </div>
+  
+  <div class="game-screen" id="screen-crossword">
+    <h2 style="text-align:center; margin-bottom:15px;">STAGE 02: CROSSWORD</h2>
+    <div id="cw-grid-container" style="display:flex; justify-content:center; margin-bottom:20px;"></div>
   </div>
 
   <footer id="site-footer">Developed by Fertas Mohammed Redha</footer>
@@ -112,10 +153,11 @@
 <div id="birthday-screen">
   <canvas id="canvas-confetti"></canvas>
   <div class="bday-badge">✦ A SPECIAL MOMENT ✦</div>
-  <h1 class="bday-title">HAPPY BIRTHDAY, Homens! 🎂🎉</h1>
+  <h1 class="bday-title">HAPPY BIRTHDAY, Homens! 🎂🎉🎊🎈</h1>
   <div class="bday-message" id="bday-message-text"></div>
-  <div style="margin-top:20px; z-index:970; position:relative;">
-    <button style="padding:15px 35px; border-radius:30px; border:none; background:var(--accent3); color:white; cursor:pointer; font-family:'Orbitron'; font-weight:700;" onclick="backToGame()">BACK TO CHALLENGE</button>
+  <div id="smile-text" style="font-weight:900; color:var(--gold); margin-top:15px; z-index:2005; position:relative;"></div>
+  <div style="margin-top:25px; z-index:2005; position:relative;">
+    <button onclick="backToGame()" style="padding:15px 40px; border-radius:50px; border:none; background:var(--accent3); color:white; cursor:pointer; font-family:'Orbitron'; font-weight:700; box-shadow:0 4px 15px rgba(124,58,237,0.3);">BACK TO CHALLENGE</button>
   </div>
 </div>
 
@@ -124,60 +166,113 @@
 </audio>
 
 <script>
+// ══════ CONFIG ══════
 const TRIGGER_HOUR = 22; 
 const TRIGGER_MIN  = 35;
-const BIRTHDAY_MESSAGE = `Wishing you a day as bright and beautiful as you are... (Message Content Here)`;
+const BIRTHDAY_DATE = { month: 4, day: 15 };
 
-const bdayMusic = document.getElementById('bday-music');
+const BIRTHDAY_MESSAGE = `Wishing you a day as bright and beautiful as you are 🌟<br>May this new year of your life bring you endless joy, laughter, and all the lovely things you truly deserve.<br><br>Happy birthday, my dear… every year you become even more wonderful.<br><br>I truly wish that God protects you and fills your days with peace and happiness. ✨🚀`;
 
-function showBirthday(){
-  document.getElementById('birthday-screen').classList.add('show');
-  bdayMusic.play().catch(e => console.log("Audio play deferred until user interaction"));
-  launchConfetti();
-}
+// ══════ STATE ══════
+let serverTime = null, fetchAt = null, score = 0;
+const music = document.getElementById('bday-music');
 
-function backToGame(){
-  // 1. إخفاء شاشة المفاجأة
-  document.getElementById('birthday-screen').classList.remove('show');
-  
-  // 2. إيقاف الصوت فوراً
-  if (bdayMusic) {
-    bdayMusic.pause();
-    bdayMusic.currentTime = 0; // إعادة الصوت للبداية للمرة القادمة
+// ══════ TIME ENGINE ══════
+async function syncTime() {
+  try {
+    const r = await fetch('https://worldtimeapi.org/api/timezone/Africa/Algiers');
+    const d = await r.json();
+    serverTime = new Date(d.datetime);
+    fetchAt = Date.now();
+  } catch(e) {
+    serverTime = new Date(); fetchAt = Date.now();
   }
 }
 
-// Check time every second
-setInterval(() => {
-  const now = new Date();
-  if(now.getHours() === TRIGGER_HOUR && now.getMinutes() === TRIGGER_MIN) {
-      if(!document.getElementById('birthday-screen').classList.contains('show')) {
+function getNow() {
+  return new Date(serverTime.getTime() + (Date.now() - fetchAt));
+}
+
+// ══════ INITIALIZATION ══════
+window.onload = async () => {
+  await syncTime();
+  document.getElementById('time-loading').style.display = 'none';
+  document.getElementById('app').style.display = 'flex';
+  document.getElementById('bday-message-text').innerHTML = BIRTHDAY_MESSAGE;
+  document.getElementById('smile-text').textContent = "😄 Smile sweetheart, it's your day 😄";
+
+  // Time Monitor
+  setInterval(() => {
+    const now = getNow();
+    if(now.getMonth()+1 === BIRTHDAY_DATE.month && now.getDate() === BIRTHDAY_DATE.day) {
+      if(now.getHours() === TRIGGER_HOUR && now.getMinutes() === TRIGGER_MIN) {
+        if(!document.getElementById('birthday-screen').classList.contains('show')) {
           showBirthday();
+        }
       }
-  }
-}, 1000);
+    }
+  }, 1000);
 
-function launchConfetti(){
-  const canvas = document.getElementById('canvas-confetti');
-  const ctx = canvas.getContext('2d');
-  canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-  const pieces = Array.from({length:80}, () => ({
-    x:Math.random()*canvas.width, y:Math.random()*canvas.height,
-    r:Math.random()*4+2, color:['#3b82f6','#f43f5e','#7c3aed'][Math.floor(Math.random()*3)]
-  }));
-  function draw(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    pieces.forEach(p => {
-      ctx.beginPath(); ctx.fillStyle=p.color;
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2); ctx.fill();
-      p.y += 2; if(p.y > canvas.height) p.y = -10;
-    });
-    requestAnimationFrame(draw);
-  }
-  draw();
+  initStars();
+  renderRiddles();
+};
+
+function showBirthday() {
+  document.getElementById('birthday-screen').classList.add('show');
+  music.play().catch(() => console.log("Audio waiting for interaction"));
+  startConfetti();
 }
 
-document.getElementById('bday-message-text').innerHTML = BIRTHDAY_MESSAGE;
+function backToGame() {
+  // 1. Hide Screen
+  document.getElementById('birthday-screen').classList.remove('show');
+  // 2. STOP AUDIO IMMEDIATELY
+  music.pause();
+  music.currentTime = 0;
+}
+
+// ══════ GAME LOGIC (Placeholders for stages) ══════
+function renderRiddles() {
+  const container = document.getElementById('riddles-container');
+  container.innerHTML = `
+    <div class="riddle-card">
+      <div class="riddle-q">I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?</div>
+      <div class="options-grid">
+        <button class="opt-btn" onclick="this.classList.add('wrong')">A Cloud</button>
+        <button class="opt-btn" onclick="this.classList.add('correct')">An Echo</button>
+      </div>
+    </div>
+  `;
+}
+
+// ══════ VISUALS (STARS & CONFETTI) ══════
+function initStars() {
+  const c = document.getElementById('stars-canvas');
+  const ctx = c.getContext('2d');
+  const resize = () => { c.width = window.innerWidth; c.height = window.innerHeight; };
+  window.onresize = resize; resize();
+  const stars = Array.from({length:80}, () => ({ x:Math.random(), y:Math.random(), r:Math.random()*1.2 }));
+  function animate() {
+    ctx.clearRect(0,0,c.width,c.height); ctx.fillStyle="#fff";
+    stars.forEach(s => { ctx.beginPath(); ctx.arc(s.x*c.width, s.y*c.height, s.r, 0, Math.PI*2); ctx.fill(); });
+    requestAnimationFrame(animate);
+  }
+  animate();
+}
+
+function startConfetti() {
+  const c = document.getElementById('canvas-confetti');
+  const ctx = c.getContext('2d');
+  c.width = window.innerWidth; c.height = window.innerHeight;
+  const colors = ['#3b82f6','#f43f5e','#7c3aed','#d97706'];
+  const p = Array.from({length:100}, () => ({ x:Math.random()*c.width, y:Math.random()*c.height, r:Math.random()*4+2, color:colors[~~(Math.random()*4)] }));
+  function run() {
+    ctx.clearRect(0,0,c.width,c.height);
+    p.forEach(i => { ctx.beginPath(); ctx.fillStyle=i.color; ctx.arc(i.x, i.y, i.r, 0, Math.PI*2); ctx.fill(); i.y+=2; if(i.y>c.height) i.y=-10; });
+    if(document.getElementById('birthday-screen').classList.contains('show')) requestAnimationFrame(run);
+  }
+  run();
+}
 </script>
 </body>
 </html>
