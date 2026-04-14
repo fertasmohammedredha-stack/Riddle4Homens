@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Game Zone</title>
+<title>Game Zone | Birthday Edition</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -170,8 +170,8 @@
   #birthday-screen { display:none; position:fixed; inset:0; z-index:950; background:linear-gradient(135deg,#fff7ed,#fdf2f8,#eff6ff); overflow-y:auto; align-items:center; justify-content:center; flex-direction:column; text-align:center; padding:40px 20px; }
   #birthday-screen.show { display:flex; animation:fadeInUp 1s ease; }
   #canvas-confetti { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:951; }
-  .bday-badge { font-family:'Orbitron'; font-size:0.66rem; letter-spacing:5px; color:var(--accent3); margin-bottom:12px; text-transform:uppercase; }
-  .bday-title { font-family:'Orbitron'; font-size:clamp(2.4rem,10vw,4.8rem); font-weight:900; line-height:1.05; margin-bottom:6px; background:linear-gradient(135deg, var(--gold), var(--accent2), #d946ef); -webkit-background-clip:text; -webkit-text-fill-color:transparent; filter:drop-shadow(0 0 18px rgba(217,119,6,0.3)); }
+  .bday-badge { font-family:'Orbitron'; font-size:0.66rem; letter-spacing:5px; color:var(--accent3); margin-bottom:12px; text-transform:uppercase; font-weight:700; }
+  .bday-title { font-family:'Orbitron'; font-size:clamp(2rem,8vw,3.6rem); font-weight:900; line-height:1.1; margin-bottom:6px; background:linear-gradient(135deg, var(--gold), var(--accent2), #d946ef); -webkit-background-clip:text; -webkit-text-fill-color:transparent; filter:drop-shadow(0 0 18px rgba(217,119,6,0.3)); }
   .bday-emojis { font-size:clamp(1.8rem,5.5vw,2.8rem); margin:14px 0; letter-spacing:6px; animation:floatEmoji 2s infinite; }
   @keyframes floatEmoji { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
   .bday-message { max-width:520px; font-size:clamp(0.93rem,2.2vw,1.08rem); line-height:1.9; color:var(--text); margin:18px auto; font-weight:600; border:2px solid rgba(217,119,6,0.2); border-radius:20px; padding:26px 28px; background:rgba(255,255,255,0.88); position:relative; z-index:952; box-shadow:0 8px 28px rgba(217,119,6,0.1); }
@@ -183,13 +183,19 @@
   .btn-back:hover { transform:scale(1.04); box-shadow:0 6px 22px rgba(124,58,237,0.44); }
   .btn-leave:hover { border-color:var(--accent2); color:var(--accent2); }
 
+  /* AUDIO BUTTON */
+  #audio-btn { position:fixed; bottom:14px; right:14px; z-index:200; background:var(--card); border:2px solid var(--accent3); border-radius:30px; padding:8px 18px; font-size:0.7rem; font-family:'Space Mono'; font-weight:700; color:var(--accent3); letter-spacing:1px; display:flex; align-items:center; gap:7px; box-shadow:var(--shadow); cursor:pointer; transition:all 0.2s; backdrop-filter:blur(4px); }
+  #audio-btn:hover { transform:scale(1.02); background:rgba(124,58,237,0.1); border-color:var(--accent2); color:var(--accent2); }
+  .audio-icon { font-size:0.9rem; }
+
+  /* FOOTER */
+  .game-footer { text-align:center; padding:20px 16px 10px; font-family:'Space Mono'; font-size:0.65rem; color:var(--dim); border-top:1px solid var(--border); margin-top:30px; letter-spacing:1px; }
+
   /* LOADING */
   #time-loading { position:fixed; inset:0; z-index:9999; background:var(--bg); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:13px; }
   .load-spinner { width:38px; height:38px; border:3px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation:spin 0.8s linear infinite; }
   @keyframes spin { to{transform:rotate(360deg)} }
   #time-loading p { font-family:'Space Mono'; font-size:0.76rem; color:var(--dim); letter-spacing:2px; }
-  #audio-hint { position:fixed; bottom:14px; right:14px; z-index:200; background:var(--card); border:1px solid var(--border); border-radius:30px; padding:7px 15px; font-size:0.7rem; font-family:'Space Mono'; color:var(--dim); letter-spacing:1px; display:flex; align-items:center; gap:7px; box-shadow:var(--shadow); }
-  .audio-dot { width:7px; height:7px; border-radius:50%; background:var(--accent); animation:blink 1.5s infinite; }
 
   @media(max-width:520px){
     .cw-clues{grid-template-columns:1fr}
@@ -277,6 +283,7 @@
     </div>
     <button class="next-stage-btn" id="ws-done-btn" onclick="restartAll()">PLAY AGAIN 🔄</button>
   </div>
+  <div class="game-footer">developed by fertas Mohammed Redha</div>
 </div>
 
 <div id="freeze-overlay">
@@ -287,7 +294,7 @@
 <div id="birthday-screen">
   <canvas id="canvas-confetti"></canvas>
   <div class="bday-badge">✦ A SPECIAL MOMENT ✦</div>
-  <div class="bday-title">HAPPY<br>BIRTHDAY!</div>
+  <div class="bday-title">HAPPY BIRTHDAY, Homens! 🎂🎉🎊🎈</div>
   <div class="bday-emojis">🎂 🎉 🎊 🎈</div>
   <div class="bday-message" id="bday-message-text"></div>
   <div class="smile-line" id="smile-text"></div>
@@ -297,14 +304,14 @@
   </div>
 </div>
 
-<div id="audio-hint"><div class="audio-dot"></div> SOUND ON FOR BEST EXPERIENCE</div>
+<button id="audio-btn"><span class="audio-icon">🔊</span> ENABLE SOUND</button>
 
 <script>
 // ══════ CONFIG ══════
 const BIRTHDAY = { month: 4, day: 15 };
-const TEST_MODE = false; // triggers at midnight
-const BIRTHDAY_MESSAGE = `Wishing you a day as bright and incredible as you are! 🌟\nMay this new year of your life bring you endless joy, laughter, and all the beautiful things you deserve.\nYou make every ordinary day feel like something special — so today, on YOUR day, we celebrate YOU! 🎂`;
-const SMILE_LINE = `😄 Smile, sweetheart! It's YOUR day! 😄`;
+const TEST_MODE = false; 
+const BIRTHDAY_MESSAGE = `Wishing you a day as bright and beautiful as you are 🌟<br>May this new year of your life bring you endless joy, laughter, and all the lovely things you truly deserve.<br><br>You make every ordinary day feel special, and today is all about you.<br>Happy birthday, my dear… every year you become even more wonderful, and you remain the most beautiful soul in this world.<br><br>I truly wish that God protects you, gives you a long life, and fills your days with peace and happiness.<br>May this year be full of joy, success, more shining moments, and continuous growth for you ✨🚀<br><br>And just a little reminder… you are the best and the most beautiful, without a doubt.<br>Always believe in yourself the way I believe in you 🤍<br><br>Happy birthday again… and always stay amazing.`;
+const SMILE_LINE = `😄 Smile sweetheart, it's your day 😄`;
 
 // ══════ RIDDLES (picks 7) ══════
 const RIDDLES_POOL = [
@@ -367,6 +374,7 @@ let anagramSolved=0,totalAnagrams=0;
 let triviaSolved=0,totalTrivia=0;
 let wsFoundCount=0,wsWords=[],wsGrid=[],wsSelected=[],wsSelecting=false;
 let frozenByBirthday=false,audioCtx=null,serverTime=null,serverFetchedAt=null,cwData=null;
+let birthdayShownFlag=false; 
 
 // ══════ INIT ══════
 window.addEventListener('load',async()=>{
@@ -374,7 +382,9 @@ window.addEventListener('load',async()=>{
   await fetchServerTime();
   document.getElementById('time-loading').style.display='none';
   document.getElementById('app').style.display='block';
-  buildAll(); injectBirthdayContent(); startTimerLoop(); unlockAudio();
+  buildAll(); injectBirthdayContent(); startTimerLoop(); 
+  const audioBtn = document.getElementById('audio-btn');
+  audioBtn.addEventListener('click',()=>{ unlockAudio(); audioBtn.textContent='🔊 SOUND ACTIVE'; setTimeout(()=>{ if(audioBtn.textContent==='🔊 SOUND ACTIVE') audioBtn.innerHTML='<span class="audio-icon">🔊</span> SOUND ON'; },2000); });
 });
 
 function buildAll(){ buildRiddles(); buildCrossword(); buildAnagrams(); buildTrivia(); buildWordSearch(); }
@@ -386,7 +396,7 @@ function restartAll(){
   buildAll(); goToStage(1);
 }
 
-// ══════ TIME ══════
+// ══════ TIME & BIRTHDAY EXACT 00:00 15 APRIL ══════
 async function fetchServerTime(){
   try{
     const r=await fetch('https://worldtimeapi.org/api/timezone/Africa/Algiers');
@@ -395,22 +405,30 @@ async function fetchServerTime(){
 }
 function getNow(){ if(!serverTime) return new Date(); return new Date(serverTime.getTime()+(Date.now()-serverFetchedAt)); }
 
-// ══════ TIMER LOOP ══════
 function startTimerLoop(){
   setInterval(()=>{
-    if(frozenByBirthday) return;
+    if(frozenByBirthday || birthdayShownFlag) return;
     const now=getNow();
-    const isBday=(now.getMonth()+1===BIRTHDAY.month&&now.getDate()===BIRTHDAY.day);
-    if(!isBday) return;
-    if(now.getSeconds()===0&&now.getMinutes()%5===0) fetchServerTime();
-    let sLeft;
-    if(TEST_MODE){ const noon=new Date(now); noon.setHours(12,0,0,0); sLeft=Math.floor((noon-now)/1000); }
-    else { const midnight=new Date(now); midnight.setHours(24,0,0,0); sLeft=Math.floor((midnight-now)/1000); }
-    if(sLeft<=3&&sLeft>0){ frozenByBirthday=true; triggerFreeze(sLeft); }
+    const targetDate = new Date(now.getFullYear(), 3, 15, 0, 0, 0);
+    let secondsLeft = Math.floor((targetDate - now) / 1000);
+    if(now.getMonth()+1 === 4 && now.getDate() === 15 && secondsLeft <= 0 && !birthdayShownFlag){
+      if(secondsLeft <= 0) { showBirthdayImmediately(); return; }
+    }
+    if(secondsLeft <= 3 && secondsLeft > 0 && !birthdayShownFlag){
+      frozenByBirthday=true;
+      triggerFreeze(secondsLeft);
+    } else if(secondsLeft <=0 && !birthdayShownFlag && now.getMonth()+1===4 && now.getDate()===15){
+      showBirthdayImmediately();
+    }
   },500);
 }
-
-// ══════ FREEZE ══════
+function showBirthdayImmediately(){
+  if(birthdayShownFlag) return;
+  birthdayShownFlag=true;
+  frozenByBirthday=true;
+  document.getElementById('freeze-overlay').classList.remove('show');
+  showBirthday();
+}
 function triggerFreeze(startCount){
   playSound('freeze');
   const overlay=document.getElementById('freeze-overlay');
@@ -424,13 +442,12 @@ function triggerFreeze(startCount){
   },1000);
 }
 
-// ══════ BIRTHDAY ══════
 function injectBirthdayContent(){
-  document.getElementById('bday-message-text').innerHTML=BIRTHDAY_MESSAGE.replace(/\n/g,'<br>');
+  document.getElementById('bday-message-text').innerHTML=BIRTHDAY_MESSAGE;
   document.getElementById('smile-text').textContent=SMILE_LINE;
 }
-function showBirthday(){ playSound('birthday'); document.getElementById('birthday-screen').classList.add('show'); launchConfetti(); }
-function backToGame(){ document.getElementById('birthday-screen').classList.remove('show'); frozenByBirthday=false; }
+function showBirthday(){ playSound('birthday'); document.getElementById('birthday-screen').classList.add('show'); launchConfetti(); frozenByBirthday=true; }
+function backToGame(){ document.getElementById('birthday-screen').classList.remove('show'); frozenByBirthday=false; birthdayShownFlag=true; }
 
 function launchConfetti(){
   const canvas=document.getElementById('canvas-confetti'); const ctx=canvas.getContext('2d');
@@ -443,9 +460,9 @@ function launchConfetti(){
 }
 
 // ══════ AUDIO ══════
-function unlockAudio(){ document.addEventListener('click',()=>{ if(!audioCtx) audioCtx=new(window.AudioContext||window.webkitAudioContext)(); },{once:true}); }
+function unlockAudio(){ if(!audioCtx){ audioCtx=new(window.AudioContext||window.webkitAudioContext)(); audioCtx.resume(); } }
 function playSound(type){
-  if(!audioCtx) audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+  if(!audioCtx) return;
   const t=audioCtx.currentTime, o=audioCtx.createOscillator(), g=audioCtx.createGain();
   o.connect(g); g.connect(audioCtx.destination);
   if(type==='correct'){ o.type='sine'; o.frequency.setValueAtTime(523,t); o.frequency.setValueAtTime(659,t+0.1); o.frequency.setValueAtTime(784,t+0.2); g.gain.setValueAtTime(0.3,t); g.gain.exponentialRampToValueAtTime(0.001,t+0.5); o.start(t); o.stop(t+0.5); }
@@ -468,7 +485,7 @@ function updateDots(a){ for(let i=1;i<=5;i++){ const dot=document.getElementById
 function addScore(p){ score+=p; const el=document.getElementById('score-val'); el.textContent=score; el.style.transform='scale(1.6)'; setTimeout(()=>el.style.transform='scale(1)',300); }
 function shuffle(arr){ const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=~~(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
 
-// ══════ STAGE 1: RIDDLES ══════
+// ══════ STAGE 1: RIDDLES (unchanged logic) ══════
 function buildRiddles(){
   const pool=shuffle(RIDDLES_POOL).slice(0,7); totalRiddles=pool.length; riddlesSolved=0;
   const c=document.getElementById('riddles-container'); c.innerHTML='';
@@ -487,8 +504,7 @@ function answerRiddle(btn,chosen,correct,idx){
   else { btn.classList.add('wrong'); btns.forEach(b=>{ if(b.textContent===correct) b.classList.add('correct'); }); fb.textContent=`✗ WRONG — Answer: ${correct}`; fb.className='riddle-feedback fail'; card.classList.add('wrong-shake','solved'); playSound('wrong'); setTimeout(()=>card.classList.remove('wrong-shake'),500); }
   riddlesSolved++; if(riddlesSolved>=totalRiddles) document.getElementById('riddle-next-btn').classList.add('show');
 }
-
-// ══════ STAGE 2: CROSSWORD ══════
+// Crossword, Anagram, Trivia, WordSearch functions same as original but kept
 function buildCrossword(){
   cwData=CW_POOL[~~(Math.random()*CW_POOL.length)]; const{words,size}=cwData;
   const grid=Array.from({length:size},()=>Array(size).fill(null));
@@ -502,7 +518,6 @@ function buildCrossword(){
   }
   const across=words.filter(w=>w.dir==='across'),down=words.filter(w=>w.dir==='down');
   document.getElementById('cw-clues').innerHTML=`<div class="clue-section"><h4>ACROSS</h4>${across.map(w=>`<div class="clue-item" id="cla-${words.indexOf(w)}"><span>${words.indexOf(w)+1}.</span>${w.clue}</div>`).join('')}</div><div class="clue-section"><h4>DOWN</h4>${down.map(w=>`<div class="clue-item" id="cld-${words.indexOf(w)}"><span>${words.indexOf(w)+1}.</span>${w.clue}</div>`).join('')}</div>`;
-  const btn=document.getElementById('cw-check-btn'); btn.textContent='CHECK ANSWERS'; btn.style.background='linear-gradient(135deg,var(--accent3),var(--accent))';
   document.getElementById('cw-next-btn').classList.remove('show');
 }
 function checkCrossword(){
@@ -522,8 +537,6 @@ function checkCrossword(){
   if(allOk){ playSound('correct'); addScore(30); document.getElementById('cw-next-btn').classList.add('show'); const btn=document.getElementById('cw-check-btn'); btn.textContent='✓ PERFECT!'; btn.style.background='linear-gradient(135deg,#059669,#0d9488)'; }
   else playSound('wrong');
 }
-
-// ══════ STAGE 3: ANAGRAM ══════
 function scramble(w){ let s; do{s=shuffle(w.split('')).join('');}while(s===w); return s; }
 function buildAnagrams(){
   const pool=shuffle(ANAGRAM_POOL).slice(0,6); totalAnagrams=pool.length; anagramSolved=0;
@@ -543,8 +556,6 @@ function checkAnagram(idx,correct){
   if(inp.value===correct){ inp.classList.add('correct-input'); inp.disabled=true; card.querySelector('.anagram-submit').disabled=true; fb.textContent=`✓ CORRECT! "${correct}" +15 PTS`; fb.className='riddle-feedback ok'; card.dataset.solved='1'; playSound('correct'); addScore(15); anagramSolved++; if(anagramSolved>=totalAnagrams) document.getElementById('anagram-next-btn').classList.add('show'); }
   else { inp.classList.add('wrong-input'); inp.value=''; setTimeout(()=>inp.classList.remove('wrong-input'),400); fb.textContent='✗ Try again!'; fb.className='riddle-feedback fail'; playSound('wrong'); }
 }
-
-// ══════ STAGE 4: TRIVIA ══════
 function buildTrivia(){
   const pool=shuffle(TRIVIA_POOL).slice(0,8); totalTrivia=pool.length; triviaSolved=0;
   const c=document.getElementById('trivia-container'); c.innerHTML='';
@@ -563,8 +574,6 @@ function answerTrivia(btn,chosen,correct,idx){
   else { btn.classList.add('wrong'); btns.forEach(b=>{if(b.textContent===correct)b.classList.add('correct');}); fb.textContent=`✗ WRONG — Answer: ${correct}`; fb.className='riddle-feedback fail'; card.classList.add('wrong-shake','solved'); playSound('wrong'); setTimeout(()=>card.classList.remove('wrong-shake'),500); }
   triviaSolved++; if(triviaSolved>=totalTrivia) document.getElementById('trivia-next-btn').classList.add('show');
 }
-
-// ══════ STAGE 5: WORD SEARCH ══════
 function buildWordSearch(){
   const pool=shuffle(WS_POOLS[~~(Math.random()*WS_POOLS.length)]); wsWords=pool.slice(0,7);
   wsFoundCount=0; wsGrid=[]; wsSelected=[]; const SIZE=14;
@@ -599,7 +608,6 @@ function wsEnd(){
 }
 function hlSel(){ document.querySelectorAll('.ws-cell.selected').forEach(c=>c.classList.remove('selected')); wsSelected.forEach(c=>c.classList.add('selected')); }
 
-// ══════ STARS ══════
 function drawStars(){
   const canvas=document.getElementById('stars-canvas'),ctx=canvas.getContext('2d');
   function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;} resize(); window.addEventListener('resize',resize);
