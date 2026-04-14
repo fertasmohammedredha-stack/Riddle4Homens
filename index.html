@@ -406,12 +406,22 @@ function startTimerLoop(){
   setInterval(()=>{
     if(frozenByBirthday) return;
     const now=getNow();
+
+    if(TEST_MODE){
+      // في TEST_MODE نتجاهل التاريخ ونشوف فقط الوقت
+      const target=new Date(now);
+      target.setHours(3,33,0,0);
+      const sLeft=Math.floor((target-now)/1000);
+      if(sLeft<=3&&sLeft>0){ frozenByBirthday=true; triggerFreeze(sLeft); }
+      return;
+    }
+
+    // الوضع الحقيقي — نتحقق من التاريخ
     const isBday=(now.getMonth()+1===BIRTHDAY.month&&now.getDate()===BIRTHDAY.day);
     if(!isBday) return;
     if(now.getSeconds()===0&&now.getMinutes()%5===0) fetchServerTime();
-    let sLeft;
-    if(TEST_MODE){ const noon=new Date(now); noon.setHours(3,28,0,0); sLeft=Math.floor((noon-now)/1000); }
-    else { const midnight=new Date(now); midnight.setHours(24,0,0,0); sLeft=Math.floor((midnight-now)/1000); }
+    const midnight=new Date(now); midnight.setHours(24,0,0,0);
+    const sLeft=Math.floor((midnight-now)/1000);
     if(sLeft<=3&&sLeft>0){ frozenByBirthday=true; triggerFreeze(sLeft); }
   },500);
 }
