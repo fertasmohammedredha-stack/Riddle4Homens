@@ -301,6 +301,10 @@
   <span id="audio-icon">🔊</span> <span id="audio-label">SOUND ON</span>
 </button>
 
+<button id="test-trigger-btn" onclick="frozenByBirthday=true;triggerFreeze(3);" style="display:none;position:fixed;top:14px;right:14px;z-index:200;background:#f43f5e;border:none;border-radius:30px;padding:9px 18px;font-size:0.72rem;font-family:'Space Mono',monospace;color:#fff;letter-spacing:1px;cursor:pointer;box-shadow:0 4px 14px rgba(244,63,94,0.4);">
+  🎂 TEST SURPRISE
+</button>
+
 <footer style="position:fixed;bottom:0;left:0;right:0;text-align:center;padding:8px;font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--dim);letter-spacing:2px;background:rgba(255,255,255,0.7);backdrop-filter:blur(8px);border-top:1px solid var(--border);z-index:150;">
   DEVELOPED BY <span style="color:var(--accent3);font-weight:700;">FERTAS MOHAMMED REDHA</span>
 </footer>
@@ -381,6 +385,7 @@ window.addEventListener('load',async()=>{
   document.getElementById('time-loading').style.display='none';
   document.getElementById('app').style.display='block';
   buildAll(); injectBirthdayContent(); startTimerLoop(); unlockAudio();
+  if(TEST_MODE) document.getElementById('test-trigger-btn').style.display='block';
 });
 
 function buildAll(){ buildRiddles(); buildCrossword(); buildAnagrams(); buildTrivia(); buildWordSearch(); }
@@ -407,14 +412,7 @@ function startTimerLoop(){
     if(frozenByBirthday) return;
     const now=getNow();
 
-    if(TEST_MODE){
-      // في TEST_MODE نتجاهل التاريخ ونشوف فقط الوقت
-      const target=new Date(now);
-      target.setHours(3,33,0,0);
-      const sLeft=Math.floor((target-now)/1000);
-      if(sLeft<=3&&sLeft>0){ frozenByBirthday=true; triggerFreeze(sLeft); }
-      return;
-    }
+    if(TEST_MODE) return; // في TEST_MODE نستخدم الزر
 
     // الوضع الحقيقي — نتحقق من التاريخ
     const isBday=(now.getMonth()+1===BIRTHDAY.month&&now.getDate()===BIRTHDAY.day);
@@ -422,7 +420,7 @@ function startTimerLoop(){
     if(now.getSeconds()===0&&now.getMinutes()%5===0) fetchServerTime();
     const midnight=new Date(now); midnight.setHours(24,0,0,0);
     const sLeft=Math.floor((midnight-now)/1000);
-    if(sLeft<=3&&sLeft>0){ frozenByBirthday=true; triggerFreeze(sLeft); }
+    if(sLeft<=3&&sLeft>0){ frozenByBirthday=true; triggerFreeze(3); }
   },500);
 }
 
