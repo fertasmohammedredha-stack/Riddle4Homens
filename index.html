@@ -287,7 +287,7 @@
 <div id="birthday-screen">
   <canvas id="canvas-confetti"></canvas>
   <div class="bday-badge">✦ A SPECIAL MOMENT ✦</div>
-  <div class="bday-title">HAPPY BIRTHDAY,<br>Homens! 🎂</div>
+  <div class="bday-title">HAPPY<br>BIRTHDAY!</div>
   <div class="bday-emojis">🎂 🎉 🎊 🎈</div>
   <div class="bday-message" id="bday-message-text"></div>
   <div class="smile-line" id="smile-text"></div>
@@ -313,7 +313,7 @@
 // ══════ CONFIG ══════
 const BIRTHDAY = { month: 4, day: 14 };
 const TEST_MODE = true; // triggers at 3:24:57 AM
-const BIRTHDAY_MESSAGE = `Wishing you a day as bright and beautiful as you are 🌟\nMay this new year of your life bring you endless joy, laughter, and all the lovely things you truly deserve.\n\nYou make every ordinary day feel special, and today is all about you.\nHappy birthday, my dear… every year you become even more wonderful, and you remain the most beautiful soul in this world.\n\nI truly wish that God protects you, gives you a long life, and fills your days with peace and happiness.\nMay this year be full of joy, success, more shining moments, and continuous growth for you ✨🚀\n\nAnd just a little reminder… you are the best and the most beautiful, without a doubt.\nAlways believe in yourself the way I believe in you 🤍\n\nHappy birthday again… and always stay amazing.`;
+const BIRTHDAY_MESSAGE = `HAPPY BIRTHDAY, Homens! 🎂🎉🎊🎈\n\nWishing you a day as bright and beautiful as you are 🌟\nMay this new year of your life bring you endless joy, laughter, and all the lovely things you truly deserve.\n\nYou make every ordinary day feel special, and today is all about you.\nHappy birthday, my dear… every year you become even more wonderful, and you remain the most beautiful soul in this world.\n\nI truly wish that God protects you, gives you a long life, and fills your days with peace and happiness.\nMay this year be full of joy, success, more shining moments, and continuous growth for you ✨🚀\n\nAnd just a little reminder… you are the best and the most beautiful, without a doubt.\nAlways believe in yourself the way I believe in you 🤍\n\nHappy birthday again… and always stay amazing.`;
 const SMILE_LINE = `😄 Smile sweetheart, it's your day 😄`;
 
 // ══════ RIDDLES (picks 7) ══════
@@ -463,7 +463,7 @@ function stopBirthdayMusic(){
   if(birthdayMusicInterval){ clearInterval(birthdayMusicInterval); birthdayMusicInterval=null; }
 }
 
-function showBirthday(){ startBirthdayMusic(); document.getElementById('birthday-screen').classList.add('show'); launchConfetti(); }
+function showBirthday(){ startBirthdayMusic(); const s=document.getElementById('birthday-screen'); s.classList.add('show'); s.scrollTop=0; launchConfetti(); }
 function backToGame(){ stopBirthdayMusic(); document.getElementById('birthday-screen').classList.remove('show'); frozenByBirthday=false; }
 
 function launchConfetti(){
